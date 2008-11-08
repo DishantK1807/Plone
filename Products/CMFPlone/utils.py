@@ -1,15 +1,10 @@
-import re
 from types import ClassType
 from os.path import join, abspath, split
 from cStringIO import StringIO
 from PIL import Image
 
 from plone.i18n.normalizer.interfaces import IIDNormalizer
-from webdav.interfaces import IWriteLock
 
-import zope.interface
-from zope.interface import implementedBy
-from zope.component import getMultiAdapter
 from zope.component import queryMultiAdapter
 from zope.component import queryUtility
 
@@ -53,18 +48,6 @@ _marker = []
 
 def parent(obj):
     return aq_parent(aq_inner(obj))
-
-def createBreadCrumbs(context, request):
-    view = getMultiAdapter((context, request), name='breadcrumbs_view')
-    return view.breadcrumbs()
-
-def createNavTree(context, request, sitemap=False):
-    view = getMultiAdapter((context, request), name='navtree_builder_view')
-    return view.navigationTree()
-
-def createSiteMap(context, request, sitemap=False):
-    view = getMultiAdapter((context, request), name='sitemap_builder_view')
-    return view.siteMap()
 
 def _getDefaultPageView(obj, request):
     """This is a nasty hack because the view lookup fails when it occurs too
@@ -371,57 +354,6 @@ def _createObjectByType(type_name, container, id, *args, **kw):
     return ob
 
 
-def safeToInt(value):
-    """Convert value to integer or just return 0 if we can't"""
-    try:
-        return int(value)
-    except ValueError:
-        return 0
-
-release_levels = ('alpha', 'beta', 'candidate', 'final')
-rl_abbr = {'a':'alpha', 'b':'beta', 'rc':'candidate'}
-
-def versionTupleFromString(v_str):
-    """Returns version tuple from passed in version string
-
-        >>> versionTupleFromString('1.2.3')
-        (1, 2, 3, 'final', 0)
-
-        >>> versionTupleFromString('2.1-final1 (SVN)')
-        (2, 1, 0, 'final', 1)
-
-        >>> versionTupleFromString('3-beta')
-        (3, 0, 0, 'beta', 0)
-
-        >>> versionTupleFromString('2.0a3')
-        (2, 0, 0, 'alpha', 3)
-
-        >>> versionTupleFromString('foo') is None
-        True
-        """
-    regex_str = "(^\d+)[.]?(\d*)[.]?(\d*)[- ]?(alpha|beta|candidate|final|a|b|rc)?(\d*)"
-    v_regex = re.compile(regex_str)
-    match = v_regex.match(v_str)
-    if match is None:
-        v_tpl = None
-    else:
-        groups = list(match.groups())
-        for i in (0, 1, 2, 4):
-            groups[i] = safeToInt(groups[i])
-        if groups[3] is None:
-            groups[3] = 'final'
-        elif groups[3] in rl_abbr.keys():
-            groups[3] = rl_abbr[groups[3]]
-        v_tpl = tuple(groups)
-    return v_tpl
-
-def getFSVersionTuple():
-    """Reads version.txt and returns version tuple"""
-    vfile = "%s/version.txt" % PACKAGE_HOME
-    v_str = open(vfile, 'r').read().lower()
-    return versionTupleFromString(v_str)
-
-
 def transaction_note(note):
     """Write human legible note"""
     T=transaction.get()
@@ -494,89 +426,6 @@ def safe_unicode(value, encoding='utf-8'):
         except (UnicodeDecodeError):
             value = value.decode('utf-8', 'replace')
     return value
-
-
-def tuplize(value):
-    if isinstance(value, tuple):
-        return value
-    if isinstance(value, list):
-        return tuple(value)
-    return (value,)
-
-def _detuplize(interfaces, append):
-    if isinstance(interfaces, (tuple, list)):
-        for sub in interfaces:
-            _detuplize(sub, append)
-    else:
-        append(interfaces)
-
-def flatten(interfaces):
-    flattened = []
-    _detuplize(interfaces, flattened.append)
-    return tuple(flattened)
-
-def directlyProvides(obj, *interfaces):
-    return zope.interface.directlyProvides(obj, *normalized_interfaces)
-
-def classImplements(class_, *interfaces):
-    return zope.interface.classImplements(class_, *normalized_interfaces)
-
-def classDoesNotImplement(class_, *interfaces):
-    # convert any Zope 2 interfaces to Zope 3 using fromZ2Interface
-    interfaces = flatten(interfaces)
-    implemented = implementedBy(class_)
-    for iface in interfaces:
-        implemented = implemented - iface
-    return zope.interface.classImplementsOnly(class_, implemented)
-
-
-# Copied 'unrestricted_rename' from ATCT migrations to avoid
-# a dependency.
-
-from App.Dialogs import MessageDialog
-from OFS.CopySupport import CopyError
-from OFS.CopySupport import eNotSupported
-from cgi import escape
-import sys
-
-def _unrestricted_rename(container, id, new_id):
-    """Rename a particular sub-object
-
-    Copied from OFS.CopySupport
-
-    Less strict version of manage_renameObject:
-        * no write lock check
-        * no verify object check from PortalFolder so it's allowed to rename
-          even unallowed portal types inside a folder
-    """
-    try:
-        container._checkId(new_id)
-    except:
-        raise CopyError, MessageDialog(
-              title='Invalid Id',
-              message=sys.exc_info()[1],
-              action ='manage_main')
-    ob=container._getOb(id)
-    if not ob.cb_isMoveable():
-        raise CopyError, eNotSupported % escape(id)
-    try:
-        ob._notifyOfCopyTo(container, op=1)
-    except:
-        raise CopyError, MessageDialog(
-              title='Rename Error',
-              message=sys.exc_info()[1],
-              action ='manage_main')
-    container._delObject(id)
-    ob = aq_base(ob)
-    ob._setId(new_id)
-
-    # Note - because a rename always keeps the same context, we
-    # can just leave the ownership info unchanged.
-    container._setObject(new_id, ob, set_owner=0)
-    ob = container._getOb(new_id)
-    ob._postCopy(container, op=1)
-
-    return None
 
 
 # Copied '_getSecurity' from Archetypes.utils to avoid a dependency.

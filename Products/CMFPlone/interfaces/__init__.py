@@ -5,7 +5,6 @@ from properties import ISimpleItemWithProperties
 from basetool import IPloneBaseTool
 from basetool import IPloneTool
 from events import ISiteManagerCreatedEvent
-from interface import IInterfaceTool
 from installable import INonInstallable
 from migration import IMigrationTool
 from siteroot import IPloneSiteRoot

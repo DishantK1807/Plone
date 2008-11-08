@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed the interface tool and some unused functions from the PloneTool.
+  [hannosch]
+
 - Removed deprecated code. Our deprecation policy allows us to deprecate in
   the 3.x line and remove in 4.0.
   [hannosch]
