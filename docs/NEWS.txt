@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Refactored the special NotFound error handling into an exception view.
+  [hannosch]
+
 - Clarified content language versus response language handling.
   [hannosch]
 
