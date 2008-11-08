@@ -444,7 +444,6 @@ class PloneGenerator:
          'portal_factory':'Responsible for the creation of content objects',
          'portal_calendar':'Controls how events are shown',
          'portal_quickinstaller':'Allows to install/uninstall products',
-         'portal_interface':'Allows to query object interfaces',
          'portal_actionicons':'Associates actions with icons',
          'portal_groupdata':'Handles properties on groups',
          'portal_groups':'Handles group related functionality',
