@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Clarified content language versus response language handling.
+  [hannosch]
+
 - Removed persistent control panel tool. The control panel section is based
   on normal actions, stored in the actions tool.
   [hannosch]
