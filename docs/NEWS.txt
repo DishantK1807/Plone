@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed deprecated code. Our deprecation policy allows us to deprecate in
+  the 3.x line and remove in 4.0.
+  [hannosch]
+
 - Refactored the special NotFound error handling into an exception view.
   [hannosch]
 

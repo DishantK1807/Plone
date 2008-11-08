@@ -5,8 +5,6 @@
 from zope.interface import directlyProvides, noLongerProvides
 
 from Products.CMFPlone.interfaces import INonStructuralFolder
-from Products.CMFPlone.interfaces.NonStructuralFolder import \
-     INonStructuralFolder as z2INonStructuralFolder
 from Products.CMFPlone.tests import PloneTestCase
 from Products.CMFPlone.tests import dummy
 

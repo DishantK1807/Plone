@@ -5,10 +5,6 @@ from Globals import InitializeClass
 from Products.CMFPlone.PloneBaseTool import PloneBaseTool
 from Products.CMFDefault.permissions import ReplyToItem
 
-from DocumentTemplate.DT_Util import html_quote
-
-from Acquisition import aq_base
-
 from plone.intelligenttext.transforms import convertWebIntelligentPlainTextToHtml
 
 class DiscussionTool(PloneBaseTool, BaseTool):

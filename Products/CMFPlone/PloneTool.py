@@ -40,15 +40,11 @@ from Products.statusmessages.interfaces import IStatusMessage
 from AccessControl.requestmethod import postonly
 from plone.app.linkintegrity.exceptions import LinkIntegrityNotificationException
 
-# BBB Plone 5.0
-from zope.deprecation import __show__
-__show__.off()
 try:
     from Products.LinguaPlone.interfaces import ITranslatable
+    HAS_LP = True
 except ImportError:
-    from Products.CMFPlone.interfaces.Translatable import ITranslatable
-__show__.on()
-
+    HAS_LP = False
 
 AllowSendto = 'Allow sendto'
 permissions.setDefaultRoles(AllowSendto, ('Anonymous', 'Manager',))
@@ -780,18 +776,19 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
             # Only look up for untranslated folderish content,
             # in translated containers we assume the container has default page
             # in the correct language.
-            implemented = ITranslatable.providedBy(obj)
-            if not implemented or implemented and not obj.isTranslation():
-                pageobj = getattr(obj, page, None)
-                if pageobj is not None and ITranslatable.providedBy(pageobj):
-                    translation = pageobj.getTranslation()
-                    if translation is not None and \
-                       (not wftool.getChainFor(pageobj) or\
-                           wftool.getInfoFor(pageobj, 'review_state') == wftool.getInfoFor(translation, 'review_state')):
-                        if ids.has_key(translation.getId()):
-                            return obj, [translation.getId()]
-                        else:
-                            return translation, ['view']
+            if HAS_LP:
+                implemented = ITranslatable.providedBy(obj)
+                if not implemented or implemented and not obj.isTranslation():
+                    pageobj = getattr(obj, page, None)
+                    if pageobj is not None and ITranslatable.providedBy(pageobj):
+                        translation = pageobj.getTranslation()
+                        if translation is not None and \
+                           (not wftool.getChainFor(pageobj) or\
+                               wftool.getInfoFor(pageobj, 'review_state') == wftool.getInfoFor(translation, 'review_state')):
+                            if ids.has_key(translation.getId()):
+                                return obj, [translation.getId()]
+                            else:
+                                return translation, ['view']
             return obj, [page]
 
         # The list of ids where we look for default
@@ -893,11 +890,6 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
         #
 
         raise AttributeError, "Failed to get a default page or view_action for %s" % (obj.absolute_url,)
-
-    security.declarePublic('isTranslatable')
-    def isTranslatable(self, obj):
-        """Checks if a given object implements the ITranslatable interface."""
-        return ITranslatable.providedBy(obj)
 
     security.declarePublic('isStructuralFolder')
     def isStructuralFolder(self, obj):
