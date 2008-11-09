@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Moved all migrations and migration tests out to a new package called
+  plone.app.upgrade.
+  [hannosch]
+
 - Removed module alias for the ploneview formerly named plone.
   [hannosch]
 

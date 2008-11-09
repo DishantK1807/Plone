@@ -4,6 +4,7 @@ CMFPlone setup handlers.
 
 from borg.localrole.utils import setup_localrole_plugin
 from five.localsitemanager import make_objectmanager_site
+from plone.app.upgrade.utils import logger
 from plone.i18n.normalizer.interfaces import IURLNormalizer
 from zope.app.component.interfaces import ISite
 from zope.app.component.hooks import setSite
@@ -27,7 +28,6 @@ from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFPlone.events import SiteManagerCreatedEvent
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.interfaces import IMigrationTool
-from Products.CMFPlone.migrations import logger
 from Products.CMFPlone.Portal import member_indexhtml
 
 
