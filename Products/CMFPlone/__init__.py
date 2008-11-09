@@ -116,7 +116,7 @@ def initialize(context):
     from Products.CMFCore import CachingPolicyManager
 
     # Plone tools
-    import PloneTool, FactoryTool, MigrationTool
+    import PloneTool, FactoryTool
     import MembershipTool, WorkflowTool, URLTool, MetadataTool
     import RegistrationTool, MemberDataTool, SyndicationTool
     import PropertiesTool, ActionsTool, TypesTool, UndoTool
@@ -132,7 +132,6 @@ def initialize(context):
               CachingPolicyManager.CachingPolicyManager,
               FactoryTool.FactoryTool,
               PropertiesTool.PropertiesTool,
-              MigrationTool.MigrationTool,
               RegistrationTool.RegistrationTool,
               URLTool.URLTool,
               MetadataTool.MetadataTool,

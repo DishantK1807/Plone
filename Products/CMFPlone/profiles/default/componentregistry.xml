@@ -57,9 +57,6 @@
      interface="Products.CMFPlone.interfaces.IPloneSiteRoot"
      object=""/>
   <utility
-     interface="Products.CMFPlone.interfaces.IMigrationTool"
-     object="portal_migration"/>
-  <utility
      interface="Products.MailHost.interfaces.IMailHost"
      object="MailHost"/>
   <utility

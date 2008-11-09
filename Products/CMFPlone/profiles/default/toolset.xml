@@ -40,8 +40,6 @@
            class="Products.PlonePAS.tools.membership.MembershipTool"/>
  <required tool_id="portal_metadata"
            class="Products.CMFPlone.MetadataTool.MetadataTool"/>
- <required tool_id="portal_migration"
-           class="Products.CMFPlone.MigrationTool.MigrationTool"/>
  <required tool_id="portal_password_reset"
            class="Products.PasswordResetTool.PasswordResetTool.PasswordResetTool"/>
  <required tool_id="portal_properties"

@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed the migration tool. Upgrades are handled by GenericSetup alone.
+  [hannosch]
+
 - Moved all migrations and migration tests out to a new package called
   plone.app.upgrade.
   [hannosch]

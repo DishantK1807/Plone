@@ -6,7 +6,6 @@ from basetool import IPloneBaseTool
 from basetool import IPloneTool
 from events import ISiteManagerCreatedEvent
 from installable import INonInstallable
-from migration import IMigrationTool
 from siteroot import IPloneSiteRoot
 from siteroot import IMigratingPloneSiteRoot
 from siteroot import ITestCasePloneSiteRoot

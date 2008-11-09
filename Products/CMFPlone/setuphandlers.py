@@ -27,7 +27,6 @@ from Products.StandardCacheManagers.RAMCacheManager import RAMCacheManager
 from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFPlone.events import SiteManagerCreatedEvent
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
-from Products.CMFPlone.interfaces import IMigrationTool
 from Products.CMFPlone.Portal import member_indexhtml
 
 
@@ -42,7 +41,7 @@ class HiddenProducts(object):
             'CMFActionIcons', 'Products.CMFActionIcons',
             'CMFCalendar', 'Products.CMFCalendar',
             'CMFDefault', 'Products.CMFDefault',
-            'CMFPlone', 'Products.CMFPlone', 'Products.CMFPlone.migrations',
+            'CMFPlone', 'Products.CMFPlone',
             'CMFTopic', 'Products.CMFTopic',
             'CMFUid', 'Products.CMFUid',
             'DCWorkflow', 'Products.DCWorkflow',
@@ -390,12 +389,7 @@ class PloneGenerator:
                 index_html.write(member_indexhtml)
                 index_html.ZPythonScript_setTitle('User Search')
 
-    def performMigrationActions(self, portal):
-        """
-        Perform any necessary migration steps.
-        """
-        mt = queryUtility(IMigrationTool)
-        mt.setInstanceVersion(mt.getFileSystemVersion())
+    def setProfileVersion(self, portal):
         setup = getToolByName(portal, 'portal_setup')
         version = setup.getVersionForProfile(_DEFAULT_PROFILE)
         setup.setLastVersionForProfile(_DEFAULT_PROFILE, version)
@@ -433,7 +427,6 @@ class PloneGenerator:
          'portal_types':'Controls the available content types in your portal',
          'plone_utils':'Various utility methods',
          'portal_metadata':'Controls metadata like keywords, copyrights, etc',
-         'portal_migration':'Upgrades to newer Plone versions',
          'portal_registration':'Handles registration of new users',
          'portal_skins':'Controls skin behaviour (search order etc)',
          'portal_syndication':'Generates RSS for folders',
@@ -507,7 +500,7 @@ def importFinalSteps(context):
     pprop = getToolByName(site, 'portal_properties')
     pmembership = getToolByName(site, 'portal_membership')
     gen = PloneGenerator()
-    gen.performMigrationActions(site)
+    gen.setProfileVersion(site)
     gen.enableSyndication(site, out)
     gen.assignTitles(site, out)
     pmembership.memberareaCreationFlag = False
