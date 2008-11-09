@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed module alias for the ploneview formerly named plone.
+  [hannosch]
+
 - Removed the interface tool and some unused functions from the PloneTool.
   [hannosch]
 
