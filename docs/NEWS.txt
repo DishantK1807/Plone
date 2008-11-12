@@ -298,3 +298,18 @@ Plone 4.0 - UNRELEASED
   using the old-style (no plone.jscalendar namespace) methods will no
   longer work until adjusted.
   [mj]
+
+- Gave RTL.css higher priority within the stylesheet registry.
+  Closes http://dev.plone.org/plone/ticket/8505
+  This fix (r22954) also closes the following RTL issues
+    http://dev.plone.org/plone/ticket/7191 
+    http://dev.plone.org/plone/ticket/7194
+  [emanlove]
+
+- For RTL languages shifted Info Bar to the right.
+  Closes http://dev.plone.org/plone/ticket/8140
+  [emanlove]
+
+- For RTL languages shifted comment icon to the right.
+  Closes http://dev.plone.org/plone/ticket/6366
+  [emanlove]
