@@ -57,7 +57,7 @@
                                               templateId=templateId, macro='startdate-field-view');"
                                   id="parent-fieldname-startDate"
                                   tal:attributes="class string:$kss_class dtstart;
-                                                  title python:here.end().ISO8601()">
+                                                  title python:here.start().ISO8601()">
                                   <span metal:define-slot="inside" 
                                         class="explain"
                                         tal:content="python:toLocalizedTime(here.start(),
