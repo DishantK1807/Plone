@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed macro slot for changing the document type; this was not
+  correct XML and should this flexibility be required, it's
+  recommended to customize `main_template.pt`.
+  [malthe]
+
 - Turned deprecated string 'Unauthorized' exceptions into real exceptions.
   [davisagli]
 
