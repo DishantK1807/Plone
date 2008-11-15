@@ -6,6 +6,7 @@
    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
    define-macro="master">
 <metal:block define-slot="top_slot" />
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en"
@@ -14,7 +15,7 @@
                   plone_view context/@@plone;
                   lang portal_state/language;
                   view nocall:view | nocall: plone_view;
-                  dummy plone_view/mark_view;
+                  dummy python: plone_view.mark_view(view);
                   portal_url portal_state/portal_url;
                   checkPermission nocall: context/portal_membership/checkPermission;
                   site_properties context/portal_properties/site_properties;"

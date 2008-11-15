@@ -16,8 +16,6 @@ from zope.deprecation import deprecate
 from zope.interface import implements, alsoProvides
 from zope.component import getMultiAdapter, queryMultiAdapter, getUtility
 
-import sys
-
 from plone.memoize.view import memoize
 from plone.portlets.interfaces import IPortletManager, IPortletManagerRenderer
 
@@ -31,13 +29,14 @@ _marker = []
 class Plone(BrowserView):
     implements(IPlone)
 
-    def mark_view(self):
+    def mark_view(self, view):
         """ Adds a marker interface to the view if it is "the" view for the context
             May only be called from a template.
         """
-        context = sys._getframe(2).f_locals['econtext']
-        view = context.vars.get('view', None)
-        context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
+
+        context_state = getMultiAdapter(
+            (self.context, self.request), name=u'plone_context_state')
+        
         if view and context_state.is_view_template() and not IViewView.providedBy(view):
             alsoProvides(view, IViewView)
 
