@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Included new Plone logo.
+  [hannosch]
+
 - Removed demo content from default installation. Demoing Plone use is better
   done via screencasts, documentation and a demo.plone.org site.
   [hannosch]
