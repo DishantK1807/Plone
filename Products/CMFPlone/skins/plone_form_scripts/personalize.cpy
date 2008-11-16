@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=visible_ids=None, portrait=None, listed=None, REQUEST=None
+##parameters=visible_ids=None, portrait=None, REQUEST=None
 ##title=Personalization Handler.
 
 from Products.CMFPlone.utils import transaction_note

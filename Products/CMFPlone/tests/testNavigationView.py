@@ -295,9 +295,6 @@ class TestBaseNavTree(PloneTestCase.PloneTestCase):
     def testCustomQuery(self):
         # Try a custom query script for the navtree that returns only published
         # objects
-        self.portal._delObject('Members')
-        self.portal._delObject('news')
-        self.portal._delObject('events')
         workflow = self.portal.portal_workflow
         factory = self.portal.manage_addProduct['PythonScripts']
         factory.manage_addPythonScript('getCustomNavQuery')
@@ -320,9 +317,6 @@ class TestBaseNavTree(PloneTestCase.PloneTestCase):
 
     def testStateFiltering(self):
         # Test Navtree workflow state filtering
-        self.portal._delObject('Members')
-        self.portal._delObject('news')
-        self.portal._delObject('events')
         workflow = self.portal.portal_workflow
         ntp=self.portal.portal_properties.navtree_properties
         ntp.manage_changeProperties(wf_states_to_show=['published'])
@@ -414,7 +408,7 @@ class TestBaseSiteMap(PloneTestCase.PloneTestCase):
         view = self.view_class(self.portal, self.request)
         sitemap = view.siteMap()
 
-        folder1map = sitemap['children'][6]
+        folder1map = sitemap['children'][4]
         self.assertEqual(len(folder1map['children']), 6)
         self.assertEqual(folder1map['item'].getPath(), path(folder1))
 
@@ -501,12 +495,12 @@ class TestBasePortalTabs(PloneTestCase.PloneTestCase):
         #Everything shows up by default
         tabs = view.topLevelTabs()
         self.failUnless(tabs)
-        self.assertEqual(len(tabs), 8)
+        self.assertEqual(len(tabs), 6)
         
-        #Only the folders show up (Members, news, events, folder1, folder2)
+        #Only the folders show up (folder1, folder2, Members)
         self.portal.portal_properties.site_properties.disable_nonfolderish_sections = True
         tabs = view.topLevelTabs()
-        self.assertEqual(len(tabs), 5)
+        self.assertEqual(len(tabs), 3)
 
     def testTabsRespectFolderOrder(self):
         # See if reordering causes a change in the tab order
@@ -525,9 +519,6 @@ class TestBasePortalTabs(PloneTestCase.PloneTestCase):
     def testCustomQuery(self):
         # Try a custom query script for the tabs that returns only published
         # objects
-        self.portal._delObject('Members')
-        self.portal._delObject('news')
-        self.portal._delObject('events')
         workflow = self.portal.portal_workflow
         factory = self.portal.manage_addProduct['PythonScripts']
         factory.manage_addPythonScript('getCustomNavQuery')
@@ -549,9 +540,6 @@ class TestBasePortalTabs(PloneTestCase.PloneTestCase):
 
     def testStateFiltering(self):
         # Test tabs workflow state filtering
-        self.portal._delObject('Members')
-        self.portal._delObject('news')
-        self.portal._delObject('events')
         workflow = self.portal.portal_workflow
         ntp=self.portal.portal_properties.navtree_properties
         ntp.manage_changeProperties(wf_states_to_show=['published'])

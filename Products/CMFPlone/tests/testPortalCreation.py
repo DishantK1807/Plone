@@ -89,29 +89,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.failUnless('folder_workflow' in lpf_chain)
         self.failIf('plone_workflow' in lpf_chain)
 
-    def testMembersFolderMetaType(self):
-        # Members folder should have meta_type 'ATBTreeFolder'
-        members = self.membership.getMembersFolder()
-        self.assertEqual(members.meta_type, 'ATBTreeFolder')
-
-    def testMembersFolderPortalType(self):
-        # Members folder should have portal_type 'Large Plone Folder'
-        members = self.membership.getMembersFolder()
-        self.assertEqual(members._getPortalTypeName(), 'Large Plone Folder')
-
-    def testMembersFolderMeta(self):
-        # Members folder should have title 'Users'
-        members = self.membership.getMembersFolder()
-        self.assertEqual(members.getId(), 'Members')
-        self.assertEqual(members.Title(), 'Users')
-
-    def testMembersFolderIsIndexed(self):
-        # Members folder should be cataloged
-        res = self.catalog(getId='Members')
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0].getId, 'Members')
-        self.assertEqual(res[0].Title, 'Users')
-
     def testSecureMailHost(self):
         # MailHost should be of the SMH variety
         mailhost = self.portal.plone_utils.getMailHost()
@@ -217,106 +194,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.failUnless('Folder' not in self.properties.site_properties.getProperty('default_page_types'))
         self.failUnless('Large Plone Folder' not in self.properties.site_properties.getProperty('default_page_types'))
         self.failUnless('Topic' in self.properties.site_properties.getProperty('default_page_types'))
-
-    def testNoMembersAction(self):
-        # There should not be a Members action
-        for action in self.actions.listActions():
-            if action.getId() == 'Members':
-                self.fail("Actions tool still has 'Members' action")
-
-    def testNoNewsAction(self):
-        # There should not be a news action
-        for action in self.actions.listActions():
-            if action.getId() == 'news':
-                self.fail("Actions tool still has 'News' action")
-
-    def testNewsTopicIsIndexed(self):
-        # News (smart) folder should be cataloged
-        res = self.catalog(path={'query' : '/plone/news/aggregator', 'depth' : 0})
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0].getId, 'aggregator')
-        self.assertEqual(res[0].Title, 'News')
-        self.assertEqual(res[0].Description, 'Site News')
-
-    def testEventsTopicIsIndexed(self):
-        # Events (smart) folder should be cataloged
-        res = self.catalog(path={'query' : '/plone/events/aggregator', 'depth' : 0})
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0].getId, 'aggregator')
-        self.assertEqual(res[0].Title, 'Events')
-        self.assertEqual(res[0].Description, 'Site Events')
-
-    def testNewsFolderIsIndexed(self):
-        # News folder should be cataloged
-        res = self.catalog(path={'query' : '/plone/news', 'depth' : 0})
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0].getId, 'news')
-        self.assertEqual(res[0].Title, 'News')
-        self.assertEqual(res[0].Description, 'Site News')
-
-    def testEventsFolderIsIndexed(self):
-        # Events folder should be cataloged
-        res = self.catalog(path={'query' : '/plone/events', 'depth' : 0})
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0].getId, 'events')
-        self.assertEqual(res[0].Title, 'Events')
-        self.assertEqual(res[0].Description, 'Site Events')
-
-    def testNewsFolder(self):
-        self.failUnless('news' in self.portal.objectIds())
-        folder = getattr(self.portal, 'news')
-        self.assertEqual(folder.portal_type, 'Large Plone Folder')
-        self.assertEqual(folder.getDefaultPage(), 'aggregator')
-        self.assertEqual(folder.getRawLocallyAllowedTypes(), ('News Item',))
-        self.assertEqual(folder.getRawImmediatelyAddableTypes(), ('News Item',))
-        self.assertEqual(folder.checkCreationFlag(), False)
-
-    def testEventsFolder(self):
-        self.failUnless('events' in self.portal.objectIds())
-        folder = getattr(self.portal, 'events')
-        self.assertEqual(folder.portal_type, 'Large Plone Folder')
-        self.assertEqual(folder.getDefaultPage(), 'aggregator')
-        self.assertEqual(folder.getRawLocallyAllowedTypes(), ('Event',))
-        self.assertEqual(folder.getRawImmediatelyAddableTypes(), ('Event',))
-        self.assertEqual(folder.checkCreationFlag(), False)
-
-    def testNewsTopic(self):
-        # News topic is in place as default view and has a criterion to show
-        # only News Items, and uses the folder_summary_view.
-        self.assertEqual(['aggregator'], [i for i in self.portal.news.objectIds()])
-        topic = getattr(self.portal.news, 'aggregator')
-        self.assertEqual(topic._getPortalTypeName(), 'Topic')
-        self.assertEqual(topic.buildQuery()['Type'], ('News Item',))
-        self.assertEqual(topic.buildQuery()['review_state'], 'published')
-        self.assertEqual(topic.getLayout(), 'folder_summary_view')
-        self.assertEqual(topic.checkCreationFlag(), False)
-
-    def testEventsTopic(self):
-        # Events topic is in place as default view and has criterion to show
-        # only future Events Items.
-        self.assertEqual(['aggregator'], [i for i in self.portal.events.objectIds()])
-        topic = getattr(self.portal.events, 'aggregator')
-        self.assertEqual(topic._getPortalTypeName(), 'Topic')
-        query = topic.buildQuery()
-        self.assertEqual(query['Type'], ('Event',))
-        self.assertEqual(query['review_state'], 'published')
-        self.assertEqual(query['start']['query'].Date(), DateTime().Date())
-        self.assertEqual(query['start']['range'], 'min')
-        self.assertEqual(topic.checkCreationFlag(), False)
-
-    def testEventsSubTopic(self):
-        # past Events sub-topic is in place and has criteria to show
-        # only past Events Items.
-        events_topic = self.portal.events.aggregator
-        self.failUnless('previous' in events_topic.objectIds())
-        topic = getattr(events_topic, 'previous')
-        self.assertEqual(topic._getPortalTypeName(), 'Topic')
-        query = topic.buildQuery()
-        self.assertEqual(query['Type'], ('Event',))
-        self.assertEqual(query['review_state'], 'published')
-        self.assertEqual(query['end']['query'].Date(), DateTime().Date())
-        self.assertEqual(query['end']['range'], 'max')
-        self.assertEqual(topic.checkCreationFlag(), False)
 
     def testObjectButtonActions(self):
         self.setRoles(['Manager', 'Member'])
@@ -466,11 +343,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
     def testSyndicationEnabledByDefault(self):
         syn = self.portal.portal_syndication
         self.failUnless(syn.isSiteSyndicationAllowed())
-
-    def testSyndicationEnabledOnNewsAndEvents(self):
-        syn = self.portal.portal_syndication
-        self.failUnless(syn.isSyndicationAllowed(self.portal.news.aggregator))
-        self.failUnless(syn.isSyndicationAllowed(self.portal.events.aggregator))
 
     def testSyndicationTabDisabled(self):
         # Syndication tab should be disabled by default
@@ -709,14 +581,8 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         left = getMultiAdapter((self.portal, leftColumn,), IPortletAssignmentMapping)
         right = getMultiAdapter((self.portal, rightColumn,), IPortletAssignmentMapping)
 
-        self.assertEquals(len(left), 2)
-        self.assertEquals(len(right), 4)
-
-    def testPortletBlockingForMembersFolder(self):
-        members = self.portal.Members
-        rightColumn = getUtility(IPortletManager, name=u'plone.rightcolumn')
-        portletAssignments = getMultiAdapter((members, rightColumn,), ILocalPortletAssignmentManager)
-        self.assertEquals(True, portletAssignments.getBlacklistStatus(CONTEXT_PORTLETS))
+        self.assertEquals(len(left), 0)
+        self.assertEquals(len(right), 0)
 
     def testAddablePortletsInColumns(self):
         for name in (u'plone.leftcolumn', u'plone.rightcolumn'):
@@ -816,35 +682,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         view=ExportStepsView(self.setup, None)
         self.assertEqual([i['id'] for i in view.invalidSteps()], [])
 
-    def testPortalContentLanguage(self):
-        from zope.app.testing.ztapi import provideUtility
-        from zope.i18n.interfaces import ITranslationDomain
-        from zope.i18n.simpletranslationdomain import SimpleTranslationDomain
-
-        # Let's fake the news title translations
-        messages = {
-            ('de', u'news-title'): u'Foo',
-            ('pt_BR', u'news-title'): u'Bar',
-        }
-        pfp = SimpleTranslationDomain('plonefrontpage', messages)
-        provideUtility(ITranslationDomain, pfp, 'plonefrontpage')
-
-        # Setup the generator and the new placeholder folders
-        gen = setuphandlers.PloneGenerator()
-        self.folder.invokeFactory('Folder', 'brazilian')
-        self.folder.invokeFactory('Folder', 'german')
-
-        # Check if the content is being created in German
-        self.app.REQUEST['HTTP_ACCEPT_LANGUAGE'] = 'de'
-        gen.setupPortalContent(self.folder.german)
-        self.failUnlessEqual(self.folder.german.news.Title(), 'Foo')
-
-        # Check if the content is being created in a composite
-        # language code, in this case Brazilian Portuguese
-        self.app.REQUEST['HTTP_ACCEPT_LANGUAGE'] = 'pt-br'
-        gen.setupPortalContent(self.folder.brazilian)
-        self.failUnlessEqual(self.folder.brazilian.news.Title(), 'Bar')
-
 
 class TestPortalBugs(PloneTestCase.PloneTestCase):
 
@@ -853,29 +690,6 @@ class TestPortalBugs(PloneTestCase.PloneTestCase):
         self.members = self.membership.getMembersFolder()
         self.catalog = self.portal.portal_catalog
         self.mem_index_type = "Script (Python)"
-
-    def testMembersIndexHtml(self):
-        # index_html for Members folder should be a Page Template
-        members = self.members
-        #self.assertEqual(aq_base(members).meta_type, 'Large Plone Folder')
-        self.assertEqual(aq_base(members).meta_type, 'ATBTreeFolder')
-        self.failUnless(hasattr(aq_base(members), 'index_html'))
-        # getitem works
-        self.assertEqual(aq_base(members)['index_html'].meta_type, self.mem_index_type)
-        self.assertEqual(members['index_html'].meta_type, self.mem_index_type)
-        # _getOb works
-        self.assertEqual(aq_base(members)._getOb('index_html').meta_type, self.mem_index_type)
-        self.assertEqual(members._getOb('index_html').meta_type, self.mem_index_type)
-        # getattr works when called explicitly
-        self.assertEqual(aq_base(members).__getattr__('index_html').meta_type, self.mem_index_type)
-        self.assertEqual(members.__getattr__('index_html').meta_type, self.mem_index_type)
-
-    def testATBTreeFolderHickup(self):
-        # Attribute access for 'index_html' acquired the Document from the
-        # portal instead of returning the local Page Template.
-        members = self.members
-        self.assertEqual(aq_base(members).meta_type, 'ATBTreeFolder')
-        self.assertEqual(members.index_html.meta_type, self.mem_index_type)
 
     def testSubsequentProfileImportSucceeds(self):
         # Subsequent profile imports fail (#5439)

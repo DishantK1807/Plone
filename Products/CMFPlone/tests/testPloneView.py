@@ -154,7 +154,7 @@ class TestPloneView(PloneTestCase.PloneTestCase):
     def testHavePortlets(self):
         view = Plone(self.portal, self.app.REQUEST)
         self.assertEqual(False, view.have_portlets('plone.leftcolumn'))
-        self.assertEqual(True, view.have_portlets('plone.rightcolumn'))
+        self.assertEqual(False, view.have_portlets('plone.rightcolumn'))
 
     def testCropText(self):
         view = Plone(self.portal, self.app.REQUEST)

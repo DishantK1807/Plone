@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed demo content from default installation. Demoing Plone use is better
+  done via screencasts, documentation and a demo.plone.org site.
+  [hannosch]
+
 - Removed last unused external methods and PloneInitialize code. To my
   knowledge the Windows installer doesn't use this code anymore.
   [hannosch]
