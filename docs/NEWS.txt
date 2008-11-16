@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Write the doctype definition in the main_template in a way that does not
+  claim to be valid XML, as the main_template really isn't.
+  [hannosch]
+
 - Worked around `sys._getframe` call in mark_view.
   [malthe, hannosch]
 

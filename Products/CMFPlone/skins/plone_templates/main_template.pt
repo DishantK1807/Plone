@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<metal:page
-   xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-   xmlns:tal="http://xml.zope.org/namespaces/tal"
-   xmlns:metal="http://xml.zope.org/namespaces/metal"
-   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-   define-macro="master">
+<metal:page define-macro="master">
 <metal:block define-slot="top_slot" />
 
+<tal:doctype tal:replace="structure string:&lt;!DOCTYPE html PUBLIC
+  &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" />
+
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       xml:lang="en"
       lang="en"
       tal:define="portal_state context/@@plone_portal_state;
