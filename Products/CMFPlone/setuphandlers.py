@@ -27,7 +27,6 @@ from Products.StandardCacheManagers.RAMCacheManager import RAMCacheManager
 from Products.CMFPlone.utils import _createObjectByType
 from Products.CMFPlone.events import SiteManagerCreatedEvent
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
-from Products.CMFPlone.Portal import member_indexhtml
 
 
 class HiddenProducts(object):
@@ -380,14 +379,6 @@ class PloneGenerator:
 
             if wftool.getInfoFor(members, 'review_state') != 'published':
                 wftool.doActionFor(members, 'publish')
-
-            # add index_html to Members area
-            if 'index_html' not in members.objectIds():
-                addPy = members.manage_addProduct['PythonScripts'].manage_addPythonScript
-                addPy('index_html')
-                index_html = getattr(members, 'index_html')
-                index_html.write(member_indexhtml)
-                index_html.ZPythonScript_setTitle('User Search')
 
     def setProfileVersion(self, portal):
         setup = getToolByName(portal, 'portal_setup')
