@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed last unused external methods and PloneInitialize code. To my
+  knowledge the Windows installer doesn't use this code anymore.
+  [hannosch]
+
 - Removed strangely implemented users search from the users folder.
   [hannosch]
 
