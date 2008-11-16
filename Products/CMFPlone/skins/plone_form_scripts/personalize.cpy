@@ -25,12 +25,6 @@ else:
     visible_ids=1
 REQUEST.set('visible_ids', visible_ids)
 
-if listed is None and REQUEST is not None:    
-    listed=0
-else:
-    listed=1
-REQUEST.set('listed', listed)
-
 if (portrait and portrait.filename):
     context.portal_membership.changeMemberPortrait(portrait)
 
@@ -38,7 +32,7 @@ delete_portrait = context.REQUEST.get('delete_portrait', None)
 if delete_portrait:
     context.portal_membership.deletePersonalPortrait(member.getId())
 
-member.setProperties(listed=listed, visible_ids=visible_ids)
+member.setProperties(visible_ids=visible_ids)
 
 tmsg='Edited personal settings for %s' % member.getId()
 transaction_note(tmsg)

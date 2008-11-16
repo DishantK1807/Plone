@@ -8,8 +8,14 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed "Listed in searches" property from the personalize form and
+  memberdata. The setting wasn't used by any code anymore. This closes
+  http//dev.plone.org/plone/ticket/8064.
+  [hannosch]
+
 - Changed workflow actor variable from user/getUserName to user/getId.
   http://dev.plone.org/plone/ticket/7398.
+  [hannosch]
 
 - Write the doctype definition in the main_template in a way that does not
   claim to be valid XML, as the main_template really isn't.

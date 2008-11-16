@@ -275,25 +275,6 @@
                          </div>
 
                         <div class="field"
-                             tal:define="listed python:request.get('listed', member.getProperty('listed',''));">
-
-                            <input type="checkbox"
-                                   class="noborder"
-                                   name="listed"
-                                   id="cb_listed"
-                                   tal:attributes="checked python:test(listed, 'checked', None);
-                                                   disabled python:member.canWriteProperty('listed') and default or 'disabled'"
-                                   />
-
-                            <label for="cb_listed" i18n:translate="label_listed_status">Listed in searches</label>
-
-                            <div class="formHelp" i18n:translate="help_listed_search">
-                            Determines if your user name is listed in user searches done on this site.
-                            </div>
-
-                        </div>
-
-                        <div class="field"
                                  tal:condition="site_properties/visible_ids|nothing"
                                  tal:define="visible_ids python:request.get('visible_ids', member.getProperty('visible_ids',''));">
 
