@@ -10,7 +10,7 @@ Changelog
 - Fixed Forbidden error when attempting to login for the first time as a newly
   created user, if the must_change_password property has been added (as a
   Boolean) to the portal_memberdata tool and set to True.
-  Closes https://dev.plone.org/plone/ticket/8425
+  Closes http://dev.plone.org/plone/ticket/8425
   [hexsprite]
 
 - Moved plone specific diff tool configuration back to Plone default
