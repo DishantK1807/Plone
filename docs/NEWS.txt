@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Optimized the action lookup code and implemented category restriction for
+  the types tool in the same way it was available for the actions tool.
+  [hannosch]
+
 - Removed remaining sys.modules hacks to provide the browser.ploneview as
   browser.plone.
   [hannosch]

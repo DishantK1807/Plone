@@ -95,16 +95,14 @@ class Plone(BrowserView):
         site_properties = getToolByName(context, "portal_properties").site_properties
 
         context_state = getMultiAdapter((context, self.request), name=u'plone_context_state')
-        actions = context_state.actions()
+        actions = context_state.actions
 
         action_list = []
         if context_state.is_structural_folder():
-            action_list = actions['folder'] + actions['object']
-        else:
-            action_list = actions['object']
+            action_list = actions('folder')
+        action_list.extend(actions('object'))
 
         tabs = []
-        
         found_selected = False
         fallback_action = None
 
@@ -115,7 +113,6 @@ class Plone(BrowserView):
             request_url_path = request_url_path[1:]
 
         for action in action_list:
-            
             item = {'title'    : action['title'],
                     'id'       : action['id'],
                     'url'      : '',
@@ -186,15 +183,15 @@ class Plone(BrowserView):
             return False
 
         context_state = getMultiAdapter((context, request), name="plone_context_state")
-        actions = context_state.actions()
-            
-        if actions.get('workflow', ()):
+        actions = context_state.actions
+
+        if actions('workflow', max=1):
             return True
 
-        if actions.get('batch', []):
+        if actions('batch', max=1):
             return True
-            
-        for action in actions.get('object', []):
+
+        for action in actions('object'):
             if action.get('id', '') != 'view':
                 return True
 
@@ -204,11 +201,11 @@ class Plone(BrowserView):
                 template_id=request['PUBLISHED'].getId()
 
         idActions = {}
-        for obj in actions.get('object', ()) + actions.get('folder', ()):
+        for obj in actions('object') + actions('folder'):
             idActions[obj.get('id', '')] = 1
 
-        if idActions.has_key('edit'):
-            if (idActions.has_key(template_id) or \
+        if 'edit' in idActions:
+            if (template_id in idActions or \
                 template_id in ['synPropertiesForm', 'folder_contents', 'folder_listing']) :
                 return True
 
