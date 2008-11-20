@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed remaining sys.modules hacks to provide the browser.ploneview as
+  browser.plone.
+  [hannosch]
+
 - Included new Plone logo.
   [hannosch]
 
