@@ -1127,7 +1127,7 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
             # Don't crash when the catalog contains a stale entry
             try:
                 obj = brain.getObject()
-            except KeyError: # getObject raises since Zope 2.8
+            except (KeyError, AttributeError): # getObject raises since Zope 2.8
                 obj = None
 
             if obj is not None:
