@@ -1,9 +1,13 @@
+from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base
+from Globals import InitializeClass
+
 from Products.CMFCore.ActionInformation import ActionInfo
 from Products.CMFCore.TypesTool import TypesTool as BaseTool
+
 from Products.CMFPlone import ToolNames
-from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
 from Products.CMFPlone.PloneBaseTool import PloneBaseTool
+
 
 class TypesTool(PloneBaseTool, BaseTool):
 
@@ -34,7 +38,7 @@ class TypesTool(PloneBaseTool, BaseTool):
         if categories is not None:
             result = []
             for action in actions:
-                cat = getattr(action, 'category', None)
+                cat = getattr(aq_base(action), 'category', None)
                 if cat is None:
                     cat = 'folder/add'
                 if cat in categories:

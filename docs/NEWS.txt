@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Optimized the types tool action lookup further to avoid Acquisition lookups.
+  [hannosch]
+
 - Simplified the normalizeString method.
   [hannosch]
 
