@@ -55,7 +55,6 @@ class HiddenProducts(object):
             'PortalTransforms', 'Products.PortalTransforms',
             'CMFDiffTool', 'Products.CMFDiffTool',
             'CMFEditions', 'Products.CMFEditions',
-            'Products.NuPlone',
             'plone.portlet.static',
             'plone.portlet.collection',
             'borg.localrole',
