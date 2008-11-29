@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Merged the getSectionFromURL script into the ploneview and removed the
+  displayContentsTab wrapper script.
+  [hannosch]
+
 - Merged the selectedTabs script into the `portal_tabs_view`.
   [hannosch]
 

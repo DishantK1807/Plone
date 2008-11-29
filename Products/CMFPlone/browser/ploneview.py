@@ -82,7 +82,15 @@ class Plone(BrowserView):
         if user is not None:
             return user.getProperty('visible_ids', False)
         return False
-    
+
+    def getSectionFromURL(self):
+        portal_url = getToolByName(self.context, 'portal_url')
+        contentPath = portal_url.getRelativeContentPath(self.context)
+        if not contentPath:
+            return ''
+        else:
+            return "section-" + contentPath[0]
+
     @memoize
     def prepareObjectTabs(self, default_tab='view', sort_first=['folderContents']):
         """Prepare the object tabs by determining their order and working
