@@ -3,7 +3,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      metal:use-macro="here/prefs_main_template/macros/master"
+      metal:use-macro="context/prefs_main_template/macros/master"
       i18n:domain="plone">
 
 <metal:block fill-slot="top_slot"
@@ -55,7 +55,7 @@
     <div id="region-content" class="documentContent">
       <a name="documentContent"></a>
 
-      <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+      <div metal:use-macro="context/global_statusmessage/macros/portal_message">
         Portal status message
       </div>
 
@@ -114,7 +114,7 @@
               class="enableUnloadProtection enableAutoFocus"
               tal:attributes="action string:${gtool/absolute_url}"
               tal:define="targetobject context/portal_groupdata;
-                          targetGetProperty nocall:group/getProperty | nocall:here/returnNone;">
+                          targetGetProperty nocall:group/getProperty | nocall:context/returnNone;">
 
             <fieldset>
                 <legend i18n:translate="link_group_properties">Group Properties</legend>
@@ -207,7 +207,7 @@
 
                     <tal:selections tal:condition="python:type in ('selection', 'multiple selection')"
                                     tal:define="select_variable python:property.get('select_variable','');
-                                    select_value python:select_variable and path('here/%s' %select_variable) or [];">
+                                    select_value python:select_variable and path('context/%s' %select_variable) or [];">
 
                     <select name="selection" tal:condition="python:type in ('selection',)"
                         tal:attributes="name string:$id:${request/management_page_charset_tag}text;

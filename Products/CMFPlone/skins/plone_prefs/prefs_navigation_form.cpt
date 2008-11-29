@@ -3,7 +3,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      metal:use-macro="here/prefs_main_template/macros/master"
+      metal:use-macro="context/prefs_main_template/macros/master"
       i18n:domain="plone">
 
 <metal:block metal:fill-slot="top_slot"
@@ -127,7 +127,7 @@
                        plone_utils      context/plone_utils;
                        userTypes        plone_utils/getUserFriendlyTypes;
                        allTypes         python:[portal_types.getTypeInfo(t) for t in userTypes];
-                       typeLists        python:here.createMultiColumnList(allTypes, numCols=3, sort_on='title_or_id');
+                       typeLists        python:context.createMultiColumnList(allTypes, numCols=3, sort_on='title_or_id');
                        blacklisted      navtree_props/metaTypesNotToList;
                        searchTypes      python:[t.getId() for t in allTypes if t.getId() not in blacklisted];">
 

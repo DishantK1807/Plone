@@ -544,7 +544,7 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
         result = []
         cont = 1
         if portal != here:
-            parent = here.aq_parent
+            parent = context.aq_parent
             while cont:
                 if not getattr(parent, 'acl_users', False):
                     break

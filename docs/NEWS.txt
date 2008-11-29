@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Replaced here with context in all templates and scripts. The old spelling is
+  still supported, but we need to settle on one to avoid confusion.
+  [hannosch]
+
 - Optimized the types tool action lookup further to avoid Acquisition lookups.
   [hannosch]
 
