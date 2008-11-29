@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Replaced a direct interface invocation with a queryAdapter call, to avoid
+  an internal getattr call and make the pattern clearer.
+  [hannosch]
+
 - Replaced here with context in all templates and scripts. The old spelling is
   still supported, but we need to settle on one to avoid confusion.
   [hannosch]

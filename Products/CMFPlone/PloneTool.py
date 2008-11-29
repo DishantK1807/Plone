@@ -4,6 +4,7 @@ from types import UnicodeType, StringType
 import urlparse
 import transaction
 
+from zope.component import queryAdapter
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo, Unauthorized
@@ -814,8 +815,10 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
                     return obj, defaultPage.split('/')
 
         # 5. If there is no default page, try IBrowserDefault.getLayout()
-
-        browserDefault = IBrowserDefault(obj, None)
+        if IBrowserDefault.providedBy(obj):
+            browserDefault = obj
+        else:
+            browserDefault = queryAdapter(obj, IBrowserDefault)
         if browserDefault is not None:
             layout = browserDefault.getLayout()
             if layout is None:
