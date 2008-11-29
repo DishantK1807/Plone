@@ -106,6 +106,11 @@ class IPlone(Interface):
            folder default page, in which case it returns the parent.
         """
 
+    def getSectionFromURL():
+        """Returns a string section-<id> with the id of top-most folder in
+           the site, whose sibling is currently viewed.
+        """
+
     def isFolderOrFolderDefaultPage():
         """Returns true only if the current object is either a folder (as
            determined by isStructuralFolder) or the default page in context.
@@ -120,7 +125,11 @@ class IPlone(Interface):
         """Returns the template Id corresponding to the default view method of
            the context object.
         """
-        
+
+    def renderBase():
+        """Calculate the correct base tag.
+        """
+
     def showEditableBorder():
         """Returns true if the editable border should be shown
         """

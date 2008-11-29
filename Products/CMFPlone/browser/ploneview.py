@@ -1,5 +1,7 @@
 from urllib import unquote
 
+from AccessControl import Unauthorized
+from Acquisition import aq_base
 from Acquisition import aq_inner
 from Products.Five import BrowserView
 from Products.CMFCore.permissions import AddPortalContent
@@ -90,6 +92,17 @@ class Plone(BrowserView):
             return ''
         else:
             return "section-" + contentPath[0]
+
+    def renderBase(self):
+        # when accessing via WEBDAV you're not allowed to access aq_explicit
+        context = self.context
+        try:
+            if getattr(aq_base(context), 'isPrincipiaFolderish', False):
+                return context.absolute_url()+'/'
+            else:
+                return context.absolute_url()
+        except Unauthorized:
+            return None
 
     @memoize
     def prepareObjectTabs(self, default_tab='view', sort_first=['folderContents']):

@@ -36,7 +36,7 @@
           tal:attributes="content string:text/html;;charset=${charset}" />
 
     <metal:baseslot define-slot="base">
-      <base tal:attributes="href context/renderBase" /><!--[if lt IE 7]></base><![endif]-->
+      <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
     </metal:baseslot>
 
     <meta name="generator" content="Plone - http://plone.org" />
