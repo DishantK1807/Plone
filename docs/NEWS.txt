@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Fixed and cleaned up the personalize_form.
+  [hannosch]
+
 - Moved NuPlone from the standard distribution into the status of a regular
   add-on. Maintaining two different themes hasn't proved itself.
   [hannosch]
