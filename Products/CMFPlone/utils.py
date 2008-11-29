@@ -189,20 +189,6 @@ def typesToList(context):
 def normalizeString(text, context=None, encoding=None, relaxed=None):
     # The relaxed mode was removed in Plone 4.0. You should use either the url
     # or file name normalizer from the plone.i18n package instead.
-    assert (context is not None) or (encoding is not None), \
-           'Either context or encoding must be provided'
-    # Make sure we are dealing with a stringish type
-    if not isinstance(text, basestring):
-        # This most surely ends up in something the user does not expect
-        # to see. But at least it does not break.
-        text = repr(text)
-
-    # Make sure we are dealing with a unicode string
-    if not isinstance(text, unicode):
-        if encoding is None:
-            encoding = getSiteEncoding(context)
-        text = unicode(text, encoding)
-
     return queryUtility(IIDNormalizer).normalize(text)
 
 

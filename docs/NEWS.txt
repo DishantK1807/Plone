@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Simplified the normalizeString method.
+  [hannosch]
+
 - Optimized the action lookup code and implemented category restriction for
   the types tool in the same way it was available for the actions tool.
   [hannosch]
