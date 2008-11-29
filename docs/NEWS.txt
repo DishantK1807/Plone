@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Merged the selectedTabs script into the `portal_tabs_view`.
+  [hannosch]
+
 - Replaced has_key method calls with containment checks via `in`.
   [hannosch]
 
