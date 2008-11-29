@@ -8,6 +8,17 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Moved NuPlone from the standard distribution into the status of a regular
+  add-on. Maintaining two different themes hasn't proved itself.
+  [hannosch]
+
+- Vastly simplified our skins folder setup. We have only three folders for
+  CMFPlone left: plone_images for images and icons, plone_resources for JS,
+  CSS and KSS files and plone_browser for all templates and scripts.
+  plone_3rdParty is an external that is pulled in separately and should really
+  be moved out to its own package.
+  [hannosch]
+
 - Moved isExpired script into a method on the context view.
   [hannosch]
 

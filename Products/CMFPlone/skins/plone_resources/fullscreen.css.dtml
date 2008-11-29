@@ -1,0 +1,13 @@
+body.fullscreen #portal-logo,
+body.fullscreen #portal-siteactions {
+    display: none;
+}
+body.fullscreen #portal-globalnav {
+    margin-top: 4em;
+}
+body.fullscreen #portal-searchbox {
+    margin: 0.5em 2em 0 0.5em;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+}
