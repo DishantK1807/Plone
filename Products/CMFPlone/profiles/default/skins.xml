@@ -43,6 +43,7 @@
   <layer name="ResourceRegistries"/>
   <layer name="PasswordReset"/>
   <layer name="LanguageTool"/>
+  <layer name="plone_3rdParty"/>
   <layer name="plone_browser"/>
   <layer name="plone_images"/>
   <layer name="plone_resources"/>
