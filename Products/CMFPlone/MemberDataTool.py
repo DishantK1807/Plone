@@ -24,13 +24,13 @@ class MemberDataTool(PloneBaseTool, BaseTool):
 
     def _setPortrait(self, portrait, member_id):
         " store portrait which must be a raw image in _portrais "
-        if self.portraits.has_key(member_id):
+        if member_id in self.portraits:
             self.portraits._delObject(member_id)
         self.portraits._setObject(id= member_id, object=portrait)
 
     def _deletePortrait(self, member_id):
         " remove member_id's portrait "
-        if self.portraits.has_key(member_id):
+        if member_id in self.portraits:
             self.portraits._delObject(member_id)
 
     security.declarePrivate('pruneMemberDataContents')

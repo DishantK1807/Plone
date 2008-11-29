@@ -137,7 +137,7 @@ class TestPrefsUserManage(PloneTestCase.PloneTestCase):
         self.portal.prefs_user_manage(delete=['barney'])
         self.setRequestMethod('GET')
         md = memberdata._members
-        self.failIf(md.has_key('barney'))
+        self.failIf('barney' in md)
 
         # There is an _v_ variable that is killed at the end of each request
         # which stores a temporary version of the member object, this is

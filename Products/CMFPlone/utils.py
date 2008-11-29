@@ -112,7 +112,7 @@ def lookupTranslationId(obj, page, ids):
             ITranslatable.providedBy(pageobj)):
             translation = pageobj.getTranslation()
             if (translation is not None and
-                ids.has_key(translation.getId())):
+                translation.getId() in ids):
                 page = translation.getId()
     return page
 
@@ -183,7 +183,7 @@ def typesToList(context):
     for t in bl:
         bl_dict[t] = 1
     all_types = ttool.listContentTypes()
-    wl = [t for t in all_types if not bl_dict.has_key(t)]
+    wl = [t for t in all_types if not t in bl_dict]
     return wl
 
 def normalizeString(text, context=None, encoding=None, relaxed=None):

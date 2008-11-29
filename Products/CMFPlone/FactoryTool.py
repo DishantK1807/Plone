@@ -87,7 +87,7 @@ class TempFolder(TempFolderBase):
                     lr=lr()
                 lr = lr or {}
                 for k, v in lr.items():
-                    if not local_roles.has_key(k):
+                    if not k in local_roles:
                         local_roles[k] = []
                     for role in v:
                         if not role in local_roles[k]:
@@ -267,7 +267,7 @@ class FactoryTool(PloneBaseTool, UniqueObject, SimpleItem):
         self._factory_types = {}
         types_tool = getToolByName(self, 'portal_types')
         for t in types_tool.listContentTypes():
-            if dict.has_key(t):
+            if t in dict:
                 self._factory_types[t] = 1
         self._p_changed = 1
         if REQUEST:

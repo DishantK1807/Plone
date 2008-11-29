@@ -103,7 +103,7 @@ class ExtensibleIndexableObjectWrapper(IndexableObjectWrapper):
 
         vars, obj, kwargs = self.beforeGetattrHook(vars, obj, kwargs)
 
-        if registry.has_key(name):
+        if name in registry:
             return registry[name](obj, portal=self._portal, vars=vars, **kwargs)
         return super(ExtensibleIndexableObjectWrapper, self).__getattr__(name)
     
@@ -126,9 +126,9 @@ def allowedRolesAndUsers(obj, portal, **kwargs):
         localroles = _mergedLocalRoles(obj)
     for user, roles in localroles.items():
         for role in roles:
-            if allowed.has_key(role):
+            if role in allowed:
                 allowed['user:' + user] = 1
-    if allowed.has_key('Owner'):
+    if 'Owner' in allowed:
         del allowed['Owner']
     return list(allowed.keys())
 

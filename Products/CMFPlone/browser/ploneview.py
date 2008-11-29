@@ -163,12 +163,11 @@ class Plone(BrowserView):
         """Determine if the editable border should be shown
         """
         request = self.request
-        
-        if request.has_key('disable_border'): #short circuit
+        if 'disable_border' in request:
             return False
-        if request.has_key('enable_border'): #short circuit
+        if 'enable_border' in request:
             return True
-        
+
         context = aq_inner(self.context)
         
         portal_membership = getToolByName(context, 'portal_membership')

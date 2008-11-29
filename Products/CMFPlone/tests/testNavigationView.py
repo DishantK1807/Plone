@@ -58,7 +58,7 @@ class TestBaseNavTree(PloneTestCase.PloneTestCase):
         view = self.view_class(self.portal, self.request)
         tree = view.navigationTree()
         self.failUnless(tree)
-        self.failUnless(tree.has_key('children'))
+        self.failUnless('children' in tree)
 
     def testCreateNavTreeCurrentItem(self):
         # With the context set to folder2 it should return a dict with
@@ -304,7 +304,7 @@ class TestBaseNavTree(PloneTestCase.PloneTestCase):
         view = self.view_class(self.portal.folder2, self.request)
         tree = view.navigationTree()
         self.failUnless(tree)
-        self.failUnless(tree.has_key('children'))
+        self.failUnless('children' in tree)
         #Should only contain current object
         self.assertEqual(len(tree['children']), 1)
         #change workflow for folder1
@@ -324,7 +324,7 @@ class TestBaseNavTree(PloneTestCase.PloneTestCase):
         view = self.view_class(self.portal.folder2, self.request)
         tree = view.navigationTree()
         self.failUnless(tree)
-        self.failUnless(tree.has_key('children'))
+        self.failUnless('children' in tree)
         #Should only contain current object
         self.assertEqual(len(tree['children']), 1)
         #change workflow for folder1

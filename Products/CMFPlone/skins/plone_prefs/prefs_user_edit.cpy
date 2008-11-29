@@ -25,7 +25,7 @@ processed={}
 for id, property in context.portal_memberdata.propertyItems():
     if id == 'last_login_time':
         continue
-    if REQUEST.has_key(id):
+    if id in REQUEST:
         processed[id] = REQUEST.get(id)
 
 if not processed.get('visible_ids'):

@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Replaced has_key method calls with containment checks via `in`.
+  [hannosch]
+
 - Replaced a direct interface invocation with a queryAdapter call, to avoid
   an internal getattr call and make the pattern clearer.
   [hannosch]
