@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Moved isExpired script into a method on the context view.
+  [hannosch]
+
 - Merged the getSectionFromURL and renderBase script into the ploneview and
   removed the displayContentsTab wrapper script.
   [hannosch]
