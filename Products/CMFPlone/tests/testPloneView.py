@@ -10,12 +10,6 @@ from Products.CMFPlone.tests import dummy
 
 from Products.CMFPlone.browser.ploneview import Plone
 
-from Products.CMFPlone.ActionsTool import ActionsTool
-from Products.CMFPlone.MembershipTool import MembershipTool
-from Products.CMFPlone.SyndicationTool import SyndicationTool
-from Products.CMFPlone.URLTool import URLTool
-from Products.CMFCore.WorkflowTool import WorkflowTool
-
 from zope.publisher.browser import setDefaultSkin
 
 class TestPloneView(PloneTestCase.PloneTestCase):

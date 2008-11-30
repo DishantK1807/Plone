@@ -116,18 +116,14 @@ def initialize(context):
     from Products.CMFCore import CachingPolicyManager
 
     # Plone tools
-    import PloneTool, FactoryTool
-    import MembershipTool, WorkflowTool, URLTool, MetadataTool
-    import RegistrationTool, MemberDataTool, SyndicationTool
+    import PloneTool, FactoryTool, WorkflowTool, URLTool, MetadataTool
+    import RegistrationTool, SyndicationTool
     import PropertiesTool, ActionsTool, TypesTool, UndoTool
     import CatalogTool, SkinsTool, DiscussionTool
     import CalendarTool, ActionIconsTool, QuickInstallerTool
-    import GroupDataTool, GroupsTool
     import TranslationServiceTool
 
-    tools = ( MembershipTool.MembershipTool,
-              MemberDataTool.MemberDataTool,
-              PloneTool.PloneTool,
+    tools = ( PloneTool.PloneTool,
               WorkflowTool.WorkflowTool,
               CachingPolicyManager.CachingPolicyManager,
               FactoryTool.FactoryTool,
@@ -145,8 +141,6 @@ def initialize(context):
               ActionIconsTool.ActionIconsTool,
               CalendarTool.CalendarTool,
               QuickInstallerTool.QuickInstallerTool,
-              GroupsTool.GroupsTool,
-              GroupDataTool.GroupDataTool,
               TranslationServiceTool.TranslationServiceTool,
             )
 
