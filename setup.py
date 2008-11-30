@@ -28,9 +28,12 @@ setup(name='Plone',
       namespace_packages=['Products'],
       include_package_data=True,
       zip_safe=False,
+      extras_require=dict(
+          test=['Products.PloneTestCase']
+          ),
       install_requires=[
           'setuptools',
-          'elementtree',
+          'Zope2',
           'Products.kupu',
           'Products.Archetypes',
           'Products.ATReferenceBrowserWidget',
@@ -101,7 +104,5 @@ setup(name='Plone',
           'five.customerize',
           'five.localsitemanager',
           'zope.i18n [compile]',
-# Needed for testing only
-          'Products.PloneTestCase',
       ],
       )
