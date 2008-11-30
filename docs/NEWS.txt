@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Added 'context' as an alias for 'object' in action expressions.
+  [davisagli]
+
 - Removed the groups, groupdata, membership and memberdata tools from this
   package. All code is now in a central place inside PlonePAS. The persistent
   tools have been from the PlonePAS package since Plone 2.5.
