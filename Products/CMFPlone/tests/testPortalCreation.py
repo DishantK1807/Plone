@@ -411,16 +411,10 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         path = self.skins.getSkinPath('Plone Default')
         self.failUnless('plone_3rdParty' in path)
 
-    def testPloneLoginLayerInDefault(self):
+    def testPloneBrowserLayerInDefault(self):
         # plone_login layer should exist
         path = self.skins.getSkinPath('Plone Default')
-        self.failUnless('plone_login' in path)
-
-    def testCMFLegacySkinComesLastInDefault(self):
-        # cmf_legacy should be the last skin layer
-        path = self.skins.getSkinPath('Plone Default')
-        path = [x.strip() for x in path.split(',')]
-        self.assertEqual(path[-1], 'cmf_legacy')
+        self.failUnless('plone_browser' in path)
 
     def testCustomSkinFolderExists(self):
         # the custom skin needs to be created
