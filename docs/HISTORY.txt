@@ -4,6 +4,9 @@ Changelog
 3.2a2 - UNRELEASED
 ------------------
 
+- Added 'context' as an alias for 'object' in action expressions.
+  [davisagli]
+
 - Include missing dependency on plone.app.locales.
   [hannosch]
 
