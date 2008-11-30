@@ -44,7 +44,6 @@ class HiddenProducts(object):
             'CMFTopic', 'Products.CMFTopic',
             'CMFUid', 'Products.CMFUid',
             'DCWorkflow', 'Products.DCWorkflow',
-            'GroupUserFolder', 'Products.GroupUserFolder',
             'PasswordResetTool', 'Products.PasswordResetTool',
             'PlonePAS', 'Products.PlonePAS',
             'kupu', 'Products.kupu',

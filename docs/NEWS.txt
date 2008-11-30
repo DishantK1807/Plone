@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- The remaining functionality from GroupUserFolder has been merged into
+  the PlonePAS package. GroupUserFolder is no longer required.
+  [hannosch]
+
 - Added 'context' as an alias for 'object' in action expressions.
   [davisagli]
 
