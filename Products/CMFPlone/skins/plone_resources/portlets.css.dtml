@@ -59,6 +59,11 @@
 .portletHeader a, .managedPortlet .portletHeader a {
     color: &dtml-fontColor;;
 }
+
+.inheritedPortlet .portletHeader {
+  background-color: transparent;
+}
+
 .portletItem {
     margin: 0;
     padding: 1em;
