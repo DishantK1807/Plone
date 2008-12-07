@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed accessibility_info page and corresponding JavaScript. The content
+  of the page was applicable to Plone itself, but not the site driven by
+  Plone. The content is better placed as a marketing text on plone.org.
+  [hannosch]
+
 - Removed site_actions action category. The corresponding viewlet uses simple
   static HTML now. You can add your own viewlet instead if you want to
   customize the default.
