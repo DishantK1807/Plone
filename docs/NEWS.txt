@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed site_actions action category. The corresponding viewlet uses simple
+  static HTML now. You can add your own viewlet instead if you want to
+  customize the default.
+  [hannosch]
+
 - Fixed the content_status_history form to include the required content table.
   The old_folder_contents template is gone.
   [hannosch]

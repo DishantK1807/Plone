@@ -327,55 +327,6 @@
    <property name="visible">False</property>
   </object>
  </object>
- <object name="site_actions" meta_type="CMF Action Category">
-  <property name="title"></property>
-  <object name="sitemap" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Site Map</property>
-   <property name="description" i18n:translate=""></property>
-   <property name="url_expr">string:$portal_url/sitemap</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
-  <object name="accessibility" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Accessibility</property>
-   <property name="description" i18n:translate=""></property>
-   <property
-      name="url_expr">string:${portal_url}/accessibility-info</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
-  <object name="contact" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Contact</property>
-   <property name="description" i18n:translate=""></property>
-   <property name="url_expr">string:${portal_url}/contact-info</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
-  <object name="plone_setup" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Site Setup</property>
-   <property name="description" i18n:translate=""></property>
-   <property
-      name="url_expr">string:${portal_url}/plone_control_panel</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="Manage portal"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
- </object>
  <object name="folder_buttons" meta_type="CMF Action Category">
   <property name="title"></property>
   <object name="copy" meta_type="CMF Action" i18n:domain="plone">

@@ -300,14 +300,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         aliases = fti.getMethodAliases()
         self.assertEqual(aliases, expected_aliases)
 
-    def testSiteActions(self):
-        self.setRoles(['Manager', 'Member'])
-        atool = self.actions
-        self.failIf(atool.getActionInfo('site_actions/sitemap') is None)
-        self.failIf(atool.getActionInfo('site_actions/contact') is None)
-        self.failIf(atool.getActionInfo('site_actions/accessibility') is None)
-        self.failIf(atool.getActionInfo('site_actions/plone_setup') is None)
-
     def testNoMembershipToolPloneSetupAction(self):
         try:
             self.failUnless(self.actions.getActionInfo('user/plone_setup'))
