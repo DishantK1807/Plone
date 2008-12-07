@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Fixed the browserDefault tests to use actual traversal to look up views
+  for content items instead of relying on Acquisition.
+  [hannosch]
+
 - The remaining functionality from GroupUserFolder has been merged into
   the PlonePAS package. GroupUserFolder is no longer required.
   [hannosch]
