@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Fixed the content_status_history form to include the required content table.
+  The old_folder_contents template is gone.
+  [hannosch]
+
 - Fixed the browserDefault tests to use actual traversal to look up views
   for content items instead of relying on Acquisition.
   [hannosch]
