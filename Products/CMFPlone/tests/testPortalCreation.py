@@ -169,13 +169,11 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.failUnless(self.properties.navtree_properties.hasProperty('wf_states_to_show'))
         self.failUnless(self.properties.navtree_properties.hasProperty('enable_wf_state_filtering'))
 
-    def testSitemapAction(self):
-        # There should be a sitemap action
+    def testNoSitemapAction(self):
+        # There should be no sitemap action
         for action in self.actions.listActions():
             if action.getId() == 'sitemap':
-                break
-        else:
-            self.fail("Actions tool has no 'sitemap' action")
+                self.fail("Actions tool should have no 'sitemap' action")
 
     def testResourceRegistries(self):
         # We should have portal_css and portal_javascripts tools
@@ -262,14 +260,11 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         # site_properties should have the typesUseViewActionInListings property
         self.failUnless(self.properties.site_properties.hasProperty('typesUseViewActionInListings'))
 
-    def testSiteSetupAction(self):
-        # There should be a Site Setup action
+    def testNoSiteSetupAction(self):
+        # There should be no Site Setup action
         for action in self.actions.listActions():
             if action.getId() == 'plone_setup':
-                self.assertEqual(action.title, 'Site Setup')
-                break
-        else:
-            self.fail("Actions tool has no 'sitemap' action")
+                self.fail("Actions tool should have no 'sitemap' action")
 
     def testFolderlistingAction(self):
         # Make sure the folderlisting action of a Folder is /view, to ensure
