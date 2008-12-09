@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed the dependency on plone.app.linkintegrity. The implementation does
+  not work anymore in a WSGI environment.
+  [hannosch]
+
 - Removed accessibility_info page and corresponding JavaScript. The content
   of the page was applicable to Plone itself, but not the site driven by
   Plone. The content is better placed as a marketing text on plone.org.
