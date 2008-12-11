@@ -19,6 +19,7 @@ ploneUtils = getToolByName(context, 'plone_utils')
 portal_url = getToolByName(context, 'portal_url')()
 pretty_title_or_id = ploneUtils.pretty_title_or_id
 plone_view = context.restrictedTraverse('@@plone')
+portal_state = context.restrictedTraverse('@@plone_portal_state')
 
 portalProperties = getToolByName(context, 'portal_properties')
 siteProperties = getattr(portalProperties, 'site_properties', None)
@@ -128,13 +129,13 @@ else:
             display_title = full_title
         full_title = full_title.replace('"', '&quot;')
         write('''<a href="%s" title="%s">%s</a>''' % (itemUrl, full_title, display_title))
-        write('''<span class="discreet">[%s%%]</span>''' % result.data_record_normalized_score_)
+        write('''<span class="discreet" dir="%s">[%s%%]</span>''' % (test(portal_state.is_rtl(), 'rtl', 'ltr'), result.data_record_normalized_score_))
         display_description = safe_unicode(result.Description)
         if len(display_description) > MAX_DESCRIPTION:
             display_description = ''.join((display_description[:MAX_DESCRIPTION],'...'))
         # need to quote it, to avoid injection of html containing javascript and other evil stuff
         display_description = html_quote(display_description)
-        write('''<div class="discreet" style="margin-left: 2.5em;">%s</div>''' % (display_description))
+        write('''<div class="LSDescr">%s</div>''' % (display_description))
         write('''</li>''')
         full_title, display_title, display_description = None, None, None
 

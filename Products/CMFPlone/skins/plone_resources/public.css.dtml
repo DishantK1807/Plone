@@ -253,9 +253,9 @@ form.searchPage input.searchButton {
 }
 .LSDescr {
     color: &dtml-discreetColor;;
-    text-transform: &dtml-textTransform;;
-    padding-left:2.1em;
-    margin-top:-0.1em;
+    font-size: &dtml-fontSmallSize;;
+    font-weight: normal;
+    margin-left: 2.5em;
 }
 .LSResult {
     position: relative;
