@@ -6,15 +6,15 @@
 
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="True"
-    expression="python:portal.kupu_library_tool.isKupuEnabled(REQUEST=request)"
+    expression="context/@@kupu_enabled/enabled"
     id="kupustyles.css" media="" rel="stylesheet" rendering="import"/>
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="True"
-    expression="python:portal.kupu_library_tool.isKupuEnabled(REQUEST=request)"
+    expression="context/@@kupu_enabled/enabled"
     id="kupuplone.css" media="" rel="stylesheet" rendering="import"/>
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
     enabled="True"
-    expression="python:portal.kupu_library_tool.isKupuEnabled(REQUEST=request)"
+    expression="context/@@kupu_enabled/enabled"
     id="kupudrawerstyles.css" media="" rel="stylesheet" rendering="import"/>
 
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
@@ -61,7 +61,7 @@
     rel="stylesheet" rendering="import"/>
 
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"
-    enabled="1" expression="python:portal.restrictedTraverse('@@plone_portal_state').is_rtl()"
+    enabled="1" expression="portal/@@plone_portal_state/is_rtl"
     id="RTL.css" media="screen" rel="stylesheet" rendering="import"/>
 
  <stylesheet title="" cacheable="True" compression="safe" cookable="True"

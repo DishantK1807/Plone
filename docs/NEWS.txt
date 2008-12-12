@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Use the new `kupu_enabled` browser view instead to determine Kupu
+  availability. Change a Python expression to a path expression for the
+  is_rtl check.
+  [hannosch]
+
 - Simplified the getIconFor method on the plone tool to only look at the
   action itself.
   [hannosch]
