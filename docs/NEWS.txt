@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Prefer path expressions over Python expressions for persistent expressions.
+  [hannosch]
+
 - Use the new `kupu_enabled` browser view instead to determine Kupu
   availability. Change a Python expression to a path expression for the
   is_rtl check.
