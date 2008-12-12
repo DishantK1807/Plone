@@ -351,34 +351,20 @@ class PloneTool(PloneBaseTool, UniqueObject, SimpleItem):
 
     security.declareProtected(View, 'getIconFor')
     def getIconFor(self, category, id, default=_marker, context=None):
-        """Get an icon for an action. Prefer the icon_expr on the action
-        itself and if not specified fall back to the icon from the
-        action icons tool.
+        """Get an icon for an action from the action itself.
         """
         if context is None:
             context = aq_parent(self)
         atool = getToolByName(context, 'portal_actions')
-        actions = atool.listActionInfos(action_chain='%s/%s' % (category, id),
-                                        object=context)
-        if len(actions) > 0:
-            icon = actions[0].get('icon', None)
-            if icon:
-                return icon
- 
-        # Short circuit the lookup
-        if (category, id) in _icons.keys():
-            return _icons[(category, id)]
-        try:
-            actionicons = getToolByName(context, 'portal_actionicons')
-            iconinfo = actionicons.getActionIcon(category, id)
-            icon = _icons.setdefault((category, id), iconinfo)
-        except KeyError:
-            if default is not _marker:
-                icon = default
-            else:
-                raise
-        # We want to return the actual object
-        return icon
+        category = getattr(atool, category, None)
+        if category is None:
+            return default
+
+        action = getattr(category, id, None)
+        if action is None:
+            return default
+
+        return action.get('icon', None)
 
     security.declareProtected(View, 'getReviewStateTitleFor')
     def getReviewStateTitleFor(self, obj):

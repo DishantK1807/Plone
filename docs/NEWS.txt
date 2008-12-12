@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Simplified the getIconFor method on the plone tool to only look at the
+  action itself.
+  [hannosch]
+
 - Removed the dependency on plone.app.linkintegrity. The implementation does
   not work anymore in a WSGI environment.
   [hannosch]
