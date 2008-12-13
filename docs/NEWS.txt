@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Use the new `icon_expr` for specifying icons for content types instead.
+  [hannosch]
+
 - Prefer path expressions over Python expressions for persistent expressions.
   [hannosch]
 
