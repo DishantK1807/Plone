@@ -218,12 +218,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
                          'Topic'):
             self.failUnless(metaType in types)
 
-    def testDisableFolderSectionsSiteProperty(self):
-        # The disable_folder_sections site property should be emtpy
-        props = self.portal.portal_properties.site_properties
-        self.failUnless(props.getProperty('disable_folder_sections', None) is not None)
-        self.failIf(props.getProperty('disable_folder_sections'))
-
     def testSelectableViewsOnFolder(self):
         views = self.portal.portal_types.Folder.getAvailableViewMethods(None)
         self.failUnless('folder_listing' in views)
@@ -643,9 +637,6 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         for p in ['Manage properties', 'Modify view template', 'Request review']:
             self.failUnless(p in [r['name'] for r in
                                 self.portal.permissionsOfRole('Editor') if r['selected']])
-
-    def testNonFolderishTabsProperty(self):
-        self.assertEquals(False, self.properties.site_properties.disable_nonfolderish_sections)
 
     def testNoDoubleGenericSetupImportSteps(self):
         view=ImportStepsView(self.setup, None)

@@ -95,8 +95,6 @@
    <element value="ATPathCriterion"/>
    <element value="ATRelativePathCriterion"/>
   </property>
-  <property name="disable_folder_sections" type="boolean">False</property>
-  <property name="disable_nonfolderish_sections" type="boolean">False</property>
   <property name="typesUseViewActionInListings" type="lines">
    <element value="Image"/>
    <element value="File"/>

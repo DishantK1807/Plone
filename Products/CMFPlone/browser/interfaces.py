@@ -7,12 +7,6 @@ class INavigationBreadcrumbs(Interface):
         """Breadcrumbs for Navigation.
         """
 
-class INavigationTabs(Interface):
-
-    def topLevelTabs(actions=None, category='portal_tabs'):
-        """Top level tabs
-        """
-
 class INavigationTree(Interface):
 
     def navigationTreeRootPath():

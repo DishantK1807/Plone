@@ -44,14 +44,6 @@
 
   <browser:page
       for="*"
-      name="portal_tabs_view"
-      class=".navigation.CatalogNavigationTabs"
-      permission="zope.Public"
-      allowed_attributes="topLevelTabs"
-      />
-
-  <browser:page
-      for="*"
       name="plone"
       class=".ploneview.Plone"
       permission="zope.Public"

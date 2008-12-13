@@ -11,7 +11,6 @@ from Products.CMFPlone.tests.utils import validatateCSSIdentifier
 
 from Products.CMFPlone.browser.navigation import CatalogNavigationTree
 from Products.CMFPlone.browser.navigation import CatalogSiteMap
-from Products.CMFPlone.browser.navigation import CatalogNavigationTabs
 from Products.CMFPlone.browser.navigation import CatalogNavigationBreadcrumbs
 from Products.CMFPlone.browser.navigation import PhysicalNavigationBreadcrumbs
 from Products.CMFPlone.interfaces import IHideFromBreadcrumbs
@@ -463,214 +462,9 @@ class TestBaseSiteMap(PloneTestCase.PloneTestCase):
         sitemap = view.siteMap()
         self.assertEqual(sitemap['children'][-1]['item'].getPath(), '/plone/folder2/file21')
 
+
 class TestSiteMap(TestBaseSiteMap):
         view_class = CatalogSiteMap
-
-class TestBasePortalTabs(PloneTestCase.PloneTestCase):
-    """Tests for the portal tabs view implementations
-       This base test is a little geared toward a catalog based implementation
-       for now.
-    """
-
-    view_class = None
-
-    def afterSetUp(self):
-        self.request = self.app.REQUEST
-        setDefaultSkin(self.request)
-        self.populateSite()
-
-    def populateSite(self):
-        self.setRoles(['Manager'])
-        self.portal.invokeFactory('Document', 'doc1')
-        self.portal.invokeFactory('Document', 'doc2')
-        self.portal.invokeFactory('Document', 'doc3')
-        self.portal.invokeFactory('Folder', 'folder1')
-        self.portal.invokeFactory('Folder', 'folder2')
-        self.setRoles(['Member'])
-
-    def _invalidateRequestMemoizations(self):
-        try:
-            del self.request.__annotations__
-        except AttributeError:
-            pass
-
-    def testCreateTopLevelTabs(self):
-        # See if we can create one at all
-        view = self.view_class(self.portal, self.request)
-        
-        #Everything shows up by default
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(len(tabs), 6)
-        
-        #Only the folders show up (folder1, folder2, Members)
-        self.portal.portal_properties.site_properties.disable_nonfolderish_sections = True
-        self._invalidateRequestMemoizations
-        tabs = view.topLevelTabs(actions=[])
-        self.assertEqual(len(tabs), 3)
-
-    def testTabsRespectFolderOrder(self):
-        # See if reordering causes a change in the tab order
-        view = self.view_class(self.portal, self.request)
-        tabs1 = view.topLevelTabs(actions=[])
-        # Must be manager to change order on portal itself
-        self.setRoles(['Manager','Member'])
-        self.portal.folder_position('up', 'folder2')
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs2 = view.topLevelTabs(actions=[])
-        #Same number of objects
-        self.failUnlessEqual(len(tabs1), len(tabs2))
-        #Different order
-        self.failUnless(tabs1 != tabs2)
-
-    def testCustomQuery(self):
-        # Try a custom query script for the tabs that returns only published
-        # objects
-        workflow = self.portal.portal_workflow
-        factory = self.portal.manage_addProduct['PythonScripts']
-        factory.manage_addPythonScript('getCustomNavQuery')
-        script = self.portal.getCustomNavQuery
-        script.ZPythonScript_edit('', 'return {"review_state":"published"}')
-        self.assertEqual(
-            self.portal.getCustomNavQuery(), {"review_state":"published"})
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        #Should contain no folders
-        self.assertEqual(len(tabs), 0)
-        #change workflow for folder1
-        workflow.doActionFor(self.portal.folder1, 'publish')
-        self.portal.folder1.reindexObject()
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        #Should only contain the published folder
-        self.assertEqual(len(tabs), 1)
-
-    def testStateFiltering(self):
-        # Test tabs workflow state filtering
-        workflow = self.portal.portal_workflow
-        ntp=self.portal.portal_properties.navtree_properties
-        ntp.manage_changeProperties(wf_states_to_show=['published'])
-        ntp.manage_changeProperties(enable_wf_state_filtering=True)
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        #Should contain no folders
-        self.assertEqual(len(tabs), 0)
-        #change workflow for folder1
-        workflow.doActionFor(self.portal.folder1, 'publish')
-        self.portal.folder1.reindexObject()
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        #Should only contain the published folder
-        self.assertEqual(len(tabs), 1)
-
-    def testDisableFolderTabs(self):
-        # Setting the site_property disable_folder_sections should remove
-        # all folder based tabs
-        props = self.portal.portal_properties.site_properties
-        props.manage_changeProperties(disable_folder_sections=True)
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.assertEqual(tabs, [])
-
-    def testTabsExcludeItemsWithExcludeProperty(self):
-        # Make sure that items witht he exclude_from_nav property are purged
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        orig_len = len(tabs)
-        self.portal.folder2.setExcludeFromNav(True)
-        self.portal.folder2.reindexObject()
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(len(tabs), orig_len - 1)
-        tab_names = [t['id'] for t in tabs]
-        self.failIf('folder2' in tab_names)
-
-    def testTabsRespectsTypesWithViewAction(self):
-        # With a type in typesUseViewActionInListings as current action it
-        # should return a tab which has '/view' appended to the url
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        # Fail if 'view' is used for folder
-        self.failIf(tabs[-1]['url'][-5:]=='/view')
-        # Add Folder to site_property
-        props = self.portal.portal_properties.site_properties
-        props.manage_changeProperties(
-            typesUseViewActionInListings=['Image','File','Folder'])
-        # Verify that we have '/view'
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(tabs[-1]['url'][-5:],'/view')
-
-    def testTabsExcludeItemsInIdsNotToList(self):
-        # Make sure that items whose ids are in the idsNotToList navTree
-        # property get purged
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        orig_len = len(tabs)
-        ntp=self.portal.portal_properties.navtree_properties
-        ntp.manage_changeProperties(idsNotToList=['folder2'])
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(len(tabs), orig_len - 1)
-        tab_names = [t['id'] for t in tabs]
-        self.failIf('folder2' in tab_names)
-
-    def testTabsExcludeNonFolderishItems(self):
-        self.portal.portal_properties.site_properties.disable_nonfolderish_sections = True
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        orig_len = len(tabs)
-        self.setRoles(['Manager','Member'])
-        self.portal.invokeFactory('Document','foo')
-
-        self._invalidateRequestMemoizations
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(len(tabs),orig_len)
-
-    def testRootBelowPortalRoot(self):
-        
-        self.setRoles(['Manager'])
-        self.portal.folder1.invokeFactory('Document', 'doc1')
-        self.portal.folder1.invokeFactory('Document', 'doc2')
-        self.portal.folder1.invokeFactory('Document', 'doc3')
-        self.portal.folder1.invokeFactory('Folder', 'folder1')
-        self.portal.folder1.invokeFactory('Folder', 'folder2')
-        self.setRoles(['Member'])
-        
-        rootPath = '/'.join(self.portal.getPhysicalPath()) + '/folder1'
-        self.portal.portal_properties.navtree_properties.root = '/folder1'
-        self.portal.portal_properties.site_properties.disable_nonfolderish_sections = True
-        
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        self.failUnless(tabs)
-        self.assertEqual(len(tabs), 2)
-        self.assertEqual(tabs[0]['id'], 'folder1')
-        self.assertEqual(tabs[1]['id'], 'folder2')
-        
-    def testPortalTabsNotIncludeViewNamesInCSSid(self):
-        self.setRoles(['Manager'])
-        self.portal.invokeFactory('File', 'file1')
-        view = self.view_class(self.portal, self.request)
-        tabs = view.topLevelTabs(actions=[])
-        for tab in tabs:
-            self.assertEqual(validatateCSSIdentifier(tab['id']),True)
-        
-
-class TestCatalogPortalTabs(TestBasePortalTabs):
-        view_class = CatalogNavigationTabs
 
 
 class TestBaseBreadCrumbs(PloneTestCase.PloneTestCase):
@@ -739,7 +533,6 @@ class TestPhysicalBreadCrumbs(TestBaseBreadCrumbs):
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
-    suite.addTest(makeSuite(TestCatalogPortalTabs))
     suite.addTest(makeSuite(TestCatalogNavTree))
     suite.addTest(makeSuite(TestSiteMap))
     suite.addTest(makeSuite(TestCatalogBreadCrumbs))

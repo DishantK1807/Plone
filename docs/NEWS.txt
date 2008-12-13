@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed the overly complex and convoluted `CatalogNavigationTabs` view
+  and corresponding options. This use-case is better served by simple static
+  viewlets or less general implementations.
+  [hannosch]
+
 - Use the new `icon_expr` for specifying icons for content types instead.
   [hannosch]
 
