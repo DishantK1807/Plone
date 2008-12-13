@@ -22,9 +22,4 @@
     i18n:attributes="title">
   <permission value="View"/>
  </action>
- <action title="External Edit" action_id="external_edit" category="object"
-    condition_expr="" url_expr="string:$object_url/external_edit"
-    visible="False" i18n:attributes="title">
-  <permission value="Modify portal content"/>
- </action>
 </object>
