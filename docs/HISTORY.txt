@@ -4,6 +4,11 @@ Changelog
 3.2a2 - UNRELEASED
 ------------------
 
+- Shifted profile and personal preferences to the left for RTL
+  scripts. Closes
+  http://dev.plone.org/plone/ticket/8169
+  [emanlove]
+
 - Cleaned up Livesearch results for RTL Languages.
   Closes http://dev.plone.org/plone/ticket/4632
   [emanlove]
