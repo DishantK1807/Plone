@@ -8,6 +8,11 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Merged in more performance optimizations from experimental.contentcreation.
+  We don't restrict the permissions for the temporary folder anymore, but
+  only care about the permissions of the actual target folder.
+  [hannosch]
+
 - Removed the overly complex and convoluted `CatalogNavigationTabs` view
   and corresponding options. This use-case is better served by simple static
   viewlets or less general implementations.
