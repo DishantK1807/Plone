@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Removed application level error message handling. This needs to be handled
+  in the WSGI pipeline. This refs http://dev.plone.org/plone/ticket/8798.
+  [hannosch]
+
 - Merged in more performance optimizations from experimental.contentcreation.
   We don't restrict the permissions for the temporary folder anymore, but
   only care about the permissions of the actual target folder.
@@ -34,7 +38,7 @@ Plone 4.0 - UNRELEASED
   [hannosch]
 
 - Removed the dependency on plone.app.linkintegrity. The implementation does
-  not work anymore in a WSGI environment.
+  currently not work in a WSGI environment.
   [hannosch]
 
 - Removed accessibility_info page and corresponding JavaScript. The content
@@ -166,9 +170,6 @@ Plone 4.0 - UNRELEASED
 
 - Removed deprecated code. Our deprecation policy allows us to deprecate in
   the 3.x line and remove in 4.0.
-  [hannosch]
-
-- Refactored the special NotFound error handling into an exception view.
   [hannosch]
 
 - Clarified content language versus response language handling.

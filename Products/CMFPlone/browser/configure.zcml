@@ -58,12 +58,6 @@
       allowed_interface=".interfaces.ISitemapView"
       />
 
-  <browser:page
-      for="zope.publisher.interfaces.INotFound"
-      class=".error.NotFoundPage"
-      name="index.html"
-      permission="zope.Public" />
-
    <adapter for="*
                 .interfaces.INavigationTree"
             factory=".navtree.DefaultNavtreeStrategy"
