@@ -13,6 +13,7 @@ from DateTime import DateTime
 from Products.CMFCore.permissions import AccessInactivePortalContent
 import transaction
 
+from Products.CMFPlone.CatalogTool import CatalogTool
 from Products.CMFPlone.CatalogTool import ExtensibleIndexableObjectWrapper
 from Products.CMFPlone.CatalogTool import _eioRegistry
 
@@ -679,6 +680,12 @@ class TestCatalogBugs(PloneTestCase.PloneTestCase):
 
     def afterSetUp(self):
         self.catalog = self.portal.portal_catalog
+        # Make the catalog tool paste-able
+        self._saved = CatalogTool.__replaceable__
+        CatalogTool.__replaceable__ = REPLACEABLE
+
+    def afterClear(self):
+        CatalogTool.__replaceable__ = self._saved
 
     def testCanPastePortalIfLexiconExists(self):
         # Should be able to copy/paste a portal containing
@@ -693,7 +700,6 @@ class TestCatalogBugs(PloneTestCase.PloneTestCase):
         # Should be able to copy/paste a portal_catalog. Triggers
         # manage_afterAdd of portal_catalog thereby exposing another bug :-/
         self.setRoles(['Manager'])
-        self.catalog.__replaceable__ = REPLACEABLE
         cb = self.portal.manage_copyObjects(['portal_catalog'])
         self.folder.manage_pasteObjects(cb)
         self.failUnless(hasattr(aq_base(self.folder), 'portal_catalog'))
@@ -701,7 +707,6 @@ class TestCatalogBugs(PloneTestCase.PloneTestCase):
     def testPastingCatalogPreservesTextIndexes(self):
         # Pasting the catalog should not cause indexes to be removed.
         self.setRoles(['Manager'])
-        self.catalog.__replaceable__ = REPLACEABLE
         cb = self.portal.manage_copyObjects(['portal_catalog'])
         self.folder.manage_pasteObjects(cb)
         self.failUnless(hasattr(aq_base(self.folder), 'portal_catalog'))
