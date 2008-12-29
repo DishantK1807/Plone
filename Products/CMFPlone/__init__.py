@@ -158,7 +158,7 @@ def initialize(context):
                                         factory.addPloneSite),
                           icon='skins/plone_images/logoIcon.gif')
 
-# Import "PloneMessageFactory as _" to create messages in the plone domain
+# Import PloneMessageFactory to create messages in the plone domain
 from zope.i18nmessageid import MessageFactory
 PloneMessageFactory = MessageFactory('plone')
 
