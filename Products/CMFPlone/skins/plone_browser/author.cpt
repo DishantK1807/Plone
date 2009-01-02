@@ -53,8 +53,7 @@
 
         <tal:haveAuthor condition="authorinfo">
  
-    <div id="region-content"
-         class="documentEditable"
+    <div class="documentEditable"
          tal:define="isOwner python:member.getId()==author;
                      isAnon context/@@plone_portal_state/anonymous;"
          tal:attributes="class python: test(isOwner, 'documentEditable', '')">
@@ -62,7 +61,8 @@
         <h5 class="hiddenStructure"
             tal:condition="isOwner">Views</h5>
         
-        <ul class="contentViews"
+        <ul id="content-views"
+            class="contentViews"
             tal:condition="isOwner">
           <li class="selected">
             <a href=""
@@ -83,7 +83,7 @@
           &nbsp;
         </div>
 
-        <div class="documentContent" id="content">
+        <div class="documentContent" id="region-content">
 
             <a name="documentContent"></a>
                     
