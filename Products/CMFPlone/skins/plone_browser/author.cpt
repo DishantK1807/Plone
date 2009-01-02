@@ -36,6 +36,8 @@
                                 member context/@@plone_portal_state/member;">
 
         <tal:noAuthor condition="not: authorinfo">
+        <div id="region-content">
+
         <dl class="portalMessage error">
             <dt i18n:translate="">
                 Error
@@ -44,13 +46,15 @@
                 No user by that name.
             </dd>
         </dl>
+        </div>
         </tal:noAuthor>
 
 
 
         <tal:haveAuthor condition="authorinfo">
  
-    <div class="documentEditable"
+    <div id="region-content"
+         class="documentEditable"
          tal:define="isOwner python:member.getId()==author;
                      isAnon context/@@plone_portal_state/anonymous;"
          tal:attributes="class python: test(isOwner, 'documentEditable', '')">
@@ -295,8 +299,8 @@
 
             </tal:authorContent>
 
-        </div>
     </div> <!-- end simulated tabs -->
+    </div>
         
     </tal:haveAuthor>
 
