@@ -1,6 +1,14 @@
 Changelog
 =========
 
+3.2.1 - UNRELEASED
+------------------
+
+- Cleaned up document actions for RTL scripts. Closes
+  http://dev.plone.org/plone/ticket/8863
+  [emanlove]
+
+
 3.2a2 - UNRELEASED
 ------------------
 
