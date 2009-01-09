@@ -33,6 +33,8 @@ setup(name='Plone',
           ),
       install_requires=[
           'setuptools',
+          'Acquisition',
+          'DateTime',
           'Zope2',
           'Products.kupu',
           'Products.Archetypes',
