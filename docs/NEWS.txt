@@ -12,6 +12,14 @@ Plone 4.0 - UNRELEASED
   in the WSGI pipeline. This refs http://dev.plone.org/plone/ticket/8798.
   [hannosch]
 
+- merged down workaround for IE6 background caching problem, closes
+  https://dev.plone.org/plone/ticket/7445, thanks cwainwright
+  [calvinhp]
+
+- Removed old background icon from personal bar for RTL scripts.
+  Closes http://dev.plone.org/plone/ticket/4570
+  [emanlove]
+
 - Merged in more performance optimizations from experimental.contentcreation.
   We don't restrict the permissions for the temporary folder anymore, but
   only care about the permissions of the actual target folder.
