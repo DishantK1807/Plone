@@ -5,7 +5,7 @@ the translate method and the default parameter.
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject

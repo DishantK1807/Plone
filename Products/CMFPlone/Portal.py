@@ -7,11 +7,10 @@ from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.PloneFolder import OrderedContainer
 
-import Globals
-
 from AccessControl import ClassSecurityInfo
 from AccessControl import Unauthorized
 from Acquisition import aq_base
+from App.class_init import InitializeClass
 from ComputedAttribute import ComputedAttribute
 from webdav.NullResource import NullResource
 from Products.CMFPlone.PloneFolder import ReplaceableWrapper
@@ -126,4 +125,4 @@ class PloneSite(CMFSite, OrderedContainer, BrowserDefaultMixin):
         languages.insert(0,(u'',_(u'Language neutral (site default)')))
         return languages
 
-Globals.InitializeClass(PloneSite)
+InitializeClass(PloneSite)

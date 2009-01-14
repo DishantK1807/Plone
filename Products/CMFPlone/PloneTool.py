@@ -11,7 +11,7 @@ from AccessControl import ClassSecurityInfo, Unauthorized
 from Acquisition import aq_base, aq_inner, aq_parent
 from ComputedAttribute import ComputedAttribute
 from DateTime import DateTime
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 from OFS.ObjectManager import bad_id
 from ZODB.POSException import ConflictError

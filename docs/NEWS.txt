@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Declare package dependencies and fixed deprecation warnings for use
+  of Globals.
+  [hannosch]
+
 - Removed application level error message handling. This needs to be handled
   in the WSGI pipeline. This refs http://dev.plone.org/plone/ticket/8798.
   [hannosch]

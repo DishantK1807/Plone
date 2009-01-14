@@ -2,7 +2,7 @@ from zope.app.container.contained import notifyContainerModified
 
 from AccessControl import ClassSecurityInfo
 from DocumentTemplate.sequence import sort
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from OFS.Folder import Folder
 from OFS.ObjectManager import REPLACEABLE
 from zExceptions import NotFound

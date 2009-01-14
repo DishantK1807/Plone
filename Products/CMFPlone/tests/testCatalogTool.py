@@ -8,8 +8,8 @@ import zope.interface
 from Products.CMFPlone.tests import PloneTestCase
 
 from Acquisition import aq_base
-from Globals import REPLACEABLE
 from DateTime import DateTime
+from OFS.ObjectManager import REPLACEABLE
 from Products.CMFCore.permissions import AccessInactivePortalContent
 import transaction
 

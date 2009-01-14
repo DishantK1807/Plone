@@ -6,9 +6,10 @@ from zope.component.interfaces import IFactory
 from zope.interface import implements
 from zope.structuredtext import stx2html
 
-import Globals
 from AccessControl import Owned, ClassSecurityInfo, getSecurityManager
 from Acquisition import aq_parent, aq_base, aq_inner, aq_get
+from App.class_init import InitializeClass
+from App.Common import package_home
 from OFS.SimpleItem import SimpleItem
 from ZPublisher.Publish import call_object, missing_name, dont_publish_class
 from ZPublisher.mapply import mapply
@@ -279,7 +280,7 @@ class FactoryTool(PloneBaseTool, UniqueObject, SimpleItem):
     manage_docs = PageTemplateFile(os.path.join('www','portal_factory_manage_docs'), globals())
     manage_docs.__name__ = 'manage_docs'
 
-    wwwpath = os.path.join(Globals.package_home(cmfplone_globals), 'www')
+    wwwpath = os.path.join(package_home(cmfplone_globals), 'www')
     f = open(os.path.join(wwwpath, 'portal_factory_docs.stx'), 'r')
     _docs = f.read()
     f.close()
@@ -465,4 +466,4 @@ class FactoryTool(PloneBaseTool, UniqueObject, SimpleItem):
         self.REQUEST.set(FACTORY_INFO, factory_info)
         return tempFolder
 
-Globals.InitializeClass(FactoryTool)
+InitializeClass(FactoryTool)
