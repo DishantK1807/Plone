@@ -12,6 +12,11 @@ Plone 4.0 - UNRELEASED
   in the WSGI pipeline. This refs http://dev.plone.org/plone/ticket/8798.
   [hannosch]
 
+- Merged time_only changeset 24257 from 3.2 branch of toLocalizedTime so that
+  event_view now localizes the start/end times if the start/end dates are the 
+  same.  Closes http://dev.plone.org/plone/ticket/8607
+  [jnelson, calvinhp]
+
 - merged down workaround for IE6 background caching problem, closes
   https://dev.plone.org/plone/ticket/7445, thanks cwainwright
   [calvinhp]

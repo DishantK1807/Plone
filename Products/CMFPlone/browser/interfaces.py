@@ -45,7 +45,7 @@ class IPlone(Interface):
     def uniqueItemIndex(pos=0):
         """Return an index iterator."""
 
-    def toLocalizedTime(time, long_format=None):
+    def toLocalizedTime(time, long_format=None, time_only = None):
         """ The time parameter must be either a string that is suitable for
             initializing a DateTime or a DateTime object. Returns a localized
             string.

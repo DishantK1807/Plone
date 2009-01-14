@@ -31,13 +31,15 @@ def utranslate(*args, **kw):
     return safe_unicode(getGlobalTranslationService().translate(*args, **kw))
 
 # unicode aware localized time method (l10n)
-def ulocalized_time(time, long_format=None, context=None,
+def ulocalized_time(time, long_format=None, time_only=None, context=None,
                     domain='plonelocales', request=None):
     # get msgid
     msgid = long_format and 'date_format_long' or 'date_format_short'
+    if time_only is not None:
+        msgid = 'time_format'
 
-    # NOTE: this requires the presence of two msgids inside the translation catalog
-    #       date_format_long and date_format_short
+    # NOTE: this requires the presence of three msgids inside the translation catalog
+    #       date_format_long, date_format_short, and time_format
     #       These msgids are translated using interpolation.
     #       The variables used here are the same as used in the strftime formating.
     #       Supported are %A, %a, %B, %b, %H, %I, %m, %d, %M, %p, %S, %Y, %y, %Z, each used as
@@ -83,7 +85,7 @@ def ulocalized_time(time, long_format=None, context=None,
     # get the formatstring
     formatstring = translate(msgid, domain, mapping, request)
 
-    if formatstring is None or formatstring.startswith('date_'):
+    if formatstring is None or formatstring.startswith('date_') or formatstring.startswith('time_'):
         # msg catalog was not able to translate this msgids
         # use default setting
 
@@ -91,7 +93,10 @@ def ulocalized_time(time, long_format=None, context=None,
         if long_format:
             format=properties.localLongTimeFormat
         else:
-            format=properties.localTimeFormat
+            if time_only:
+                format=properties.localTimeOnlyFormat
+            else:
+                format=properties.localTimeFormat
 
         return time.strftime(format)
     
