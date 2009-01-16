@@ -8,6 +8,9 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Avoid dependency on the zope.app.zapi package.
+  [hannosch]
+
 - Declare package dependencies and fixed deprecation warnings for use
   of Globals.
   [hannosch]
