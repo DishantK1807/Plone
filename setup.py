@@ -102,6 +102,7 @@ setup(name='Plone',
           'wicked',
           'five.customerize',
           'five.localsitemanager',
+          'z3c.autoinclude',
 # Needed for testing only
           'Products.PloneTestCase',
       ],
