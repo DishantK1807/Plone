@@ -15,6 +15,6 @@
         />
 
     <!-- include plone plugins with z3c.autoinclude -->
-    <includePlugins package="plone" file="overrides.zcml" />
+    <includePluginsOverrides package="plone" file="overrides.zcml" />
 
 </configure>
