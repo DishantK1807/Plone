@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- The IWorkflowChain interface and default adapter implementation has been
+  moved to plone.app.workflow.
+  [hannosch]
+
 - Moved the `scale_image` function from utils into the PlonePAS.utils
   module, as PlonePAS is the only user of it.
   [hannosch]

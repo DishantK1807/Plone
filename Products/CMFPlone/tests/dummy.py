@@ -6,12 +6,13 @@
 
 import os
 
+from plone.app.workflow.interfaces import IWorkflowChain
+
 from zope.interface import implementer
 from zope.interface import implements
 from zope.interface import Interface
 
 from Products.CMFPlone.interfaces import INonStructuralFolder
-from Products.CMFPlone.interfaces import IWorkflowChain
 
 from ComputedAttribute import ComputedAttribute
 from OFS.SimpleItem import SimpleItem
@@ -183,19 +184,6 @@ class DummyContent(Dummy):
 
     def getPortalTypeName(self):
         return getattr(self, 'portal_type')
-
-class DummyWorkflowTool(object):
-    """A dummy workflow tool for testing adaptation based workflow"""
-
-    def __init__(self, id='portal_workflow'):
-        self._chains_by_type = {}
-
-    def setChainForPortalTypes(self, types, chain):
-        for ptype in types:
-            self._chains_by_type[ptype] = chain
-
-    def getDefaultChainFor(self, context):
-        return ('Default Workflow',)
 
 @implementer(IWorkflowChain)
 def DummyWorkflowChainAdapter(context, tool):

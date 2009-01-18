@@ -1,11 +1,12 @@
-from zope.component import getMultiAdapter
-from Products.CMFCore.interfaces import IConfigurableWorkflowTool
+from plone.app.workflow.interfaces import IWorkflowChain
 
+from zope.component import getMultiAdapter
+
+from Products.CMFCore.interfaces import IConfigurableWorkflowTool
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowTool import WorkflowTool as BaseTool
 from Products.CMFPlone import ToolNames
 from Products.CMFPlone.utils import base_hasattr
-from Products.CMFPlone.interfaces import IWorkflowChain
 from ZODB.POSException import ConflictError
 from Acquisition import aq_base, aq_parent, aq_inner
 

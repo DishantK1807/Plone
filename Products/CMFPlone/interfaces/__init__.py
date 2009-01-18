@@ -18,5 +18,10 @@ from view import IDynamicViewTypeInformation
 from factory import IFactoryTool
 from translationservice import ITranslationServiceTool
 from breadcrumbs import IHideFromBreadcrumbs
-from workflow import IWorkflowChain
 
+import zope.deferredimport
+zope.deferredimport.deprecated(
+    "It has been moved to plone.app.workflow.interfaces. " 
+    "This alias will be removed in Plone 5.0",
+    IWorkflowChain = 'plone.app.workflow.interfaces:IWorkflowChain',
+    )
