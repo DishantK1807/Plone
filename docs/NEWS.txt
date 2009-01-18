@@ -8,6 +8,10 @@ Changelog
 Plone 4.0 - UNRELEASED
 ----------------------
 
+- Moved the `scale_image` function from utils into the PlonePAS.utils
+  module, as PlonePAS is the only user of it.
+  [hannosch]
+
 - Fixed a couple of remaining undefined object_title variables in templates.
   [hannosch]
 
