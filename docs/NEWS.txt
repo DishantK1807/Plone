@@ -8,6 +8,11 @@ Changelog
 3.2.1 - Unreleased
 ----------------
 
+- Added failing tests for subtopic and the ATFriendlyDateCriteria used for
+  past events. The fix is added to Products.ATContentTypes.
+  https://dev.plone.org/plone/ticket/8827 
+  [pelle_]
+
 - Update default frontpage to refer to Plone 3 instead of 3.0.
   [wichert]
 

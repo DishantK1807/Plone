@@ -334,9 +334,39 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.assertEqual(query['end']['query'].Date(), DateTime().Date())
         self.assertEqual(query['end']['range'], 'max')
         self.assertEqual(topic.checkCreationFlag(), False)
-        # query shouldn't have a start key #8827
+        # query shouldn't have a start key #8827 
         # at least not in this specific use case.
         self.failIf(query.has_key('start'))
+
+        # add some news items
+        self.setRoles(['Manager', 'Member'])
+        self.portal.events.invokeFactory('Event', id='event_future')
+        event_future = getattr(self.portal.events, 'event_future')
+        event_future.edit(title='Event - future',
+                        start_date='2013-09-18',
+                        end_date='2013-09-19')
+        self.portal.events.invokeFactory('Event', id='event_past')
+        event_past = getattr(self.portal.events, 'event_past')
+        event_past.edit(title='Event - past',
+                        start_date='2003-09-18',
+                        end_date='2003-09-19')
+        
+        # publish events
+        self.workflow.doActionFor(event_future, 'publish')
+        self.workflow.doActionFor(event_past, 'publish')
+        
+        # become a memember again
+        self.setRoles(['Member'])
+        
+        # just a basic check to ensure we have some published event items
+        news_items = self.portal.queryCatalog({'portal_type':'Event', 'review_state':'published' })
+        self.failUnless(len(news_items))
+        
+        # # lets investigate the news aggragtor / topic
+        topic = getattr(self.portal.events, 'aggregator')
+        querycatalog = topic.queryCatalog()
+        self.failUnless(querycatalog)
+        self.assertEqual(querycatalog[0].id, 'event_future')
 
     def testObjectButtonActions(self):
         self.setRoles(['Manager', 'Member'])
