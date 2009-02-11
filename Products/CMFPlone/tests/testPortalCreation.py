@@ -336,7 +336,7 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.assertEqual(topic.checkCreationFlag(), False)
         # query shouldn't have a start key #8827 
         # at least not in this specific use case.
-        self.failIf(query.has_key('start'))
+        self.failIf('start' in query)
 
         # add some news items
         self.setRoles(['Manager', 'Member'])
