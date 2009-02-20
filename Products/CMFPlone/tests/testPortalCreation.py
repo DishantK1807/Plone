@@ -361,12 +361,16 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         # just a basic check to ensure we have some published event items
         news_items = self.portal.queryCatalog({'portal_type':'Event', 'review_state':'published' })
         self.failUnless(len(news_items))
-        
-        # # lets investigate the news aggragtor / topic
+  
+        # lets briefly investigate the news aggragtor / topic
         topic = getattr(self.portal.events, 'aggregator')
         querycatalog = topic.queryCatalog()
         self.failUnless(querycatalog)
         self.assertEqual(querycatalog[0].id, 'event_future')
+        subtopic = getattr(self.portal.events.aggregator, 'previous')
+        querycatalog = subtopic.queryCatalog()
+        self.failUnless(querycatalog)
+        self.assertEqual(querycatalog[0].id, 'event_past')
 
     def testObjectButtonActions(self):
         self.setRoles(['Manager', 'Member'])
