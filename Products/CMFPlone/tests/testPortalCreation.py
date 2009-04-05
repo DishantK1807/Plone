@@ -324,6 +324,7 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
     def testEventsSubTopic(self):
         # past Events sub-topic is in place and has criteria to show
         # only past Events Items.
+        now = DateTime()
         events_topic = self.portal.events.aggregator
         self.failUnless('previous' in events_topic.objectIds())
         topic = getattr(events_topic, 'previous')
@@ -331,7 +332,7 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         query = topic.buildQuery()
         self.assertEqual(query['Type'], ('Event',))
         self.assertEqual(query['review_state'], 'published')
-        self.assertEqual(query['end']['query'].Date(), DateTime().Date())
+        self.assertEqual(query['end']['query'].Date(), now.Date())
         self.assertEqual(query['end']['range'], 'max')
         self.assertEqual(topic.checkCreationFlag(), False)
         # query shouldn't have a start key #8827 
@@ -343,13 +344,13 @@ class TestPortalCreation(PloneTestCase.PloneTestCase, WarningInterceptor):
         self.portal.events.invokeFactory('Event', id='event_future')
         event_future = getattr(self.portal.events, 'event_future')
         event_future.edit(title='Event - future',
-                        start_date='2013-09-18',
-                        end_date='2013-09-19')
+                        startDate=now+1,
+                        endDate=now+3)
         self.portal.events.invokeFactory('Event', id='event_past')
         event_past = getattr(self.portal.events, 'event_past')
         event_past.edit(title='Event - past',
-                        start_date='2003-09-18',
-                        end_date='2003-09-19')
+                        startDate=now-3,
+                        endDate=now-1)
         
         # publish events
         self.workflow.doActionFor(event_future, 'publish')
