@@ -369,9 +369,6 @@ form.searchPage input.searchButton {
 #portal-personaltools {
     /* Bar with personalized menu (user preferences, etc) */
     background-color: &dtml-globalBackgroundColor;;
-    border-top-color: &dtml-globalBorderColor;;
-    border-top-style: &dtml-borderStyle;;
-    border-top-width: &dtml-borderWidth;;
     border-bottom-color: &dtml-globalBorderColor;;
     border-bottom-style: &dtml-borderStyle;;
     border-bottom-width: &dtml-borderWidth;;
@@ -417,6 +414,9 @@ form.searchPage input.searchButton {
     border-bottom-color: &dtml-globalBorderColor;;
     border-bottom-style: &dtml-borderStyle;;
     border-bottom-width: &dtml-borderWidth;;
+    border-top-color: &dtml-globalBorderColor;;
+    border-top-style: &dtml-borderStyle;;
+    border-top-width: &dtml-borderWidth;;
     padding-left: 2em;
     padding-right: 2em;
     text-transform: &dtml-textTransform;;
