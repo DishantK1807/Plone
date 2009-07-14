@@ -377,5 +377,73 @@
    </property>
    <property name="visible">True</property>
   </object>
+  <object name="account" meta_type="CMF Action">
+   <property name="title">Account</property>
+   <property name="description"></property>
+   <property
+      name="url_expr">string:${globals_view/navigationRootUrl}/account</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:member </property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
+  <object name="personal-folder" meta_type="CMF Action">
+   <property name="title">My stuff</property>
+   <property name="description"></property>
+   <property
+      name="url_expr">string:${globals_view/navigationRootUrl}/whats-the-url</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:member and 'hasMyStuff' </property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
+ </object>
+ <object name="accountpanel" meta_type="CMF Action Category">
+  <property name="title"></property>
+  <object name="personal_preferences" meta_type="CMF Action">
+   <property name="title">Personal Preferences</property>
+   <property name="description"></property>
+   <property
+      name="url_expr">string:${context/portal_url}/@@personal_preferences</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:member </property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
+  <object name="User Data" meta_type="CMF Action">
+   <property name="title">User data</property>
+   <property name="description"></property>
+   <property
+      name="url_expr">string:${context/portal_url}/@@user_data</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python: member</property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
+  <object name="Profile Settings" meta_type="CMF Action">
+   <property name="title">Profile settings</property>
+   <property name="description"></property>
+   <property
+      name="url_expr">string:${context/portal_url}/@@profile_settings</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
  </object>
 </object>
