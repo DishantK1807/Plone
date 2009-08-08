@@ -575,6 +575,10 @@ dl.error dd {
     color: &dtml-discreetColor;;
     margin-bottom: 0.5em;
 }
+.documentLocation {
+    display: block;
+    font-size: &dtml-fontSmallSize;;
+}
 dl.searchResults span.documentByLine {
     font-size: 64%;
 }

@@ -128,9 +128,6 @@
                     </tal:block>  
                 </span>
 
-                
-
-
                 <span class="documentModified">
                   &mdash;
                     <span i18n:translate="box_last_modified">
@@ -140,7 +137,6 @@
                     August 16, 2001 at 23:35:59
                     </span>
                 </span>
-
 
                 <span tal:define="categories result/Subject|nothing"
                       tal:condition="categories">
@@ -164,7 +160,16 @@
                 <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
                     Cropped description
                 </span>
-            </dd>
+
+                <span class="documentLocation">
+                    <a href=""
+                       class="link-location"
+                       tal:content="result_url"
+                       tal:attributes="href result_url">
+                        Location
+                    </a>
+                </span>
+           </dd>
 
         </tal:entry>
         </tal:results>
