@@ -576,7 +576,7 @@ dl.error dd {
     margin-bottom: 0.5em;
 }
 dl.searchResults span.documentByLine {
-    display: block;
+    font-size: 64%;
 }
 .discussion {
     margin-top: 1em;

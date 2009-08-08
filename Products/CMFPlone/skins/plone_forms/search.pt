@@ -110,12 +110,6 @@
                  tal:attributes="href url;
                                  class string:$item_wf_state_class"
                  tal:content="result/pretty_title_or_id" />
-            </dt>
-            
-            <dd>
-                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
-                    Cropped description
-                </span>
 
             <span class="documentByLine"
                   tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
@@ -164,7 +158,12 @@
                 </span>
 
             </span>
-
+            </dt>
+            
+            <dd>
+                <span tal:replace="python:plone_view.cropText(result.Description, desc_length, desc_ellipsis)">
+                    Cropped description
+                </span>
             </dd>
 
         </tal:entry>
