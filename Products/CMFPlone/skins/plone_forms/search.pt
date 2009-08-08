@@ -99,6 +99,7 @@
         <dl class="searchResults">
         <tal:results repeat="result batch">
         <tal:entry define="result_url result/getURL;
+                           result_path result/getPath;
                            result_type result/portal_type;
                            item_icon python:plone_view.getIcon(result);
                            url python:'%s?searchterm=%s'%(test(result_type in use_view_action, result_url+'/view', result_url+'/'), searchterm);">
@@ -164,8 +165,8 @@
                 <span class="documentLocation">
                     <a href=""
                        class="link-location"
-                       tal:content="result_url"
-                       tal:attributes="href result_url">
+                       tal:content="result_path"
+                       tal:attributes="href url">
                         Location
                     </a>
                 </span>
