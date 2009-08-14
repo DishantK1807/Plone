@@ -366,22 +366,11 @@
    </property>
    <property name="visible">False</property>
   </object>
-  <object name="logout" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Log out</property>
-   <property name="description" i18n:translate=""></property>
-   <property name="url_expr">string:${globals_view/navigationRootUrl}/logout</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr">python:member is not None</property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
   <object name="account" meta_type="CMF Action">
    <property name="title">Account</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/account</property>
+      name="url_expr">string:${globals_view/navigationRootUrl}/@@personal_preferences</property>
    <property name="icon_expr"></property>
    <property name="available_expr">python:member </property>
    <property name="permissions">
@@ -390,13 +379,26 @@
    <property name="link_target"></property>
    <property name="visible">True</property>
   </object>
-  <object name="personal-folder" meta_type="CMF Action">
-   <property name="title">My stuff</property>
+  <object name="personal_folder" meta_type="CMF Action">
+   <property name="title">My folder</property>
    <property name="description"></property>
    <property
       name="url_expr">string:${globals_view/navigationRootUrl}/whats-the-url</property>
    <property name="icon_expr"></property>
    <property name="available_expr">python:member and 'hasMyStuff' </property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="link_target"></property>
+   <property name="visible">True</property>
+  </object>
+  <object name="logout" meta_type="CMF Action" i18n:domain="plone">
+   <property name="title" i18n:translate="">Log out</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">string:${globals_view/navigationRootUrl}/logout</property>
+   <property name="icon_expr"></property>
+   <property name="available_expr">python:member is not None</property>
    <property name="permissions">
     <element value="View"/>
    </property>
@@ -419,7 +421,7 @@
    <property name="link_target"></property>
    <property name="visible">True</property>
   </object>
-  <object name="User Data" meta_type="CMF Action">
+  <object name="user_data" meta_type="CMF Action">
    <property name="title">User data</property>
    <property name="description"></property>
    <property
@@ -432,13 +434,13 @@
    <property name="link_target"></property>
    <property name="visible">True</property>
   </object>
-  <object name="Profile Settings" meta_type="CMF Action">
-   <property name="title">Profile settings</property>
+  <object name="change_password" meta_type="CMF Action">
+   <property name="title">Change password</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${context/portal_url}/@@profile_settings</property>
+      name="url_expr">string:${context/portal_url}/@@change_password</property>
    <property name="icon_expr"></property>
-   <property name="available_expr"></property>
+   <property name="available_expr">python:member is not None</property>
    <property name="permissions">
     <element value="View"/>
    </property>
