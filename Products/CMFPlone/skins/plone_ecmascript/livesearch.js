@@ -22,7 +22,7 @@ var livesearch = function (){
         var $request = null;
         var $cache = {};
         var $querytarget = "livesearch_reply";
-        var $querytarget = $form.attr('action').replace(/search$/g,"") + $querytarget;
+        var $querytarget = $form.attr('action').replace(/@@search$/g,"") + $querytarget;
         var $$result = $form.find('div.LSResult');
         var $shadow = $form.find('div.LSShadow');
         var $path = $form.find('input[name=path]');
