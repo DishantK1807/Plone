@@ -61,6 +61,7 @@ class HiddenProducts(object):
             'borg.localrole',
             'plone.keyring',
             'plone.protect',
+            'archetypes.querystringwidget',
             ]
 
 
@@ -74,6 +75,7 @@ class PloneGenerator:
         qi.installProduct('PortalTransforms', locked=1, hidden=1, forceProfile=True)
         qi.installProduct('Archetypes', locked=1, hidden=1,
             profile=u'Products.Archetypes:Archetypes')
+        qi.installProduct('archetypes.querystringwidget', locked=1, hidden=1, forceProfile=True)
 
     def installProducts(self, p):
         """QuickInstaller install of required Products"""

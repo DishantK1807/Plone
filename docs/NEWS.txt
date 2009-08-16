@@ -8,6 +8,9 @@ Changelog
 4.0 - Unreleased
 ----------------
 
+- Install archetypes.querystringwidget by default and remove from uninstalllist.
+  [robgietema]
+
 - Use the new zope.ramcache in favor of zope.app.cache.
   [hannosch]
 
