@@ -26,6 +26,12 @@
                  groups context/portal_groups/getGroupIds;
                  ignore string:AuthenticatedUsers">
 
+<tal:comment replace="nothing">
+
+<!-- XXX Populate ignore (see above define ^^^) with a call to acl_users that returns virtual groups -->
+
+</tal:comment>
+
   <h1 class="documentFirstHeading"
       i18n:translate="heading_registration_form">Registration Form</h1>
 
