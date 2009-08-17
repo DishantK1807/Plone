@@ -151,11 +151,7 @@
            tal:attributes="class python:test(error, 'field error', 'field')">
 
         <label for="group"
-               i18n:translate="label_group">Group</label>
-
-              <div class="formHelp" i18n:translate="help_group_selection">
-                Enter additional groups to include this member in.
-              </div>
+               i18n:translate="label_group">Add to the following groups:</label>
 
               <div tal:repeat="group groups">
                   <tal:ignore condition="not: python: group==ignore">
