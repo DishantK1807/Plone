@@ -23,7 +23,8 @@
                  allowEnterPassword not:context/portal_url/getPortalObject/validate_email|nothing;
                  mailpw site_properties/validate_email;
                  mailconfigured python:allowEnterPassword or (mailhost and mailfrom);
-                 groups context/portal_groups/getGroupIds">
+                 groups context/portal_groups/getGroupIds;
+                 ignore string:AuthenticatedUsers">
 
   <h1 class="documentFirstHeading"
       i18n:translate="heading_registration_form">Registration Form</h1>
@@ -146,21 +147,17 @@
         <label for="group"
                i18n:translate="label_group">Group</label>
 
-        <span class="fieldRequired" title="Required"
-              i18n:attributes="title title_required;"
-              i18n:translate="label_required">(Required)</span>
-
               <div class="formHelp" i18n:translate="help_group_selection">
-                Enter additional groups. The default group of 'AuthenticatedUsers' is enough but
-                you can make this user a site administrator by 
-                placing them in the 'Administrators' group.
+                Enter additional groups to include this member in.
               </div>
 
               <div tal:repeat="group groups">
-                  <input type="checkbox"
-                         name="group"
-                         tal:attributes="id group;value group;checked python:group=='AuthenticatedUsers'"/>
-                  <label tal:attributes="for group" tal:content="group" />
+                  <tal:ignore condition="not: python: group==ignore">
+                      <input type="checkbox"
+                             name="group"
+                             tal:attributes="id group"/>
+                      <label tal:attributes="for group" tal:content="group" />
+                  </tal:ignore>
               </div>
 
               <div tal:content="error">Validation error output</div>
