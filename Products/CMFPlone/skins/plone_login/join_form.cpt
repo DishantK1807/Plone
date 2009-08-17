@@ -22,7 +22,8 @@
                  site_properties context/portal_properties/site_properties;
                  allowEnterPassword not:context/portal_url/getPortalObject/validate_email|nothing;
                  mailpw site_properties/validate_email;
-                 mailconfigured python:allowEnterPassword or (mailhost and mailfrom)">
+                 mailconfigured python:allowEnterPassword or (mailhost and mailfrom);
+                 roles context/getGlobalPortalRoles">
 
   <h1 class="documentFirstHeading"
       i18n:translate="heading_registration_form">Registration Form</h1>
@@ -133,6 +134,40 @@
                      size="30"
                      tal:attributes="value email;"
                      />
+      </div>
+
+
+      <div class="field"
+           tal:condition="python: checkPermission('Manage portal', here)"
+           tal:define="error errors/role | nothing;
+                       role request/role | nothing;"
+           tal:attributes="class python:test(error, 'field error', 'field')">
+
+        <label for="role"
+               i18n:translate="label_role">Role</label>
+
+        <span class="fieldRequired" title="Required"
+              i18n:attributes="title title_required;"
+              i18n:translate="label_required">(Required)</span>
+
+              <div class="formHelp" i18n:translate="help_role_selection">
+                Enter site role. The default site role of 'Member' is fine, but
+                you can make this new user a site administrator, for example, by 
+                selecting the 'Manager' role.
+              </div>
+
+              <select name="roles"
+                      id="roles">
+                <option value=""
+                        tal:repeat="role roles"
+                        tal:attributes="selected string:Member"
+                        tal:content="role">
+                    Site role
+                </option>
+              </select>
+
+              <div tal:content="error">Validation error output</div>
+
       </div>
 
 
