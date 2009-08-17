@@ -151,20 +151,17 @@
               i18n:translate="label_required">(Required)</span>
 
               <div class="formHelp" i18n:translate="help_group_selection">
-                Enter site group. The default site group of 'AuthenticatedUsers' is fine, but
-                you can make this new user a site administrator, for example, by 
+                Enter additional groups. The default group of 'AuthenticatedUsers' is enough but
+                you can make this user a site administrator by 
                 placing them in the 'Administrators' group.
               </div>
 
-              <select name="groups"
-                      id="groups">
-                <option value=""
-                        tal:repeat="group groups"
-                        tal:attributes="selected string:Member"
-                        tal:content="group">
-                    Site group
-                </option>
-              </select>
+              <div tal:repeat="group groups">
+                  <input type="checkbox"
+                         name="group"
+                         tal:attributes="id group;value group;checked python:group=='AuthenticatedUsers'"/>
+                  <label tal:attributes="for group" tal:content="group" />
+              </div>
 
               <div tal:content="error">Validation error output</div>
 
