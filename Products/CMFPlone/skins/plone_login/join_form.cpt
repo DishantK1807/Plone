@@ -23,7 +23,7 @@
                  allowEnterPassword not:context/portal_url/getPortalObject/validate_email|nothing;
                  mailpw site_properties/validate_email;
                  mailconfigured python:allowEnterPassword or (mailhost and mailfrom);
-                 roles context/getGlobalPortalRoles">
+                 groups context/portal_groups/getGroupIds">
 
   <h1 class="documentFirstHeading"
       i18n:translate="heading_registration_form">Registration Form</h1>
@@ -139,30 +139,30 @@
 
       <div class="field"
            tal:condition="python: checkPermission('Manage portal', here)"
-           tal:define="error errors/role | nothing;
-                       role request/role | nothing;"
+           tal:define="error errors/group | nothing;
+                       group request/group | nothing;"
            tal:attributes="class python:test(error, 'field error', 'field')">
 
-        <label for="role"
-               i18n:translate="label_role">Role</label>
+        <label for="group"
+               i18n:translate="label_group">Group</label>
 
         <span class="fieldRequired" title="Required"
               i18n:attributes="title title_required;"
               i18n:translate="label_required">(Required)</span>
 
-              <div class="formHelp" i18n:translate="help_role_selection">
-                Enter site role. The default site role of 'Member' is fine, but
+              <div class="formHelp" i18n:translate="help_group_selection">
+                Enter site group. The default site group of 'AuthenticatedUsers' is fine, but
                 you can make this new user a site administrator, for example, by 
-                selecting the 'Manager' role.
+                placing them in the 'Administrators' group.
               </div>
 
-              <select name="roles"
-                      id="roles">
+              <select name="groups"
+                      id="groups">
                 <option value=""
-                        tal:repeat="role roles"
+                        tal:repeat="group groups"
                         tal:attributes="selected string:Member"
-                        tal:content="role">
-                    Site role
+                        tal:content="group">
+                    Site group
                 </option>
               </select>
 
