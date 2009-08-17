@@ -160,8 +160,7 @@
               <div tal:repeat="group groups">
                   <tal:ignore condition="not: python: group==ignore">
                       <input type="checkbox"
-                             name="group"
-                             tal:attributes="id group"/>
+                             tal:attributes="id group;name python: '.'.join(['group',group])"/>
                       <label tal:attributes="for group" tal:content="group" />
                   </tal:ignore>
               </div>
