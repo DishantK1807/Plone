@@ -31,7 +31,6 @@ try:
     add=[]
     for value in REQUEST.form.keys():
         if value.startswith('group.'):
-            log.info('%s' % value)
             add.append(value.split('.')[1])
 
     userid=username
