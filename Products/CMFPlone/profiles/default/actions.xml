@@ -374,7 +374,8 @@
    <property name="icon_expr"></property>
    <property name="available_expr">python:member </property>
    <property name="permissions">
-    <element value="View"/>
+    <element value="Set own password"/>
+    <element value="Set own properties"/>
    </property>
    <property name="link_target"></property>
    <property name="visible">True</property>
@@ -416,7 +417,7 @@
    <property name="icon_expr"></property>
    <property name="available_expr">python:member </property>
    <property name="permissions">
-    <element value="View"/>
+    <element value="Set own properties"/>
    </property>
    <property name="link_target"></property>
    <property name="visible">True</property>
@@ -429,7 +430,7 @@
    <property name="icon_expr"></property>
    <property name="available_expr">python: member</property>
    <property name="permissions">
-    <element value="View"/>
+    <element value="Set own properties"/>
    </property>
    <property name="link_target"></property>
    <property name="visible">True</property>
@@ -442,7 +443,7 @@
    <property name="icon_expr"></property>
    <property name="available_expr">python:member is not None</property>
    <property name="permissions">
-    <element value="View"/>
+    <element value="Set own password"/>
    </property>
    <property name="link_target"></property>
    <property name="visible">True</property>

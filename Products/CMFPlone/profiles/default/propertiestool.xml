@@ -51,7 +51,6 @@
   <property name="default_charset" type="string">utf-8</property>
   <property name="ext_editor" type="boolean">False</property>
   <property name="available_editors" type="lines">
-   <element value="None"/>
    <element value="Kupu"/>
   </property>
   <property name="allowRolesToAddKeywords" type="lines">
