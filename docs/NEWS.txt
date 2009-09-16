@@ -12,6 +12,14 @@ Changelog
   for people using the SecureMailHost API.
   [alecm]
 
+- Adjust to CMF's splitting of CMFCatalogAware into separate CatalogAware,
+  WorkflowAware, and OpaqueItemManager mixins.
+  [davisagli]
+
+- Added zope.app.locales dependency, some strings are in zope domain such as
+  'Invalid value' and '(no value)' found in portlet EditForm.
+  [vincentfretin]
+
 - Replaced mail host with a standard mail host. This completes the basic
   implementation of http://dev.plone.org/plone/ticket/8814.
   [hannosch]
