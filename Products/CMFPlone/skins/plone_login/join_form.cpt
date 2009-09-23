@@ -23,7 +23,6 @@
                  allowEnterPassword not:context/portal_url/getPortalObject/validate_email|nothing;
                  mailpw site_properties/validate_email;
                  mailconfigured python:allowEnterPassword or (mailhost and mailfrom);
-                 groups context/portal_groups/getGroupIds;
                  ignore string:AuthenticatedUsers">
 
 <tal:comment replace="nothing">
@@ -145,23 +144,25 @@
 
 
       <div class="field"
-           tal:condition="python: checkPermission('Manage portal', here)"
+           tal:condition="python: checkPermission('Manage users', here)"
            tal:define="error errors/group | nothing;
                        group request/group | nothing;"
            tal:attributes="class python:test(error, 'field error', 'field')">
 
-        <label for="group"
-               i18n:translate="label_group">Add to the following groups:</label>
+        <tal:define_groups tal:define="groups context/portal_groups/getGroupIds;">
+            <label for="group"
+                   i18n:translate="label_group">Add to the following groups:</label>
 
-              <div tal:repeat="group groups">
-                  <tal:ignore condition="not: python: group==ignore">
-                      <input type="checkbox"
-                             tal:attributes="id group;name python: '.'.join(['group',group])"/>
-                      <label tal:attributes="for group" tal:content="group" />
-                  </tal:ignore>
-              </div>
+            <div tal:repeat="group groups">
+                <tal:ignore condition="not: python: group==ignore">
+                    <input type="checkbox"
+                           tal:attributes="id group;name python: '.'.join(['group',group])"/>
+                    <label tal:attributes="for group" tal:content="group" />
+                </tal:ignore>
+            </div>
 
-              <div tal:content="error">Validation error output</div>
+            <div tal:content="error">Validation error output</div>
+        </tal:define_groups>
 
       </div>
 
