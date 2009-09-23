@@ -142,30 +142,33 @@
                      />
       </div>
 
+      <tal:many_groups tal:define="many_groups context/portal_properties/site_properties/many_groups"
+                       tal:condition="not: many_groups">
 
-      <div class="field"
-           tal:condition="python: checkPermission('Manage users', here)"
-           tal:define="error errors/group | nothing;
-                       group request/group | nothing;"
-           tal:attributes="class python:test(error, 'field error', 'field')">
+          <div class="field"
+               tal:condition="python: checkPermission('Manage users', here)"
+               tal:define="error errors/group | nothing;
+                           group request/group | nothing;"
+               tal:attributes="class python:test(error, 'field error', 'field')">
 
-        <tal:define_groups tal:define="groups context/portal_groups/getGroupIds;">
-            <label for="group"
-                   i18n:translate="label_group">Add to the following groups:</label>
+            <tal:define_groups tal:define="groups context/portal_groups/getGroupIds;">
+                <label for="group"
+                       i18n:translate="label_group">Add to the following groups:</label>
 
-            <div tal:repeat="group groups">
-                <tal:ignore condition="not: python: group==ignore">
-                    <input type="checkbox"
-                           tal:attributes="id group;name python: '.'.join(['group',group])"/>
-                    <label tal:attributes="for group" tal:content="group" />
-                </tal:ignore>
-            </div>
+                <div tal:repeat="group groups">
+                    <tal:ignore condition="not: python: group==ignore">
+                        <input type="checkbox"
+                               tal:attributes="id group;name python: '.'.join(['group',group])"/>
+                        <label tal:attributes="for group" tal:content="group" />
+                    </tal:ignore>
+                </div>
 
-            <div tal:content="error">Validation error output</div>
-        </tal:define_groups>
+                <div tal:content="error">Validation error output</div>
+            </tal:define_groups>
 
-      </div>
+          </div>
 
+      </tal:many_groups>
 
       <div class="field"
            tal:condition="not: allowEnterPassword"
