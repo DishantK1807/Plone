@@ -22,14 +22,7 @@
                  site_properties context/portal_properties/site_properties;
                  allowEnterPassword not:context/portal_url/getPortalObject/validate_email|nothing;
                  mailpw site_properties/validate_email;
-                 mailconfigured python:allowEnterPassword or (mailhost and mailfrom);
-                 ignore string:AuthenticatedUsers">
-
-<tal:comment replace="nothing">
-
-<!-- XXX Populate ignore (see above define ^^^) with a call to acl_users that returns virtual groups -->
-
-</tal:comment>
+                 mailconfigured python:allowEnterPassword or (mailhost and mailfrom);">
 
   <h1 class="documentFirstHeading"
       i18n:translate="heading_registration_form">Registration Form</h1>
@@ -148,7 +141,8 @@
           <div class="field"
                tal:condition="python: checkPermission('Manage users', here)"
                tal:define="error errors/group | nothing;
-                           group request/group | nothing;"
+                           group request/group | nothing;
+                            ignore string:AuthenticatedUsers;"
                tal:attributes="class python:test(error, 'field error', 'field')">
 
             <tal:define_groups tal:define="groups context/portal_groups/getGroupIds;">
@@ -156,11 +150,15 @@
                        i18n:translate="label_group">Add to the following groups:</label>
 
                 <div tal:repeat="group groups">
-                    <tal:ignore condition="not: python: group==ignore">
-                        <input type="checkbox"
-                               tal:attributes="id group;name python: '.'.join(['group',group])"/>
-                        <label tal:attributes="for group" tal:content="group" />
-                    </tal:ignore>
+
+                    <tal:group_title tal:define="group_obj python:context.portal_groups.getGroupById(group);
+                                                group_title group_obj/getGroupTitleOrName">
+                        <tal:ignore condition="not: python: group==ignore">
+                            <input type="checkbox"
+                                   tal:attributes="id group;name python: '.'.join(['group',group])"/>
+                            <label tal:attributes="for group" tal:content="group_title" />
+                        </tal:ignore>
+                    </tal:group_title>
                 </div>
 
                 <div tal:content="error">Validation error output</div>
