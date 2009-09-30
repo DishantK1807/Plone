@@ -28,12 +28,10 @@ password=REQUEST.get('password') or portal_registration.generatePassword()
 # for more info. (rohrer 2004-10-24)
 try:
     portal_registration.addMember(username, password, properties=REQUEST, REQUEST=context.REQUEST)
-    add=[]
-    for value in REQUEST.form.keys():
-        if value.startswith('group.'):
-            add.append(value.split('.')[1])
 
+    # Do the groupadd stuff
     userid=username
+    add = REQUEST.form['groups']
     # Straight outta prefs_user_membership_edit.py...
     for groupname in add:
         group = context.portal_groups.getGroupById(groupname)

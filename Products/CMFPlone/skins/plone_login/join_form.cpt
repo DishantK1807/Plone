@@ -155,7 +155,9 @@
                                                 group_title group_obj/getGroupTitleOrName">
                         <tal:ignore condition="not: python: group==ignore">
                             <input type="checkbox"
-                                   tal:attributes="id group;name python: '.'.join(['group',group])"/>
+                                   tal:attributes="id group;
+                                                    name string:groups:list:string;
+                                                     value group;" />
                             <label tal:attributes="for group" tal:content="group_title" />
                         </tal:ignore>
                     </tal:group_title>
