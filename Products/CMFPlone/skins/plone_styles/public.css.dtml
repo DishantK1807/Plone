@@ -200,6 +200,17 @@ dl.searchResults dt {
     font-weight: normal;
 }
 
+dl.searchResults dd {
+    margin-left: 0;
+}
+
+dl.searchResults .link-location{
+    font-size: &dtml-fontSmallSize;;
+    color: &dtml-discreetColor;;
+    font-weight: normal;
+}
+
+
 form.searchPage {
     text-align: center;
 }
