@@ -380,19 +380,6 @@
    <property name="link_target"></property>
    <property name="visible">True</property>
   </object>
-  <object name="personal_folder" meta_type="CMF Action">
-   <property name="title">My folder</property>
-   <property name="description"></property>
-   <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/whats-the-url</property>
-   <property name="icon_expr"></property>
-   <property name="available_expr">python:member and 'hasMyStuff' </property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="link_target"></property>
-   <property name="visible">True</property>
-  </object>
   <object name="logout" meta_type="CMF Action" i18n:domain="plone">
    <property name="title" i18n:translate="">Log out</property>
    <property name="description" i18n:translate=""></property>
@@ -441,7 +428,8 @@
    <property
       name="url_expr">string:${context/portal_url}/@@change_password</property>
    <property name="icon_expr"></property>
-   <property name="available_expr">python:member is not None</property>
+   <property
+      name="available_expr">python:member is not None and member.canPasswordSet()</property>
    <property name="permissions">
     <element value="Set own password"/>
    </property>
