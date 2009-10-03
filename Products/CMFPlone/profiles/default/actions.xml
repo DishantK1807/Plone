@@ -370,7 +370,7 @@
    <property name="title">Account</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/@@personal_preferences</property>
+      name="url_expr">string:${globals_view/navigationRootUrl}/account</property>
    <property name="icon_expr"></property>
    <property name="available_expr">python:member </property>
    <property name="permissions">
@@ -400,7 +400,7 @@
    <property name="title">Personal Preferences</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${context/portal_url}/@@personal_preferences</property>
+      name="url_expr">string:${context/portal_url}/account/personal_preferences</property>
    <property name="icon_expr"></property>
    <property name="available_expr">python:member </property>
    <property name="permissions">
@@ -413,7 +413,7 @@
    <property name="title">User data</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${context/portal_url}/@@user_data</property>
+      name="url_expr">string:${context/portal_url}/account/user_data</property>
    <property name="icon_expr"></property>
    <property name="available_expr">python: member</property>
    <property name="permissions">
@@ -426,7 +426,7 @@
    <property name="title">Change password</property>
    <property name="description"></property>
    <property
-      name="url_expr">string:${context/portal_url}/@@change_password</property>
+      name="url_expr">string:${context/portal_url}/account/change_password</property>
    <property name="icon_expr"></property>
    <property
       name="available_expr">python:member is not None and member.canPasswordSet()</property>

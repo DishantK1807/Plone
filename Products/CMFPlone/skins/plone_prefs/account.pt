@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+    <metal:block fill-slot="column_one_slot" />
+    <metal:block fill-slot="column_two_slot" />
+</head>
+
+<body>
+
+<tal:comment replace="nothing">
+    Please note that this template fills the "content" slot instead of the
+    "main" slot, this is done so we can provide stuff like the content
+    tabs. This also means that we have to supply things that are normally
+    present from main_template.
+</tal:comment>
+
+<metal:main fill-slot="content">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="account_tab context/@@get_account_tab;">
+
+        <tal:noAuthor condition="not: account_tab">
+        <div id="region-content">
+        <div id="content">
+        <dl class="portalMessage error">
+            <dt i18n:translate="">
+                Error
+            </dt>
+            <dd tal:content="account_tab">
+                Account tab error
+            </dd>
+        </dl>
+        </div>
+        </div>
+        </tal:noAuthor>
+ 
+        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+            Portal status message
+        </div>
+
+        <tal:prefs tal:condition="account_tab"
+                   tal:replace="structure python: context.restrictedTraverse(account_tab)()"/>
+
+ 
+
+
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>
