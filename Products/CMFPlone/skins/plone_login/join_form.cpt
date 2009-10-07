@@ -140,24 +140,25 @@
 
           <div class="field"
                tal:condition="python: checkPermission('Manage users', here)"
-               tal:define="error errors/group | nothing;
-                           group request/group | nothing;
+               tal:define="error errors/groups | nothing;
+                           groups request/groups | python:();
                             ignore string:AuthenticatedUsers;"
                tal:attributes="class python:test(error, 'field error', 'field')">
 
-            <tal:define_groups tal:define="groups context/portal_groups/getGroupIds;">
-                <label for="group"
+            <tal:define_groups tal:define="all_groups context/portal_groups/getGroupIds;">
+                <label for="groups:list:string"
                        i18n:translate="label_group">Add to the following groups:</label>
 
-                <div tal:repeat="group groups">
+                <div tal:repeat="group all_groups">
 
                     <tal:group_title tal:define="group_obj python:context.portal_groups.getGroupById(group);
                                                 group_title group_obj/getGroupTitleOrName">
                         <tal:ignore condition="not: python: group==ignore">
                             <input type="checkbox"
                                    tal:attributes="id group;
-                                                    name string:groups:list:string;
-                                                     value group;" />
+                                                   name string:groups:list:string;
+                                                   value group;
+                                                   checked python:group in groups;" />
                             <label tal:attributes="for group" tal:content="group_title" />
                         </tal:ignore>
                     </tal:group_title>
