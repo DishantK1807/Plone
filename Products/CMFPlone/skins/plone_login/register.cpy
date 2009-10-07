@@ -31,11 +31,12 @@ try:
 
     # Do the groupadd stuff
     userid=username
-    add = REQUEST.form['groups']
-    # Straight outta prefs_user_membership_edit.py...
-    for groupname in add:
-        group = context.portal_groups.getGroupById(groupname)
-        group.addMember(userid, REQUEST=context.REQUEST)
+    if REQUEST.form.has_key('groups'):
+        add = REQUEST.form['groups']
+        # Straight outta prefs_user_membership_edit.py...
+        for groupname in add:
+            group = context.portal_groups.getGroupById(groupname)
+            group.addMember(userid, REQUEST=context.REQUEST)
 
 except AttributeError:
     state.setError('username', _(u'The login name you selected is already in use or is not valid. Please choose another.'))
