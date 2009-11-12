@@ -2,6 +2,7 @@
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
 
  <javascript id="jquery.js" compression="none" />
+ <javascript id="jquery-inlinefunctions.js" />
  <javascript id="jquery-integration.js" />
  <javascript id="event-registration.js" enabled="False" />
  <javascript id="register_function.js" />
@@ -36,12 +37,4 @@
  <javascript id="formsubmithelpers.js" authenticated="True" />
  <javascript id="unlockOnFormUnload.js" authenticated="True" />
 
- <!-- KSS -->
- <javascript id="++resource++MochiKit.js" compression="none" enabled="False" />
- <javascript id="++resource++prototype.js" enabled="False" />
- <javascript id="++resource++effects.js" enabled="False" />
- <javascript id="++resource++cssQuery-compat.js" enabled="False" />
- <javascript id="++resource++base2-dom-fp.js" compression="none" authenticated="True" />
- <javascript id="++resource++kukit.js" compression="none" authenticated="True" />
- <javascript id="++resource++kukit-devel.js" compression="none" enabled="False" />
 </object>
