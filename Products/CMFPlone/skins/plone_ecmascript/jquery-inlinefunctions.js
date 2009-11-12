@@ -30,20 +30,36 @@ function handleKSSResponse(response){
         replaceHTML = jQuery(replaceInnerHTMLCommand).find('param[name="html"]').text();
         jQuery(selector).html(replaceHTML);
     }
-
 }
 
-/* Inline Validation */
 jQuery(function(){
+    /* Inline Validation */
     jQuery('input.blurrable, select.blurrable, textarea.blurrable').blur(function(){
-        value = jQuery(this).val();
-        wrapperdiv = jQuery(this).parents("div[class*='kssattr-atfieldname']");
-        fieldname = getKSSAttr(wrapperdiv, 'atfieldname');
-        uid = getKSSAttr(wrapperdiv, 'atuid');
+        wrapper = jQuery(this).parents("div[class*='kssattr-atfieldname']");
         serviceURL = jQuery('base').attr('href') + '/' + '@@kssValidateField';
-        jQuery.get(serviceURL, {'fieldname': fieldname, 'value': value, 'uid': uid}, handleKSSResponse(data));
+        params = {'fieldname':   getKSSAttr(wrapper, 'atfieldname'),
+                  'value':       jQuery(this).val()};
+        uid = getKSSAttr(wrapper, 'atuid');
+        if (uid){
+            params['uid'] = uid;
+        }
+        jQuery.get(serviceURL, params, function(data){handleKSSResponse(data);});
     });
-
+    
+    /* Inline Editing */
+    // jQuery('.inlineEditable').click(function(){
+    //     wrapper = jQuery(this).parents("div[class*='kssattr-atfieldname']");
+    //     serviceURL = jQuery('base').attr('href') + '/' + '@@replaceField';
+    //     jQuery.get(serviceURL,
+    //                 {'fieldname':   getKSSAttr(wrapper, 'atfieldname'),
+    //                  'macro':       getKSSAttr(wrapper, 'macro'),
+    //                  'templateId':  getKSSAttr(wrapper, 'templateId'),
+    //                  'uid':         getKSSAttr(wrapper, 'atuid'),
+    //                  'target':      getKSSAttr(wrapper, 'target'),
+    //                  'edit':        'true'},
+    //                function(data){handleKSSResponse(data);});
+    // });
+    
 });
 
 
