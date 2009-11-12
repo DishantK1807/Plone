@@ -47,18 +47,23 @@ jQuery(function(){
     });
     
     /* Inline Editing */
-    // jQuery('.inlineEditable').click(function(){
-    //     wrapper = jQuery(this).parents("div[class*='kssattr-atfieldname']");
-    //     serviceURL = jQuery('base').attr('href') + '/' + '@@replaceField';
-    //     jQuery.get(serviceURL,
-    //                 {'fieldname':   getKSSAttr(wrapper, 'atfieldname'),
-    //                  'macro':       getKSSAttr(wrapper, 'macro'),
-    //                  'templateId':  getKSSAttr(wrapper, 'templateId'),
-    //                  'uid':         getKSSAttr(wrapper, 'atuid'),
-    //                  'target':      getKSSAttr(wrapper, 'target'),
-    //                  'edit':        'true'},
-    //                function(data){handleKSSResponse(data);});
-    // });
+    jQuery('.inlineEditable').click(function(){
+        console.log('begin inlineEdit');
+        serviceURL = jQuery('base').attr('href') + '/' + '@@replaceField';
+        params = {'fieldname':   getKSSAttr(jQuery(this), 'atfieldname'),
+                  'templateId':  getKSSAttr(jQuery(this), 'templateId'),
+                  'macro':       getKSSAttr(jQuery(this), 'macro'),
+                  'edit':        'True'};
+        uid = getKSSAttr(jQuery(this), 'atuid');
+        if (uid){
+            params['uid']=uid;
+        }
+        target = getKSSAttr(jQuery(this), 'target');
+        if (target){
+            params['target']=target;
+        }
+        jQuery.get(serviceURL, params, function(data){handleKSSResponse(data);});
+    });
     
 });
 
@@ -89,3 +94,45 @@ jQuery(function(){
 // </command>
 // </commands>
 // </kukit>
+
+// <commands>
+// <command selector=".portalMessage" name="setStyle" selectorType="css">
+//     <param name="name">display</param>
+//     <param name="value">none</param>
+// </command>
+// <command selector="kssPortalMessage" name="replaceInnerHTML" selectorType="htmlid">
+//     <param name="html"><![CDATA[<dt>Info</dt><dd></dd>]]></param>
+//     <param name="withKssSetup">True</param>
+// </command>
+// <command selector="kssPortalMessage" name="setAttribute" selectorType="htmlid">
+//     <param name="name">class</param>
+//     <param name="value">portalMessage info</param>
+// </command>
+// <command selector="kssPortalMessage" name="setStyle" selectorType="htmlid">
+//     <param name="name">display</param>
+//     <param name="value">none</param>
+// </command>
+// <command selector="parent-fieldname-title" name="replaceHTML" selectorType="htmlid">
+//     <param name="html"><![CDATA[<span class=" kssattr-atfieldname-title kssattr-templateId-widgets/string kssattr-macro-string-field-view" id="parent-fieldname-title">
+// <form class="field inlineForm enableUnloadProtection enableUnlockProtection" id="kss-inlineform-title">
+// <div class="field ArchetypesStringWidget  kssattr-atfieldname-title" id="archetypes-fieldname-title">
+// <span></span>
+// <label class="formQuestion" for="title">Title</label>
+// <span class="fieldRequired" title="Required">
+//             (Required)
+//           </span>
+// <div class="formHelp" id="title_help"></div>
+// <div class="fieldErrorBox"></div>
+// <input type="text" name="title" class="blurrable firstToFocus" id="title" value="Test Page" size="30" maxlength="255" />
+// </div>
+// <div class="formControls">
+// <input name="kss-save" value="Save" type="button" class="context" />
+// <input name="kss-cancel" value="Cancel" type="button" class="standalone" />
+// </div>
+// </form>
+// </span>]]></param>
+//     <param name="withKssSetup">True</param>
+// </command>
+// <command selector="#parent-fieldname-title .firstToFocus" name="focus" selectorType="">
+// </command>
+// </commands>
