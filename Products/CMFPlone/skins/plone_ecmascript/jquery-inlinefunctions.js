@@ -11,34 +11,37 @@ function getKSSAttr(obj, varname){
     return '';
 }
 
+function handleKSSResponse(response){
+    clearCommand = jQuery(response).find('command[name="clearChildNodes"]');
+    if (clearCommand.length > 0){
+        selector = jQuery(clearCommand).attr('selector');
+        jQuery(selector).empty();
+    }
+    setAttributeCommand = jQuery(response).find('command[name="setAttribute"]');
+    if (setAttributeCommand.length > 0){
+        selector = jQuery(setAttributeCommand).attr('selector');
+        attributeName = jQuery(setAttributeCommand).find('param[name="name"]').text();
+        replaceText = jQuery(setAttributeCommand).find('param[name="value"]').text();
+        jQuery('#' + selector).attr(attributeName, replaceText);
+    }
+    replaceInnerHTMLCommand = jQuery(response).find('command[name="replaceInnerHTML"]');
+    if (replaceInnerHTMLCommand.length > 0){
+        selector = jQuery(replaceInnerHTMLCommand).attr('selector');
+        replaceHTML = jQuery(replaceInnerHTMLCommand).find('param[name="html"]').text();
+        jQuery(selector).html(replaceHTML);
+    }
+
+}
+
 /* Inline Validation */
 jQuery(function(){
     jQuery('input.blurrable, select.blurrable, textarea.blurrable').blur(function(){
         value = jQuery(this).val();
         wrapperdiv = jQuery(this).parents("div[class*='kssattr-atfieldname']");
         fieldname = getKSSAttr(wrapperdiv, 'atfieldname');
+        uid = getKSSAttr(wrapperdiv, 'atuid');
         serviceURL = jQuery('base').attr('href') + '/' + '@@kssValidateField';
-        jQuery.get(serviceURL, {'fieldname': fieldname, 'value':value},
-          function(data){
-              clearCommand = jQuery(data).find('command[name="clearChildNodes"]');
-              if (clearCommand.length > 0){
-                  selector = jQuery(clearCommand).attr('selector');
-                  jQuery(selector).empty();
-              }
-              setAttributeCommand = jQuery(data).find('command[name="setAttribute"]');
-              if (setAttributeCommand.length > 0){
-                  selector = jQuery(setAttributeCommand).attr('selector');
-                  attributeName = jQuery(setAttributeCommand).find('param[name="name"]').text();
-                  replaceText = jQuery(setAttributeCommand).find('param[name="value"]').text();
-                  jQuery('#' + selector).attr(attributeName, replaceText);
-              }
-              replaceInnerHTMLCommand = jQuery(data).find('command[name="replaceInnerHTML"]');
-              if (replaceInnerHTMLCommand.length > 0){
-                  selector = jQuery(replaceInnerHTMLCommand).attr('selector');
-                  replaceHTML = jQuery(replaceInnerHTMLCommand).find('param[name="html"]').text();
-                  jQuery(selector).html(replaceHTML);
-              }
-          });
+        jQuery.get(serviceURL, {'fieldname': fieldname, 'value': value, 'uid': uid}, handleKSSResponse(data));
     });
 
 });
