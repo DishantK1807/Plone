@@ -17,7 +17,8 @@ jQuery(function(){
         value = jQuery(this).val();
         wrapperdiv = jQuery(this).parents("div[class*='kssattr-atfieldname']");
         fieldname = getKSSAttr(wrapperdiv, 'atfieldname');
-        jQuery.get(document.baseURI + '/' + '@@kssValidateField', {'fieldname': fieldname, 'value':value},
+        serviceURL = jQuery('base').attr('href') + '/' + '@@kssValidateField';
+        jQuery.get(serviceURL, {'fieldname': fieldname, 'value':value},
           function(data){
               clearCommand = jQuery(data).find('command[name="clearChildNodes"]');
               if (clearCommand.length > 0){
