@@ -136,9 +136,6 @@
         $('form.inlineForm input[name="kss-cancel"]').click(function(){
             cancelInlineEdit(this);
         });
-        $('form.inlineForm input[name="kss-cancel"]').click(function(){
-            cancelInlineEdit(this);
-        });
         $('input.blurrable, select.blurrable, textarea.blurrable').keypress(function(event){
             if (event.keyCode == 27){cancelInlineEdit(this);}
         });
@@ -160,7 +157,6 @@
     
         target = getKSSAttr($(obj), 'target');
         if (target){params['target']=target;}
-        console.log(params);
         $.get(serviceURL, params, function(data){handleKSSResponse(data);});
     }
 
