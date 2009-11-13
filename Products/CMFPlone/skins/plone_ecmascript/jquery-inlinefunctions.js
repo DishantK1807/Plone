@@ -8,27 +8,64 @@ function getKSSAttr(obj, varname){
             return cls.substring(classname.length, cls.length);
         }
     }
-    return '';
+    inherited = obj.parents("[class*='" + classname + "']");
+    if(inherited.length){
+        return getKSSAttr(inherited, varname);
+    }
+    else{
+        return '';
+    }
 }
 
 function handleKSSResponse(response){
-    clearCommand = jQuery(response).find('command[name="clearChildNodes"]');
-    if (clearCommand.length > 0){
-        selector = jQuery(clearCommand).attr('selector');
-        jQuery(selector).empty();
+    jQuery(response).find('command').each(
+        function(){
+            doKSSCommand(this);
+        });
+}
+
+function extractSelector(command){
+    selector = jQuery(command).attr('selector');
+    selectorType = jQuery(command).attr('selectorType');
+    switch (selectorType){
+        case 'htmlid':
+            return '#' + selector;
+        case 'css':
+            return selector;
+        default:
+            return selector;
     }
-    setAttributeCommand = jQuery(response).find('command[name="setAttribute"]');
-    if (setAttributeCommand.length > 0){
-        selector = jQuery(setAttributeCommand).attr('selector');
-        attributeName = jQuery(setAttributeCommand).find('param[name="name"]').text();
-        replaceText = jQuery(setAttributeCommand).find('param[name="value"]').text();
-        jQuery('#' + selector).attr(attributeName, replaceText);
-    }
-    replaceInnerHTMLCommand = jQuery(response).find('command[name="replaceInnerHTML"]');
-    if (replaceInnerHTMLCommand.length > 0){
-        selector = jQuery(replaceInnerHTMLCommand).attr('selector');
-        replaceHTML = jQuery(replaceInnerHTMLCommand).find('param[name="html"]').text();
-        jQuery(selector).html(replaceHTML);
+}
+
+function doKSSCommand(command){
+    selector = extractSelector(command);
+    switch(jQuery(command).attr('name')){
+        case 'clearChildNodes':
+            jQuery(selector).empty();
+            break;
+        case 'focus':
+            jQuery(selector).focus();
+            break;            
+        case 'replaceHTML':
+            html = jQuery(command).find('param[name="html"]').text();
+            jQuery(selector).replaceWith(html);
+            break;
+        case 'replaceInnerHTML':
+            html = jQuery(command).find('param[name="html"]').text();
+            jQuery(selector).html(html);
+            break;
+        case 'setAttribute':
+            attributeName = jQuery(command).find('param[name="name"]').text();
+            replaceText = jQuery(command).find('param[name="value"]').text();
+            jQuery(selector).attr(attributeName, replaceText);   
+            break;
+        case 'setStyle':
+            name = jQuery(command).find('param[name="name"]').text();
+            value = jQuery(command).find('param[name="value"]').text();
+            jQuery(selector).css(name, value);
+            break;
+        default:
+            console.log('No handler for command ' + jQuery(command).attr('name'));
     }
 }
 
@@ -48,7 +85,6 @@ jQuery(function(){
     
     /* Inline Editing */
     jQuery('.inlineEditable').click(function(){
-        console.log('begin inlineEdit');
         serviceURL = jQuery('base').attr('href') + '/' + '@@replaceField';
         params = {'fieldname':   getKSSAttr(jQuery(this), 'atfieldname'),
                   'templateId':  getKSSAttr(jQuery(this), 'templateId'),
@@ -62,12 +98,70 @@ jQuery(function(){
         if (target){
             params['target']=target;
         }
-        jQuery.get(serviceURL, params, function(data){handleKSSResponse(data);});
+        jQuery.get(serviceURL, params,
+            function(data){
+                handleKSSResponse(data);
+                registerInlineFormControlEvents();
+            });
     });
-    
 });
 
+function registerInlineFormControlEvents(){
+    jQuery('form.inlineForm input[name="kss-save"]').click(function(){
+        console.log('Inline save');
+        
+        serviceURL = jQuery('base').attr('href') + '/' + '@@saveField';
+        fieldname = getKSSAttr(jQuery(this), 'atfieldname');
+        params = {'fieldname': fieldname};
+        
+        valueSelector = "input[name='" + params['fieldname'] + "']";
+        value = jQuery(this).parents('form').find(valueSelector).val();
+        if (value){params['value']={fieldname: value}};
+        
+        templateId = getKSSAttr(jQuery(this), 'templateId');
+        if (templateId){params['templateId']=templateId;}
+        
+        macro = getKSSAttr(jQuery(this), 'macro');
+        if (macro){params['macro']=macro;}
+        
+        uid = getKSSAttr(jQuery(this), 'atuid');
+        if (uid){params['uid']=uid;}
+        
+        target = getKSSAttr(jQuery(this), 'target');
+        if (target){params['target']=target;}
 
+        jQuery.get(serviceURL, params, function(data){handleKSSResponse(data);});        
+    });
+    jQuery('form.inlineForm input[name="kss-cancel"]').click(function(){
+        cancelInlineEdit(this);
+    });
+    jQuery('form.inlineForm input[name="kss-cancel"]').click(function(){
+        cancelInlineEdit(this);
+    });
+    jQuery('input.blurrable, select.blurrable, textarea.blurrable').keypress(function(event){
+        if (event.keyCode == 27){cancelInlineEdit(this);}
+    });
+}
+
+function cancelInlineEdit(obj){
+    serviceURL = jQuery('base').attr('href') + '/' + '@@replaceWithView';
+    fieldname = getKSSAttr(jQuery(obj), 'atfieldname');
+    params = {'fieldname': fieldname,
+              'edit':      true};
+    templateId = getKSSAttr(jQuery(obj), 'templateId');
+    if (templateId){params['templateId']=templateId;}
+    
+    macro = getKSSAttr(jQuery(obj), 'macro');
+    if (macro){params['macro']=macro;}
+    
+    uid = getKSSAttr(jQuery(obj), 'atuid');
+    if (uid){params['uid']=uid;}
+    
+    target = getKSSAttr(jQuery(obj), 'target');
+    if (target){params['target']=target;}
+    console.log(params);
+    jQuery.get(serviceURL, params, function(data){handleKSSResponse(data);});
+}
 
 // Possible responses:
 // 
