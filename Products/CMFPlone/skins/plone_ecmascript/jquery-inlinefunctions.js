@@ -1,5 +1,12 @@
 (function($) {
 
+    $(function(){
+        addInlineValidation();
+        addInlineEditing();
+        addCalendarChange();
+    });
+
+
     function getKSSAttr(obj, varname){
         classes = obj.attr('class').split(' ');
         classname = 'kssattr-' + varname + '-';
@@ -70,8 +77,9 @@
         }
     }
 
-    $(function(){
-        /* Inline Validation */
+
+    function addInlineValidation(){
+    /* Inline Validation */
         $('input.blurrable, select.blurrable, textarea.blurrable').blur(function(){
             wrapper = $(this).parents("div[class*='kssattr-atfieldname']");
             serviceURL = $('base').attr('href') + '/' + '@@kssValidateField';
@@ -83,7 +91,9 @@
             }
             $.get(serviceURL, params, function(data){handleKSSResponse(data);});
         });
-    
+    }
+
+    function addInlineEditing(){
         /* Inline Editing */
         $('.inlineEditable').click(function(){
             serviceURL = $('base').attr('href') + '/' + '@@replaceField';
@@ -105,7 +115,24 @@
                     registerInlineFormControlEvents();
                 });
         });
-    });
+    }
+
+    function addCalendarChange(){
+        /* Calendar update */
+        $('a.kssCalendarChange').click(function(){
+            serviceURL = $('base').attr('href') + '/' + '@@refreshCalendar';
+            params = {'portlethash':   getKSSAttr($(this), 'portlethash'),
+                      'year':  getKSSAttr($(this), 'year'),
+                      'month':       getKSSAttr($(this), 'month')};
+            
+            $.get(serviceURL, params, 
+                  function(data){
+                    handleKSSResponse(data);
+                    addCalendarChange();
+                  });
+            return false;
+        });
+    }
 
     function registerInlineFormControlEvents(){
         $('form.inlineForm input[name="kss-save"]').click(function(){
@@ -135,7 +162,7 @@
         });
         $('form.inlineForm input[name="kss-cancel"]').click(function(){
             cancelInlineEdit(this);
-        });
+        });3
         $('input.blurrable, select.blurrable, textarea.blurrable').keypress(function(event){
             if (event.keyCode == 27){cancelInlineEdit(this);}
         });
