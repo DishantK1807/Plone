@@ -1,11 +1,9 @@
 (function($) {
-
     $(function(){
         addInlineValidation();
         addInlineEditing();
         addCalendarChange();
     });
-
 
     function getKSSAttr(obj, varname){
         classes = obj.attr('class').split(' ');
@@ -16,20 +14,19 @@
                 return cls.substring(classname.length, cls.length);
             }
         }
+        
         inherited = obj.parents("[class*='" + classname + "']");
-        if(inherited.length){
+        if (inherited.length){
             return getKSSAttr(inherited, varname);
         }
-        else{
-            return '';
-        }
+
+        return '';
     }
 
     function handleKSSResponse(response){
-        $(response).find('command').each(
-            function(){
+        $(response).find('command').each(function(){
                 doKSSCommand(this);
-            });
+        });
     }
 
     function extractSelector(command){
@@ -47,7 +44,8 @@
 
     function doKSSCommand(command){
         selector = extractSelector(command);
-        switch($(command).attr('name')){
+        commandName = $(command).attr('name');
+        switch (commandName){
             case 'clearChildNodes':
                 $(selector).empty();
                 break;
@@ -73,7 +71,9 @@
                 $(selector).css(name, value);
                 break;
             default:
-                console.log('No handler for command ' + $(command).attr('name'));
+                if (console) {
+                    console.log('No handler for command ' + $(command).attr('name'));
+                }
         }
     }
 
@@ -83,13 +83,17 @@
         $('input.blurrable, select.blurrable, textarea.blurrable').blur(function(){
             wrapper = $(this).parents("div[class*='kssattr-atfieldname']");
             serviceURL = $('base').attr('href') + '/' + '@@kssValidateField';
-            params = {'fieldname':   getKSSAttr(wrapper, 'atfieldname'),
-                      'value':       $(this).val()};
+            params = {
+                'fieldname': getKSSAttr(wrapper, 'atfieldname'),
+                'value': $(this).val()
+            };
             uid = getKSSAttr(wrapper, 'atuid');
             if (uid){
                 params['uid'] = uid;
             }
-            $.get(serviceURL, params, function(data){handleKSSResponse(data);});
+            $.get(serviceURL, params, function(data){
+                handleKSSResponse(data);
+            });
         });
     }
 
@@ -97,10 +101,12 @@
         /* Inline Editing */
         $('.inlineEditable').click(function(){
             serviceURL = $('base').attr('href') + '/' + '@@replaceField';
-            params = {'fieldname':   getKSSAttr($(this), 'atfieldname'),
-                      'templateId':  getKSSAttr($(this), 'templateId'),
-                      'macro':       getKSSAttr($(this), 'macro'),
-                      'edit':        'True'};
+            params = {
+                'fieldname': getKSSAttr($(this), 'atfieldname'),
+                'templateId': getKSSAttr($(this), 'templateId'),
+                'macro': getKSSAttr($(this), 'macro'),
+                'edit': 'True'
+            };
             uid = getKSSAttr($(this), 'atuid');
             if (uid){
                 params['uid']=uid;
@@ -109,11 +115,10 @@
             if (target){
                 params['target']=target;
             }
-            $.get(serviceURL, params,
-                function(data){
-                    handleKSSResponse(data);
-                    registerInlineFormControlEvents();
-                });
+            $.get(serviceURL, params, function(data){
+                handleKSSResponse(data);
+                registerInlineFormControlEvents();
+            });
         });
     }
 
@@ -121,50 +126,69 @@
         /* Calendar update */
         $('a.kssCalendarChange').click(function(){
             serviceURL = $('base').attr('href') + '/' + '@@refreshCalendar';
-            params = {'portlethash':   getKSSAttr($(this), 'portlethash'),
-                      'year':  getKSSAttr($(this), 'year'),
-                      'month':       getKSSAttr($(this), 'month')};
+            params = {
+                'portlethash': getKSSAttr($(this), 'portlethash'),
+                'year': getKSSAttr($(this), 'year'),
+                'month': getKSSAttr($(this), 'month')
+            };
             
-            $.get(serviceURL, params, 
-                  function(data){
-                    handleKSSResponse(data);
-                    addCalendarChange();
-                  });
+            $.get(serviceURL, params, function(data){
+                handleKSSResponse(data);
+                addCalendarChange();
+            });
             return false;
         });
     }
 
     function registerInlineFormControlEvents(){
         $('form.inlineForm input[name="kss-save"]').click(function(){
-            console.log('Inline save');
-        
             serviceURL = $('base').attr('href') + '/' + '@@saveField';
             fieldname = getKSSAttr($(this), 'atfieldname');
-            params = {'fieldname': fieldname};
+            params = {
+                'fieldname': fieldname
+            };
         
             valueSelector = "input[name='" + params['fieldname'] + "']";
             value = $(this).parents('form').find(valueSelector).val();
-            if (value){params['value']={fieldname: value}};
+            if (value){
+                params['value']={
+                    fieldname: value
+                }
+            }
         
             templateId = getKSSAttr($(this), 'templateId');
-            if (templateId){params['templateId']=templateId;}
+            if (templateId){
+                params['templateId']=templateId;
+            }
         
             macro = getKSSAttr($(this), 'macro');
-            if (macro){params['macro']=macro;}
+            if (macro){
+                params['macro']=macro;
+            }
         
             uid = getKSSAttr($(this), 'atuid');
-            if (uid){params['uid']=uid;}
+            if (uid){
+                params['uid']=uid;
+            }
         
             target = getKSSAttr($(this), 'target');
-            if (target){params['target']=target;}
+            if (target){
+                params['target']=target;
+            }
 
-            $.get(serviceURL, params, function(data){handleKSSResponse(data);});        
+            $.get(serviceURL, params, function(data){
+                handleKSSResponse(data);
+            });        
         });
+        
         $('form.inlineForm input[name="kss-cancel"]').click(function(){
             cancelInlineEdit(this);
-        });3
+        });
+        
         $('input.blurrable, select.blurrable, textarea.blurrable').keypress(function(event){
-            if (event.keyCode == 27){cancelInlineEdit(this);}
+            if (event.keyCode == 27){
+                cancelInlineEdit(this);
+            }
         });
     }
 
@@ -174,16 +198,24 @@
         params = {'fieldname': fieldname,
                   'edit':      true};
         templateId = getKSSAttr($(obj), 'templateId');
-        if (templateId){params['templateId']=templateId;}
+        if (templateId){
+            params['templateId']=templateId;
+        }
     
         macro = getKSSAttr($(obj), 'macro');
-        if (macro){params['macro']=macro;}
+        if (macro){
+            params['macro']=macro;
+        }
     
         uid = getKSSAttr($(obj), 'atuid');
-        if (uid){params['uid']=uid;}
+        if (uid){
+            params['uid']=uid;
+        }
     
         target = getKSSAttr($(obj), 'target');
-        if (target){params['target']=target;}
+        if (target){
+            params['target']=target;
+        }
         $.get(serviceURL, params, function(data){handleKSSResponse(data);});
     }
 
