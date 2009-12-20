@@ -160,7 +160,7 @@
                 </span>
 
             <span class="documentByLine"
-                  tal:condition="python:not isAnon or site_properties.allowAnonymousViewAbout">
+                  tal:condition="python:checkPermission('View about')">
                 <span class="documentAuthor"
                     i18n:translate="label_by_author">
                 by

@@ -85,7 +85,7 @@
                                  tal:content="first_parent/Title" />
                                
                                 <span class="discreet" i18n:translate="results_by_author"
-                                  tal:condition="python: not isAnon or site_properties.allowAnonymousViewAbout">
+                                  tal:condition="python:checkPermission('View about')">
                                 by <span tal:omit-tag="" tal:content="first_parent/Creator" i18n:name="author">Author</span>,
                                 <span tal:omit-tag="" tal:content="python:toLocalizedTime(first_parent.ModificationDate(), long_format=1)" i18n:name="date">Modification Date</span>
                                 </span>
@@ -112,7 +112,7 @@
                                  tal:content="similar/pretty_title_or_id" />
                                
                                 <span class="discreet" i18n:translate="results_by_author"
-                                  tal:condition="python: not isAnon or site_properties.allowAnonymousViewAbout">
+                                  tal:condition="python:checkPermission('View about')">
                                 by <span tal:omit-tag="" tal:content="similar/Creator" i18n:name="author">Author</span>,
                                 <span tal:omit-tag="" tal:content="python:toLocalizedTime(similar.ModificationDate, long_format=1)" i18n:name="date">Modification Date</span>
                                 </span>
