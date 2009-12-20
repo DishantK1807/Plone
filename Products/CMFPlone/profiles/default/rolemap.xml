@@ -71,6 +71,15 @@
       <role name="Manager"/>
       <role name="Member"/>
     </permission>
+    <permission name="View about" acquire="True">
+      <role name="Anonymous"/>
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+    <permission name="Add keywords" acquire="True">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
     <permission name="Delete objects" acquire="True">
       <role name="Manager"/>
       <role name="Owner"/>

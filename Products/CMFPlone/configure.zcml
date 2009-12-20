@@ -98,4 +98,14 @@
     <!-- include plone plugins with z3c.autoinclude -->
     <includePlugins package="plone" file="configure.zcml" />
 
+    <permission
+        id="plone.ViewAbout"
+        title="View about"
+        /> 
+
+    <permission
+        id="plone.AddKeywords"
+        title="Add keywords"
+        /> 
+
 </configure>
