@@ -53,7 +53,7 @@
                             isAnon context/@@plone_portal_state/anonymous;
                             normalizeString nocall: context/plone_utils/normalizeString;
                             toLocalizedTime nocall: context/@@plone/toLocalizedTime;
-                            show_about python:checkPermission('View about');
+                            show_about python:checkPermission('View about', context);
                             navigation_root_url context/@@plone_portal_state/navigation_root_url;
                             pas_member context/@@pas_member;">
         <tal:listing condition="folderContents">
@@ -97,7 +97,7 @@
 
                     </h2>
 
-                    <div class="documentByLine" tal:condition="python: checkPermission('View about')">
+                    <div class="documentByLine" tal:condition="python: checkPermission('View about', context)">
                     <tal:event condition="python: item_type == 'Event'">
                         <span tal:condition="python: item_type == 'Event' and item.location"
                               i18n:translate="label_event_byline">

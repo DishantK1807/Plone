@@ -160,7 +160,7 @@
                 </span>
 
             <span class="documentByLine"
-                  tal:condition="python:checkPermission('View about')">
+                  tal:condition="python:checkPermission('View about', context)">
                 <span class="documentAuthor"
                     i18n:translate="label_by_author">
                 by

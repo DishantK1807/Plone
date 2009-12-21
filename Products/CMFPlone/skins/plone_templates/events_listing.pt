@@ -29,7 +29,7 @@
                  home_url python:context.portal_membership.getHomeUrl;
                  isAnon context/@@plone_portal_state/anonymous;
                  portal context/@@plone_portal_state/portal;
-                 show_about python:checkPermission('View about')">
+                 show_about python:checkPermission('View about', context)">
 
 
     <form name="searchresults" action="" method="post" tal:condition="results"
