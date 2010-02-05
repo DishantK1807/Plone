@@ -111,7 +111,7 @@ of this test will try to swiftly cover all forms that need protection, or
 rather all of them which are supposed to get it at the moment.  Let's start
 with the personal preferences:
 
-  >>> browser.open('http://nohost/plone/personalize_form')
+  >>> browser.open('http://nohost/plone/@@personal-preferences')
   >>> browser.getControl('Full Name').value = 'John Doe'
   >>> browser.getControl('E-mail').value = 'john@foo-security.com'
   >>> browser.getControl('Save').click()

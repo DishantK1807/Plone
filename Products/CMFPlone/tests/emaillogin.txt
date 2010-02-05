@@ -116,7 +116,7 @@ created before the policy to use emails as logins was used.  This can
 be remedied be going to the personalize form.  No changes are even
 necessary; the form just needs to be saved:
 
-    >>> browser.open('http://nohost/plone/personalize_form')
+    >>> browser.open('http://nohost/plone/@@personal-preferences')
     >>> browser.getControl('Save').click()
     >>> self.failUnless('Your personal settings have been saved.' in browser.contents)
 
@@ -150,7 +150,7 @@ switched on.
 
 We change the email address.
 
-    >>> browser.open('http://nohost/plone/personalize_form')
+    >>> browser.open('http://nohost/plone/@@personal-preferences')
     >>> browser.getControl('E-mail').value = 'email2@example.org'
     >>> browser.getControl('Save').click()
     >>> self.failUnless('Your personal settings have been saved.' in browser.contents)
@@ -159,10 +159,10 @@ We change the email address.
 
 We change the email address again, as saving the personalize form
 twice in a row can subtly go wrong (personalize.cpy.metadata should
-not traverse to personalize_form but redirect to it):
+not traverse to @@personal-preferences but redirect to it):
 
     >>> browser.url
-    'http://nohost/plone/personalize_form'
+    'http://nohost/plone/@@personal-preferences'
     >>> browser.getControl('E-mail').value = 'email3@example.org'
     >>> browser.getControl('Save').click()
     >>> self.failUnless('Your personal settings have been saved.' in browser.contents)
@@ -194,7 +194,7 @@ The current email address of course works fine for logging in:
 
 Picking the e-mail address of another user should of course fail:
 
-    >>> browser.open('http://nohost/plone/personalize_form')
+    >>> browser.open('http://nohost/plone/@@personal-preferences')
     >>> browser.getControl('E-mail').value = 'username@example.org'
     >>> browser.getControl('Save').click()
     >>> self.failIf('Your personal settings have been saved.' in browser.contents)
