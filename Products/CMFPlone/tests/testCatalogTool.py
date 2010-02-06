@@ -61,11 +61,10 @@ class TestCatalogSetup(PloneTestCase.PloneTestCase):
         self.assertEqual(self.catalog.Indexes['path'].__class__.__name__,
                          'ExtendedPathIndex')
 
-    def testGetObjPositionInParentIsFieldIndex(self):
-        # getObjPositionInParent index should be a FieldIndex
+    def testGetObjPositionInParentIsGone(self):
+        # getObjPositionInParent index doesn't exist anymore...
         # also see TestCatalogOrdering below
-        self.assertEqual(self.catalog.Indexes['getObjPositionInParent'].__class__.__name__,
-                         'FieldIndex')
+        self.failIf('getObjPositionInParent' in self.catalog.Indexes)
 
     def testGetObjSizeInSchema(self):
         # getObjSize column should be in catalog schema
@@ -640,21 +639,6 @@ class TestCatalogOrdering(PloneTestCase.PloneTestCase):
                                    path = '/'.join(self.folder.getPhysicalPath()),
                                    sort_on = 'getObjPositionInParent')
         self.failUnlessEqual([b.getId for b in folder_docs], expected)
-
-    def testAllObjectsHaveOrder(self):
-        #Make sure that a query with sort_on='getObjPositionInParent'
-        #returns the same number of results as one without, make sure
-        #the Members folder is in the catalog and has getObjPositionInParent
-        all_objs = self.catalog()
-        sorted_objs = self.catalog(sort_on='getObjPositionInParent')
-        self.failUnlessEqual(len(all_objs), len(sorted_objs))
-
-        members = self.portal.Members
-        members_path = '/'.join(members.getPhysicalPath())
-        members_query = self.catalog(path=members_path)
-        members_sorted = self.catalog(path=members_path, sort_on = 'getObjPositionInParent')
-        self.failUnless(len(members_query))
-        self.failUnlessEqual(len(members_query),len(members_sorted))
 
 
 class TestCatalogBugs(PloneTestCase.PloneTestCase):
