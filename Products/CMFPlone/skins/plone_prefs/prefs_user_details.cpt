@@ -14,7 +14,7 @@
 <div metal:fill-slot="prefs_configlet_content"
      tal:define="member context/@@plone_portal_state/member;
                  userid python:request.get('userid', member.getId());
-                 account_page python:request.get('page', 'personal-information');
+                 account_page python:request.get('page', '@@personal-information');
                  dummy python:request.set(template.id, 1);
                  mq python:modules['ZTUtils'].make_query;
                  userquery python:mq(userid=userid);
@@ -74,13 +74,22 @@
         <p i18n:translate="label_change_member_properties">
           Change user properties.
         </p>
-        <b tal:content="account_page"/>
 
 
-        <div tal:condition="python: account_page == 'personal-information'"
+        <tal:comment tal:replace="nothing">
+            Refs #9898 kcleong, plone.app.users. The personal info and prefs forms
+            are located in plone.app.users. If the prefs forms are called from this
+            template a 'bare' version is shown.
+            
+            Perhaps it's cleaner (and less hackish) to convert this template to a
+            browser view and not use the bare views, request vars, macro's and tal
+            replace structure.
+        </tal:comment>
+
+        <div tal:condition="python: account_page == '@@personal-information'"
              tal:replace="structure context/personal-information"/>
 
-        <div tal:condition="python: account_page == 'personal-preferences'"
+        <div tal:condition="python: account_page == '@@personal-preferences'"
              tal:replace="structure context/personal-preferences"/>
 
       </div>
