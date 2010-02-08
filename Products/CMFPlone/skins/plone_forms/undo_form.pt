@@ -11,7 +11,7 @@
 
 <body>
 
-<div metal:fill-slot="main" tal:omit-tag=""
+<metal:main fill-slot="main"
      tal:define="transactions python:container.portal_undo.listUndoableTransactionsFor(here);
                  Batch python:modules['Products.CMFPlone'].Batch;
                  DateTime python:modules['DateTime'].DateTime;
@@ -42,7 +42,6 @@
             modified objects that were modified by the transaction.
             </p>
 
-            <!-- Navigation -->
             <div metal:use-macro="context/batch_macros/macros/navigation" />
 
             <table class="listing"
@@ -105,12 +104,11 @@
                    i18n:attributes="value label_undo;"
                    />
 
-            <!-- Navigation -->
             <div metal:use-macro="context/batch_macros/macros/navigation" />
 
         </form>
     </div>
-</div>
+</metal:main>
 
 </body>
 </html>

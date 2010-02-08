@@ -15,13 +15,12 @@
 
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1);
-                             disable_column_one python:request.set('plone.leftcolumn',1);
-                             disable_column_two python:request.set('plone.rightcolumn',1);" />
+                             disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
 </head>
 
 <body>
-<div metal:fill-slot="main"
-     tal:omit-tag=""
+<metal:main fill-slot="main"
      tal:define="use_types_blacklist request/use_types_blacklist | python:True;
                  use_navigation_root request/use_navigation_root | python:True;
                  sort_on request/sort_on|nothing;
@@ -226,7 +225,7 @@
         </div>
     </div>
     
-</div>
+</metal:main>
 </body>
 </html>
 

@@ -9,7 +9,7 @@
 <metal:block fill-slot="top_slot"
              tal:define="dummy python:request.set('disable_border',1)" />
 
-<div metal:fill-slot="main" tal:omit-tag=""
+<metal:main fill-slot="main"
        tal:define="search_view here/@@pas_search;
                    listing_allowed python: checkPermission('List portal members', here);
                    results python:listing_allowed and search_view.searchUsersByRequest(request, sort_by='fullname') or [];
@@ -32,7 +32,6 @@
                 <span i18n:name="number" tal:omit-tag="" tal:content="python:len(results)">234</span> items matching your search terms
             </strong>
 
-            <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
 
             <div>
@@ -60,7 +59,6 @@
             </metal:block>
             </div>
 
-            <!-- Navigation -->
             <div class="visualClear" id="clear-space-before-navigation"><!-- --></div>
 
             <div metal:use-macro="here/batch_macros/macros/navigation" />
@@ -74,6 +72,6 @@
         </div>
     </div>
     
-</div>
+</metal:main>
 
 </html>
