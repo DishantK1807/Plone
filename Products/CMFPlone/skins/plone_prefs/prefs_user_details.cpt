@@ -47,7 +47,7 @@
           &nbsp;
         </div>
 
-    <div id="content" class="documentContent">
+    <div id="content">
       <a name="documentContent"></a>
 
       <div metal:use-macro="context/global_statusmessage/macros/portal_message">
