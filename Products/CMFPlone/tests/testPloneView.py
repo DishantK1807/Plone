@@ -1,10 +1,3 @@
-#
-# Test methods used to make ...
-#
-
-from zope.interface import directlyProvides, noLongerProvides
-
-from Products.CMFPlone.interfaces import INonStructuralFolder
 from Products.CMFPlone.tests import PloneTestCase
 from Products.CMFPlone.tests import dummy
 
@@ -142,44 +135,6 @@ class TestPloneView(PloneTestCase.PloneTestCase):
         view = Plone(self.folder.topic, self.app.REQUEST)
         self.assertEqual(view.getCurrentFolder(), self.folder)
 
-    def testHavePortlets(self):
-        view = Plone(self.portal, self.app.REQUEST)
-        self.assertEqual(False, view.have_portlets('plone.leftcolumn'))
-        self.assertEqual(False, view.have_portlets('plone.rightcolumn'))
-
-    def testDisableColumns(self):
-        view = Plone(self.portal, self.app.REQUEST)
-
-        from zope.component import getUtility
-        from plone.portlets.interfaces import IPortletType
-
-        self.setRoles(('Manager',))
-
-        # first - add some portlets to be sure we have columns
-        portlet = getUtility(IPortletType, name='portlets.Calendar')
-        mapping_left = self.portal.restrictedTraverse('++contextportlets++plone.leftcolumn')
-        mapping_right = self.portal.restrictedTraverse('++contextportlets++plone.rightcolumn')
-        for m in mapping_left.keys():
-            del mapping_left[m]
-        addview_left = mapping_left.restrictedTraverse('+/' + portlet.addview)
-
-        for m in mapping_right.keys():
-            del mapping_right[m]
-        addview_right = mapping_right.restrictedTraverse('+/' + portlet.addview)
-
-        # This is a NullAddForm - calling it does the work
-        addview_left()
-        addview_right()
-
-        self.assertEqual(True, view.have_portlets('plone.leftcolumn'))
-        self.app.REQUEST.set('disable_plone.leftcolumn', 1)
-        self.assertEqual(False, view.have_portlets('plone.leftcolumn'))
-
-        self.assertEqual(True, view.have_portlets('plone.rightcolumn'))
-        self.app.REQUEST.set('disable_plone.rightcolumn', 1)
-        self.assertEqual(False, view.have_portlets('plone.rightcolumn'))
-
-
     def testCropText(self):
         view = Plone(self.portal, self.app.REQUEST)
         self.assertEqual(view.cropText('Hello world', 7), 'Hello ...')
@@ -191,44 +146,6 @@ class TestPloneView(PloneTestCase.PloneTestCase):
         # Must return 6 characters, because 5th character is two byte
         text = u'Koko\u0159\xedn'.encode('utf8')
         self.assertEqual(view.cropText(text, 5), 'Koko\xc5\x99...')
-
-    def testPrepareObjectTabsOnPortalRoot(self):
-        self._invalidateRequestMemoizations()
-        self.loginAsPortalOwner()
-        self.app.REQUEST['ACTUAL_URL'] = self.portal.absolute_url()
-        view = self.portal.restrictedTraverse('@@plone')
-        tabs = view.prepareObjectTabs()
-        self.assertEquals(tabs[0]['id'], 'folderContents')
-        self.assertEquals(['view'], [t['id'] for t in tabs if t['selected']])
-
-    def testPrepareObjectTabsNonFolder(self):
-        self._invalidateRequestMemoizations()
-        self.loginAsPortalOwner()
-        self.app.REQUEST['ACTUAL_URL'] = self.folder.test.absolute_url()
-        view = self.folder.test.restrictedTraverse('@@plone')
-        tabs = view.prepareObjectTabs()
-        self.assertEquals(0, len([t for t in tabs if t['id'] == 'folderContents']))
-        self.assertEquals(['view'], [t['id'] for t in tabs if t['selected']])
-
-    def testPrepareObjectTabsNonStructuralFolder(self):
-        self._invalidateRequestMemoizations()
-        self.loginAsPortalOwner()
-        self.app.REQUEST['ACTUAL_URL'] = self.folder.absolute_url()
-        directlyProvides(self.folder, INonStructuralFolder)
-        view = self.folder.restrictedTraverse('@@plone')
-        tabs = view.prepareObjectTabs()
-        noLongerProvides(self.folder, INonStructuralFolder)
-        self.assertEquals(0, len([t for t in tabs if t['id'] == 'folderContents']))
-        self.assertEquals(['view'], [t['id'] for t in tabs if t['selected']])
-
-    def testPrepareObjectTabsDefaultView(self):
-        self._invalidateRequestMemoizations()
-        self.loginAsPortalOwner()
-        self.app.REQUEST['ACTUAL_URL'] = self.folder.test.absolute_url() + '/edit'
-        view = self.folder.test.restrictedTraverse('@@plone')
-        tabs = view.prepareObjectTabs()
-        self.assertEquals(0, len([t for t in tabs if t['id'] == 'folderContents']))
-        self.assertEquals(['edit'], [t['id'] for t in tabs if t['selected']])
 
     def testSiteEncoding(self):
         view = Plone(self.portal, self.app.REQUEST)
