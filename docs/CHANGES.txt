@@ -8,6 +8,9 @@ Changelog
 4.0b2 - Unreleased
 ------------------
 
+- Adapt the advanced search form to integrate with the basic one.
+  [dukebody]
+
 - Fixed livesearch_reply.py to give the context to ts.translate method.
   [vincentfretin]
 
