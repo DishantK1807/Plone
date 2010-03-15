@@ -28,7 +28,7 @@
 
         <metal:define define-macro="form">
 
-        <form action="search"
+        <form action="@@search"
               class="enableAutoFocus"
               method="get"
               name="search"
