@@ -28,7 +28,7 @@
 
         <metal:define define-macro="form">
 
-         <div action="search"
+         <form action="search"
               class="enableAutoFocus"
               method="get"
               name="search"
@@ -41,19 +41,19 @@
 
             <input type="hidden" name="advanced_search" value="True" />
         
-                <div class="field">
+                <!-- <div class="field">
                     <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
 
                     <div class="formHelp" i18n:translate="help_search_text">
-		      Multiple words may be found by combining
+              Multiple words may be found by combining
                       them with <strong>AND</strong>
                       and <strong>OR</strong>
-		      in the field above.
+              in the field above.
                       The text in this field will be matched with
                       items' contents, title and description.
                     </div>
 
-                </div>
+                </div> -->
 
             
                 <div class="field"
@@ -432,7 +432,7 @@
 
 
         
-         </div>
+         </form>
 
         </metal:define>
     </div>
