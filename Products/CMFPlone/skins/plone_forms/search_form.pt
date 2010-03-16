@@ -39,7 +39,7 @@
                           field_collapsible_class  python:'field'+(options.collapse() and ' collapsible' or '');
                           first_call  not:request/advanced_search|nothing">
 
-            <input type="hidden" name="advanced_search" value="True" />
+                <input type="hidden" name="advanced_search" value="True" />
         
                 <div class="field" id="advanced-search-field">
                     <label for="SearchableText" i18n:translate="label_search_text">Search text</label>
