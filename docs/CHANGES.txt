@@ -8,8 +8,32 @@ Changelog
 4.0b2 - Unreleased
 ------------------
 
+- Simplify folder_tabular_view to use the folder_listing macros.
+  [elro]
+
+- folder_listing should batch for collections, like folder_tabular_view.
+  This was introduced to fix #7937 but it no longer seems to be a problem.
+  [elro]
+
+- Simplified the "Event when" i18n introduced in 4.0b1.
+  [vincentfretin]
+
+- Fixed DYNAMIC_CONTENT in heading_prefs_user_details message.
+  [vincentfretin]
+
+- Updated the table_sorter.js to use Unicode for its arrows instead of images.
+  Also made it more robust, so it doesn't fail if you have two columns with 
+  the same name. This refs http://dev.plone.org/plone/ticket/10352
+  [davisagli, limi]
+  
 - Adapt the advanced search form to integrate with the basic one.
-  [dukebody]
+  [dukebody]  
+
+- Stop removing the $ alias for jQuery, since many plugins rely on it. Users
+  worried about conflicts with other libraries can customize
+  jquery-integration.js and set jq = jQuery.noConflict() again, instead of
+  jq = jQuery
+  [davisagli, limi]
 
 - For Managers, make default_error_message display tracebacks inline rather
   than linking to them.
@@ -45,8 +69,8 @@ Changelog
 ------------------
 
 - "Event when" improved for better i18n.  
-   This closes http://dev.plone.org/plone/ticket/10196
-   [gotcha]
+  This closes http://dev.plone.org/plone/ticket/10196
+  [gotcha]
 
 - Adjust the tests now that `DateTime` objects are stored with a time zone.
   Refs http://dev.plone.org/plone/ticket/10141
