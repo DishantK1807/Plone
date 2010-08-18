@@ -3,9 +3,9 @@ import os.path
 
 version = '4.0rc2'
 
-setup(name='Plone',
+setup(name='Products.CMFPlone',
       version=version,
-      description="The Plone Content Management System",
+      description="The Plone Content Management System (core)",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "CHANGES.txt")).read(),
       classifiers=[
