@@ -234,7 +234,7 @@ class RegistrationTool(PloneBaseTool, BaseTool):
         return self.getPassword(length, salt)
 
     security.declarePublic('mailPassword')
-    def mailPassword(self, forgotten_userid, REQUEST):
+    def mailPassword(self, login, REQUEST):
         """ Wrapper around mailPassword """
         membership = getToolByName(self, 'portal_membership')
         if not membership.checkPermission('Mail forgotten password', self):
@@ -242,20 +242,10 @@ class RegistrationTool(PloneBaseTool, BaseTool):
 
         utils = getToolByName(self, 'plone_utils')
         props = getToolByName(self, 'portal_properties').site_properties
-        emaillogin = props.getProperty('use_email_as_login', False)
-        if emaillogin:
-            member = get_member_by_login_name(self, forgotten_userid)
-        else:
-            member = membership.getMemberById(forgotten_userid)
+        member = get_member_by_login_name(self, login)
 
         if member is None:
             raise ValueError(_(u'The username you entered could not be found.'))
-
-        if emaillogin:
-            # We use the member id as new forgotten_userid, because in
-            # resetPassword we ask for the real member id too, instead of
-            # the login name.
-            forgotten_userid = member.getId()
 
         # assert that we can actually get an email address, otherwise
         # the template will be made with a blank To:, this is bad
@@ -274,7 +264,7 @@ class RegistrationTool(PloneBaseTool, BaseTool):
         # render the message ourselves and send it from here (where we
         # don't need to worry about 'UseMailHost' permissions).
         reset_tool = getToolByName(self, 'portal_password_reset')
-        reset = reset_tool.requestReset(forgotten_userid)
+        reset = reset_tool.requestReset(member.getId())
 
 
         encoding = getUtility(ISiteRoot).getProperty('email_charset', 'utf-8')
@@ -369,7 +359,7 @@ _TESTS = ( ( re.compile("^[0-9a-zA-Z\.\-\_\+\']+\@[0-9a-zA-Z\.\-]+$")
            , True
            , "Failed d"
            )
-         , ( re.compile(".\.\-.|.\-\..|.\.\..|.\-\-.")
+         , ( re.compile(".\.\-.|.\-\..|.\.\..|.!(xn)\-\-.")
            , False
            , "Failed e"
            )
@@ -377,7 +367,7 @@ _TESTS = ( ( re.compile("^[0-9a-zA-Z\.\-\_\+\']+\@[0-9a-zA-Z\.\-]+$")
            , False
            , "Failed f"
            )
-         , ( re.compile(".\.([a-zA-Z]{2,3})$|.\.([a-zA-Z]{2,4})$")
+         , ( re.compile("(.\.([a-zA-Z]{2,}))$|(.\.(xn--[0-9a-z]+))$")
            , True
            , "Failed g"
            )

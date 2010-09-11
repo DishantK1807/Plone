@@ -5,8 +5,364 @@
 Changelog
 =========
 
-4.0b2 - Unreleased
+4.0.1 - Unreleased
+-------------------
+
+- Successful completion of contact form ended in redirect to 'undefined'
+  when using popups. Fixed by just closing.
+  Fixes https://dev.plone.org/plone/ticket/11090
+  [smcmahon]
+
+- Fixed i18n of the Upgrade hellip button in plone-overview.pt.
+  [vincentfretin]
+
+- Fix a malformed list comprehension in failsafe_login_form.cpt
+  [esteele]
+
+- Modified plone.css.py script to correctly show contents for z3 style resources, by
+  using portal_css.getInlineResource.
+  This fixes http://dev.plone.org/plone/ticket/10864
+  [mr_savage]
+
+- Fixed https://dev.plone.org/plone/ticket/10956 - prevent content of the
+  types listed in typesUseViewActionInListings from being selected as default
+  pages.
+  [elro]
+
+- Validate new group names using the isMemberIdAllowed method of the
+  registration tool. This fixes http://dev.plone.org/plone/ticket/10897.
+  [davisagli]
+
+4.0 - 2010-08-28
+----------------
+
+- Tag 4.0 final.
+  [esteele]
+
+4.0rc1 - 2010-08-05
+-------------------
+
+- Fixed http://dev.plone.org/plone/ticket/10790
+  "popupforms.js causes javascript error on IE7"
+  [smcmahon]
+
+- Limit number of matches looked up during live search for speedier replies.
+  [witsch]
+
+- Use the standard libraries doctest module.
+  [hannosch]
+
+- Don't open content_status_history in a popup, it requires template specific
+  JS and CSS to be loaded. This refs http://dev.plone.org/plone/ticket/10726.
+  [hannosch]
+
+- No longer mention `textile` as a supported markup style. We don't ship with
+  the required Python packages by default. This closes
+  http://dev.plone.org/plone/ticket/10690.
+  [hannosch]
+
+- Fix the table of contents generation script to include h1 tags from the
+  content body. Fixes http://dev.plone.org/plone/ticket/10755
+  [davisagli]
+
+- Update `plone-upgrade.pt` to explicitly check if a Plone instance has
+  been downgraded since the database was created. This fixes:
+  http://dev.plone.org/plone/ticket/10220
+  Thanks to davidblewett for the patch.
+  [claytron, davisagli]
+
+- Update license to GPL version 2 only.
+  [hannosch]
+
+- Use Unicode characters instead of HTML entities in the default front page
+  text. This closes http://dev.plone.org/plone/ticket/10084.
+  [hannosch]
+
+- Replace the `manage_zmi_logout` link and page with a nicer Plone specific
+  implementation.
+  [hannosch]
+
+- Fixed the visual appearance of the `logged_out` page.
+  [hannosch]
+
+- Stop issuing deprecation warnings about action icons in our default install.
+  [hannosch]
+
+- Silence the ISO8601 warning until we fixed all of Plone Core. This refs
+  http://dev.plone.org/plone/ticket/10322.
+  [hannosch]
+
+- Avoid deprecation warning in sendmail patch and require at least Zope 2.12.9.
+  [hannosch]
+
+- Removed long unused ``ie5fixes.js``. This refs
+  http://dev.plone.org/plone/ticket/10287.
+  [hannosch]
+
+- Be a bit less noisy in GenericSetup handlers and don't log a
+  ``Nothing to import`` message for our own handlers.
+  [hannosch]
+
+- Fix broken userid/login name in the password reset code. Fixes
+  http://dev.plone.org/plone/ticket/10767
+  [wichert]
+
+4.0b5 - 2010-07-07
 ------------------
+
+- Don't show the site's logo on the upgrade screen. Trying to render it can
+  cause problems on not yet upgraded sites.
+  [hannosch]
+
+- No longer show relevance percentage numbers in search results. What matters
+  to users is the search results order; the numbers are meaningless.
+  [hannosch]
+
+- No longer include a searchterm parameter in the query string when linking
+  from the search results page, as it will be picked up from the referer.
+  [davisagli]
+
+- Fix the highlightsearchterms script to not apply highlighting within
+  textareas, to avoid data loss. Fixes http://dev.plone.org/plone/ticket/10573
+  [davisagli]
+
+- Improved comment display and behavior: Now opens "Add comment" in an
+  overlay, no longer insists on a Subject for every comment, and more readable
+  layout. Also improved the error messages.
+  [limi]
+
+- Switching the default modal window effect to be a white-out instead of a
+  darkened effect. With large windows, the darkening is very distracting, and
+  it also reminds people of the UAC prompts from Windows Vista/7, which is not
+  a good thing. ;)
+  [limi]
+
+- Removing action links from Events, since they are in the template (and were
+  never supposed to have actions in the first place). This fixes
+  http://dev.plone.org/plone/ticket/10540.
+  [limi]
+
+- Better icon for the theme control panel. (Thanks, Tango!)
+  [limi]
+
+- Added normalizeString to the Plone view interface, where the declaration was
+  missing.
+  [davisagli]
+
+- Add a contenttype class to the items listed in select_default_page.cpt, so
+  they can get sprited icons. Fixes http://dev.plone.org/plone/ticket/10577.
+  [davisagli]
+
+- Add a contenttype class to the links in the livesearch results, so that
+  they can get sprited icons. Fixes http://dev.plone.org/plone/ticket/10512.
+  [davisagli]
+
+- Avoid using the deprecated five:implements directive.
+  [hannosch]
+
+- Avoid testing dependency on zope.app.testing.
+  [hannosch]
+
+- No longer use the extra argument to the functional tests publish method.
+  [hannosch]
+
+- Make the jQueryTools overlay configuration options in popupforms.js be
+  the default overlay configuration for jQueryTools so that popup forms in
+  other add ons look similar.
+  [smcmahon]
+
+4.0b4 - 2010-06-03
+------------------
+
+- Fix FactoryTool to mangle REQUEST.BASEn correctly.
+  [elro]
+
+- Updated the description_user_management default message in
+  plone_deprecated/prefs_users_overview.cpt to be the same as
+  plone/app/controlpanel/usergroups_usersoverview.pt
+  [vincentfretin]
+
+- Ensure text is shown for the various Collection views. This fixes
+  http://dev.plone.org/plone/ticket/10226
+  [pelle]
+
+- Set the correct meta_type for files and images.
+  [hannosch]
+
+- Removed the Large Plone Folder portal_type and LargePloneFolder class.
+  Instead, use a normal ATFolder from plone.app.folder, with its ``ordering``
+  attribute set to u'unordered'. Existing Large Plone Folders will get
+  migrated when upgrading from older versions of Plone.
+  [davisagli]
+
+- Removed empty HTML tags from listings when an item in the listing has no
+  description.
+  [spliter]
+
+- Fix bad test for valid paste data in object_paste.
+  [wichert]
+
+- Remove deprecated IndexIterator class and tabindex html attribute
+  [edegoute]
+
+- Use a mask to visually highlight modal overlays. Configurable in
+  popupforms.js. Set a common set of configuration options, defaulting
+  to overlays that use absolute positioning.
+  [smcmahon]
+
+- Update the ZMI security tab warning so it doesn't display outside of a Plone
+  site.  This fixes http://dev.plone.org/plone/ticket/10521.
+  [davisagli]
+
+- Get configlet icons directly from the action, rather than using the
+  getIconFor helper.  This breaks the backwards-compatible fallback to the
+  action icons tool, but avoids re-evaluating all action conditions for each
+  configlet.
+  [davisagli]
+
+- Report expiration of password resets for registration as an absolute time,
+  rather than a number of hours.
+  [davisagli]
+
+4.0b3 - 2010-05-03
+------------------
+
+- "(Requires Javascript)" is now translatable in accessibility-info.pt.
+  This closes http://dev.plone.org/plone/ticket/10475
+  [vincentfretin]
+
+- Revert changes from changeset 34269, which prevented the calendar widget
+  from properly saving results. Add another hidden field for the purposes
+  of handling the label's for attribute.
+  Fixes http://dev.plone.org/plone/ticket/10450
+  [esteele]
+
+- Update capitalization of i18n:translate-d tags in deprecated templates to
+  avoid i18ndude warnings on new templates.
+  [esteele]
+
+- Updated default_error_message.pt to provide a better 404 Error page as per
+  http://dev.plone.org/plone/ticket/8667
+  [cwainwright, dunlapm]
+
+- Fixed newsitem_view to not render the caption if the field is empty.
+  [limi]
+
+- Moved old GIF variants of the icons to plone_deprecated, since Plone itself
+  uses the PNG variants now.
+  [limi]
+
+- Added touch_icon.png for iPhone/iPad home screen support.
+  [limi]
+
+- Fixed clipped icons for most of the content type sprites by centralizing the
+  definitions and setting line-height to 2em. There's still an issue where
+  tal:replace="structure item_icon/html_tag" renders an img tag without src or
+  points to the root, which makes the layout have an empty element. Probably
+  needs to be fixed in the html_tag expression (e.g. if there isn't anything
+  there, don't render). Should be good enough for beta3, but needs to be fixed
+  before RC. See LiveSearch results + Advanced Workflow + Collection view
+  (e.g. "Events") for examples of this. References
+  http://dev.plone.org/plone/ticket/10409,
+  http://dev.plone.org/plone/ticket/10466
+  [limi]
+
+- Don't take values directly from the request in ``getFolderContents``.
+  request.form can include arbitrary data and request.other contains a whole
+  lot of data, which isn't valid catalog indexes.
+  [hannosch]
+
+- Don't send Bcc header with Mailhost.secureSend. Renamed CC header to Cc.
+  [vincentfretin]
+
+- Fixed folder_listing.pt so it doesn't stringify and then reparse the start
+  and end dates of events (this also fixes a timezone issue,
+  http://dev.plone.org/plone/ticket/10445)
+  [davisagli]
+
+- Fixed folder_listing.pt so that it shows event dates in a cleaner way
+  (no more redundant listing of times + dates when and event is on one day
+  has same start + end time)
+  [jonstahl]
+
+- Change the title of the Users folder to be more in line with its actual
+  function.
+  Fixes: http://dev.plone.org/plone/ticket/9693
+  [cwainwright]
+
+- Inject contentFilter as `**kw` params to topic's queryCatalog and not as first
+  argument which should be the REQUEST, if given. With that in place, batching
+  on contentFiltered topics works again.
+  Fixes: http://dev.plone.org/plone/ticket/10428
+  [thet]
+
+- Template for editing user preferences (prefs_user_details) is replaced by
+  personal information and preferences forms from plone.app.users. Moved
+  prefs_user_details and prefs_user_edit to deprecated skins.
+  http://dev.plone.org/plone/ticket/10327
+  [kcleong]
+
+4.0b2 - 2010-03-09
+------------------
+
+- Explicitly check that a searchterm was provided before adding it to the
+  query string.
+  Fixes http://dev.plone.org/plone/ticket/9025
+  (Port of [35909])
+  [blueaidan]
+
+- Batch folderContents in folder_listing's listing macro if it's not already
+  batched when passed in. This closes http://dev.plone.org/plone/ticket/10401
+  [davisagli]
+
+- Added overlays for Rename and selecting default folder views.
+  [limi]
+
+- Made the core content types use CSS sprites instead of individual images,
+  which cuts down the number of image HTTP requests from 11 to 2.
+  This fixes http://dev.plone.org/plone/ticket/10403
+  [limi]
+
+- Cleaned up the type descriptions, and removed the ones where that are
+  self-evident or redundant.
+  [limi]
+
+- Fix several issues in the RSS template: don't get the logo name from
+  base_properties, correctly fetch the full text and last modified date, and
+  only specify the publishing date in the output.
+  [davisagli]
+
+- Add and adapt tests for moving dates bug which was caused by date
+  conversion without respect to Daylight Saving Times.
+  Fix for http://dev.plone.org/plone/ticket/10141
+  [thet]
+
+- Removed msgid for "Site Setup" message in portlet_prefs.pt
+  and plone_control_panel.pt.
+  [vincentfretin]
+
+- Added in support WebKit- and Gecko-based small-screen devices
+  (iPhone, Android, Firefox Mobile)
+  [limi]
+
+- Make prefs_main_template fill portlets_one_slot instead of column_one_slot
+  to add its portlet, for compatibility with Sunburst.  Also make it
+  unnecessary for custom configlet templates to set display_border.
+  [davisagli]
+
+- Adjusted viewlet configuration so that the Sunburst theme uses the viewlets
+  defined in plone.app.layout, and the Classic theme overrides that
+  configuration to achieve the old viewlet positions.
+  [davisagli]
+
+- batch_macros.pt: Use request/ACTUAL_URL instead of context/absolute_url as
+  batching base url so that batching works for diffent views and FSPageTemplates
+  appended to context/absolute_url.
+  The approach ${context/absolute_url}/${template/getId} didn't work for views.
+  [thet]
+
+- Fix columns in prefs_main_template.
+  [davisagli]
 
 - Use zope.app.locales >= 3.6.0, this package have now a configure.zcml
   which register the translations, we use it now.
@@ -16,10 +372,6 @@ Changelog
 
 - Fix argument order in translate Python script.
   [davisagli]
-
-- Hide email field in personal information page when one is loged in 
-  with email address. refs http://dev.plone.org/plone/ticket/10363
-  [terapyon]
 
 - Simplify folder_tabular_view to use the folder_listing macros.
   [elro]
@@ -35,7 +387,7 @@ Changelog
   [vincentfretin]
 
 - Updated the table_sorter.js to use Unicode for its arrows instead of images.
-  Also made it more robust, so it doesn't fail if you have two columns with 
+  Also made it more robust, so it doesn't fail if you have two columns with
   the same name. This refs http://dev.plone.org/plone/ticket/10352
   [davisagli, limi]
   
@@ -81,7 +433,7 @@ Changelog
 4.0b1 - 2010-03-08
 ------------------
 
-- "Event when" improved for better i18n.  
+- "Event when" improved for better i18n.
   This closes http://dev.plone.org/plone/ticket/10196
   [gotcha]
 
@@ -110,14 +462,14 @@ Changelog
 - Add an HTML id to the "add group" form.
   [stuttle]
 
-- Moved the tal:condition from the <img> tag to <a> tag in folder_summary_view, 
+- Moved the tal:condition from the <img> tag to <a> tag in folder_summary_view,
   to remove unnecessary empty <a> tags when no image exists.
   References http://dev.plone.org/plone/ticket/10251
   [miguelitosm]
 
 - Removed the 'ListFolderContents' permission from all workflows and limit the
   default permission to Manager, Owner, Reviewer, Editor and Contributor.
-  It should not change with workflow state, it's an edit/admin view that you 
+  It should not change with workflow state, it's an edit/admin view that you
   either should have or not.
   References http://dev.plone.org/plone/ticket/10236
   [tomster]
@@ -157,7 +509,7 @@ Changelog
   i.e. without searching the skin.
   [witsch]
 
-- Removed redundant 'configlet' class from prefs_group_details.pt and 
+- Removed redundant 'configlet' class from prefs_group_details.pt and
   prefs_user_details.pt
   [spliter]
 
@@ -174,12 +526,12 @@ Changelog
   tests, where automatically included packages can cause leakage of state or
   unrelated errors if Plone's ZCML is loaded. To disable auto-inclusion,
   you can add a ZCML statement like the following::
-  
+
     <configure xmlns="http://namespaces.zope.org/zope"
                xmlns:meta="http://namespaces.zope.org/meta">
         <meta:provides feature="no-autoinclude" />
     </configure>
-  
+
   You need to do this "early", i.e. before Plone's ZCML is loaded.
   [optilude]
 
@@ -250,7 +602,7 @@ Changelog
 
 - Re-factored plone_prefs/ templates to follow the recent markup conventions.
   References http://dev.plone.org/plone/ticket/9981
-  [spliter] 
+  [spliter]
 
 - Added 'All content' blog like view for folderish types.
   [elro]
@@ -264,7 +616,7 @@ Changelog
 
 - Add current portal type to the body css class like the section
   and template css class's.
-  Refs https://dev.plone.org/plone/ticket/8777.
+  Refs http://dev.plone.org/plone/ticket/8777.
   [pelle]
 
 - Deprecate the portlets_fetcher and macro_renderer templates.
@@ -357,7 +709,7 @@ Changelog
 
 - Make QuickInstallerTool.upgradeProduct() able to handle upgradeSteps
   directive.
-  Closes http://dev.plone.org/plone/ticket/9455 
+  Closes http://dev.plone.org/plone/ticket/9455
   [cah190]
 
 - Update jquery.js to use jquery-1.4.min.js. The change is in
@@ -421,20 +773,20 @@ Changelog
   This refs http://dev.plone.org/plone/ticket/10072.
   [hannosch]
 
-- Updated markup of document_view and event_view to follow conventions 
-  in main_template. 
-  References https://dev.plone.org/plone/ticket/9981
+- Updated markup of document_view and event_view to follow conventions
+  in main_template.
+  References http://dev.plone.org/plone/ticket/9981
   [spliter]
 
-- Just a markup polishing - <metal> tags don't need explicit "metal" for 
+- Just a markup polishing - <metal> tags don't need explicit "metal" for
   defining slots.
   [spliter]
 
-- plone.belowcontent should not replace div#viewlet-below-content but 
+- plone.belowcontent should not replace div#viewlet-below-content but
   rather add content into it
   [spliter]
 
-- Moves plone.abovecontent and plone.belowcontent viewlet managers actually 
+- Moves plone.abovecontent and plone.belowcontent viewlet managers actually
   above and below content respectively.
   Closes http://dev.plone.org/plone/ticket/10081
   [spliter]
@@ -449,7 +801,7 @@ Changelog
   @@usergroup-groupprefs page when creating a new groups, and postback to
   itself when modifying existing groups.
   [esteele]
-  
+
 - Add popup for add group form.
   [smcmahon]
 
@@ -483,7 +835,7 @@ Changelog
   [esteele]
 
 - Update prefs_user_details.cpt and prefs_user_memberships.cpt templates to
-  fit the current styling of other configuration screens. 
+  fit the current styling of other configuration screens.
   Closes http://dev.plone.org/plone/ticket/9660
   [esteele]
 
@@ -491,7 +843,7 @@ Changelog
   Refs http://dev.plone.org/plone/ticket/9489.
   [dukebody]
 
-- Removed explicit macros calls for related items from templates. 
+- Removed explicit macros calls for related items from templates.
   Closes http://dev.plone.org/plone/ticket/9985
   [spliter]
 
@@ -574,7 +926,7 @@ Changelog
   OFS folders).
   [davisagli]
 
-- Move prefs_navigation_form to plone.app.controlpanel as 
+- Move prefs_navigation_form to plone.app.controlpanel as
   @@navigation-controlpanel. The form and its cpy script have been deprecated.
   [esteele]
 
@@ -588,7 +940,7 @@ Changelog
 
 - RegistrationTool's registeredNotify now sends mail immediately instead of
   waiting until the end of the transaction. This puts the function back in
-  line with the way the method worked in previous versions of Plone. 
+  line with the way the method worked in previous versions of Plone.
   http://dev.plone.org/plone/ticket/9871
   [esteele]
 
@@ -606,7 +958,7 @@ Changelog
   http://dev.plone.org/plone/ticket/9366
   [spliter]
 
-- moved "Manage portlets" fallback link out of main_template to 
+- moved "Manage portlets" fallback link out of main_template to
   plone.manage_portlets_fallback viewlet
   http://dev.plone.org/plone/ticket/9808
   [spliter]
@@ -682,7 +1034,7 @@ Changelog
 
 - Moved all CSS styles to plonetheme.classic package. plonetheme.sunburst is
   now default theme, both are installed by default, classic theme may be
-  uninstalled, sunburst theme can't be uninstalled. 
+  uninstalled, sunburst theme can't be uninstalled.
   [limi, naro]
 
 - Added site_encoding and bodyClass methods to the @@plone view. These should
@@ -700,7 +1052,7 @@ Changelog
 - Changed default message for label_show_all msgid from "Show all..." to
   "Show all items" in livesearch_reply.py to be the same as in folder_contents
   view which use the same msgid.
-  [vincentfretin]  
+  [vincentfretin]
 
 - Use the new ``pas_member`` view in the overview templates. This avoids
   getting the member info for each item in the listing from the PAS internals.
@@ -710,7 +1062,7 @@ Changelog
   Fixes http://dev.plone.org/old/plone/ticket/9659
   [alecm]
 
-- Deprecated register.py and join_form.cpt. This functionality has been moved 
+- Deprecated register.py and join_form.cpt. This functionality has been moved
   to plone.app.users.
   [esteele]
 
@@ -781,7 +1133,7 @@ Changelog
 - Moved happytalk in site_feedback_template.pt and author_feedback_template.pt
   to bottom of emails, per http://dev.plone.org/plone/ticket/7001
   [jonstahl]
-  
+
 - Added precedence: bulk header to several PasswordReset's
   mail_password_template, per http://dev.plone.org/plone/ticket/7000 - still
   haven't added this header to CMFPlone templates.
@@ -810,7 +1162,7 @@ Changelog
   [hannosch]
 
 - Changed search.pt (plone_forms) and rss_template.pt (plone_templates) so they
-  display fullname instead of creator. 
+  display fullname instead of creator.
   [ralphjacobs]
 
 - Cleaned up old an unused scripts to edit the plone site object itself. This
@@ -914,14 +1266,14 @@ Changelog
   portal creation time.
   [hannosch]
 
-- Make use of the new `authenticated` flag for ResourceRegistries entries 
-  instead of specifying verbose condition expressions. 
+- Make use of the new `authenticated` flag for ResourceRegistries entries
+  instead of specifying verbose condition expressions.
   [hannosch]
 
-- "Categories" are now "Tags", in line with common usage and terminology. 
+- "Categories" are now "Tags", in line with common usage and terminology.
   [limi]
 
-- Changed workflow actor variable from user/getUserName to user/getId. 
+- Changed workflow actor variable from user/getUserName to user/getId.
   http://dev.plone.org/plone/ticket/7398.
   [hannosch]
 
@@ -935,11 +1287,11 @@ Changelog
   inside Plone sites. The CMFDefault types are no longer supported.
   [hannosch]
 
-- Move prefs_users_overview and prefs_groups_overview pages to 
+- Move prefs_users_overview and prefs_groups_overview pages to
   plone.app.controlpanel (@@usergroup-userprefs and @@usergroup-groupprefs
   respectively).
   [esteele]
-  
+
 - Adjust to CMF's splitting of CMFCatalogAware into separate CatalogAware,
   WorkflowAware, and OpaqueItemManager mixins.
   [davisagli]
@@ -1023,7 +1375,7 @@ Changelog
   has always come from Products.CMFDynamicViewFTI.
   [hannosch]
 
-- Use the `replace_local_role_manager` method from borg.localrole. 
+- Use the `replace_local_role_manager` method from borg.localrole.
   [hannosch]
 
 - Deprecate our own IOrderedContainer interface in favor of the original one
@@ -1046,14 +1398,14 @@ Changelog
   only care about the permissions of the actual target folder.
   [hannosch]
 
-- Use the new `icon_expr` for specifying icons for content types instead. 
+- Use the new `icon_expr` for specifying icons for content types instead.
   [hannosch]
 
 - Prefer path expressions over Python expressions for persistent expressions.
   [hannosch]
 
-- Fixed the content_status_history form to include the required content table. 
-  The old_folder_contents template is gone. 
+- Fixed the content_status_history form to include the required content table.
+  The old_folder_contents template is gone.
   [hannosch]
 
 - Fixed the browserDefault tests to use actual traversal to look up views
@@ -1117,7 +1469,7 @@ Changelog
 - Turned deprecated string 'Unauthorized' exceptions into real exceptions.
   [davisagli]
 
-- Removed module alias for the ploneview formerly named plone. 
+- Removed module alias for the ploneview formerly named plone.
   [hannosch]
 
 - Clarified content language versus response language handling.
@@ -1133,43 +1485,43 @@ Changelog
   navtree_preferences.  Request from theming sprinter at ploneconf2008.
   [MatthewWilkes]
 
-- Made the fieldset tabbing code faster on startup (especially for IE) by 
-  constructing a big string and creating the HTML elements in one bunch 
-  instead of using DOM functions to add them step by step. 
+- Made the fieldset tabbing code faster on startup (especially for IE) by
+  constructing a big string and creating the HTML elements in one bunch
+  instead of using DOM functions to add them step by step.
   [fschulze]
 
-- Added uniqueItemIndex as a method to the plone view. 
+- Added uniqueItemIndex as a method to the plone view.
   [hannosch]
 
 - Added back ``global_defines.pt`` as a template including the (empty)
-  macro definition. This allows main templates to be compatible with both 
-  Plone 3.x and 4.0 at the same time. 
+  macro definition. This allows main templates to be compatible with both
+  Plone 3.x and 4.0 at the same time.
   [hannosch]
 
-- Removed ``global_defines.pt`` and the globalize-hack. Templates 
-  now bring in their tool and function dependency using the 
+- Removed ``global_defines.pt`` and the globalize-hack. Templates
+  now bring in their tool and function dependency using the
   standard utility views or via normal Acquisition of tools.
   [malthe, hannosch]
 
-- Fixed test for editing language fields. This refs 
-  http://dev.plone.org/plone/ticket/8342. 
+- Fixed test for editing language fields. This refs
+  http://dev.plone.org/plone/ticket/8342.
   [hannosch]
 
-- Removed deprecated context parameter in getDefaultPage and 
-  isDefaultPage in utils.py. 
+- Removed deprecated context parameter in getDefaultPage and
+  isDefaultPage in utils.py.
   [maurits]
 
-- Made sure the export order of the factory tool GS step is consistent. 
-  This closes http://dev.plone.org/plone/ticket/7892. 
+- Made sure the export order of the factory tool GS step is consistent.
+  This closes http://dev.plone.org/plone/ticket/7892.
   [hannosch]
 
-- Replaced lock_icon with smaller version with one third of the size. 
+- Replaced lock_icon with smaller version with one third of the size.
   [hannosch]
 
-- Removed backwards-compatibility code in calendar_formfields.js introduced 
-  in Plone 3.1.4. Any date-time picker not based on calendar_macros.pt 
-  using the old-style (no plone.jscalendar namespace) methods will no 
-  longer work until adjusted. 
+- Removed backwards-compatibility code in calendar_formfields.js introduced
+  in Plone 3.1.4. Any date-time picker not based on calendar_macros.pt
+  using the old-style (no plone.jscalendar namespace) methods will no
+  longer work until adjusted.
   [mj]
 
 - Don't show relevance information of one percent in the search form,
@@ -1202,7 +1554,7 @@ Changelog
   http://dev.plone.org/plone/ticket/8186
   [hannosch]
 
-- Avoid an empty span in folder_summary_view. This closes 
+- Avoid an empty span in folder_summary_view. This closes
   http://dev.plone.org/plone/ticket/8181
   [hannosch]
 
@@ -1224,89 +1576,89 @@ Changelog
   closes http://dev.plone.org/plone/ticket/8096
   [hannosch]
 
-- Include link to the plone.org upgrade manual from the migration tool 
+- Include link to the plone.org upgrade manual from the migration tool
   inside the ZMI. This closes http://dev.plone.org/plone/ticket/8075
   [hannosch]
 
-- Clarify help text in content_status_history. This closes 
+- Clarify help text in content_status_history. This closes
   http://dev.plone.org/plone/ticket/8218
   [hannosch]
 
-- Let default RSS list publication date, not modified date and include 
+- Let default RSS list publication date, not modified date and include
   the body text. This closes http://dev.plone.org/plone/ticket/7952
   [hannosch]
 
-- Updated the check_id script to disallowed content by the name of 
+- Updated the check_id script to disallowed content by the name of
   properties. This closes http://dev.plone.org/plone/ticket/6005
   [hannosch]
 
-- Fixed invalid markup in membershipRolemapping.dtml. This closes 
+- Fixed invalid markup in membershipRolemapping.dtml. This closes
   http://dev.plone.org/plone/ticket/6222
   [hannosch]
 
-- Removed long unused getObjPositionInParent.py script which wasn't 
-  functional at all anymore, since it used Zope 2 interfaces. Also 
-  simplified the getObjPositionInParent function in the CatalogTool. 
+- Removed long unused getObjPositionInParent.py script which wasn't
+  functional at all anymore, since it used Zope 2 interfaces. Also
+  simplified the getObjPositionInParent function in the CatalogTool.
   This closes http://dev.plone.org/plone/ticket/6081
   [hannosch]
 
-- Removed getActionObject call from createObject script. It was a private 
-  method and would always fail. This closes 
+- Removed getActionObject call from createObject script. It was a private
+  method and would always fail. This closes
   http://dev.plone.org/plone/ticket/7172
   [hannosch]
 
-- Removed testing of sendto action visibilty from sendto.cpy. There's a 
-  permission to use to restrict sending mail. This closes 
+- Removed testing of sendto action visibilty from sendto.cpy. There's a
+  permission to use to restrict sending mail. This closes
   http://dev.plone.org/plone/ticket/5377
   [hannosch]
 
-- Disable external editor icon for structural folders. This closes 
+- Disable external editor icon for structural folders. This closes
   http://dev.plone.org/plone/ticket/6871
   [hannosch]
 
-- Updated the check_id script to disallowed content by the name of zip or 
-  plone since this shadows the views by those names. This closes 
+- Updated the check_id script to disallowed content by the name of zip or
+  plone since this shadows the views by those names. This closes
   http://dev.plone.org/plone/ticket/6105
   [hannosch]
 
-- Purged old Zope 2 Interface interfaces for Zope 2.12 compatibility. 
+- Purged old Zope 2 Interface interfaces for Zope 2.12 compatibility.
   [elro]
 
-- Make use of upgrade steps with a source '*' version and an explicit 
-  destination, to register the 'enable site' and 'register tools as 
+- Make use of upgrade steps with a source '*' version and an explicit
+  destination, to register the 'enable site' and 'register tools as
   utilities' only once.
   [hannosch]
 
-- Added support for upgrade step groups to the migration tool and started 
-  exposing the individual upgrade methods as steps. 
+- Added support for upgrade step groups to the migration tool and started
+  exposing the individual upgrade methods as steps.
   [hannosch]
 
-- Changed the way messages are handled during migration. We don't pass an 
-  `out` list around anymore, but use the logging framework. 
+- Changed the way messages are handled during migration. We don't pass an
+  `out` list around anymore, but use the logging framework.
   [hannosch]
 
-- Replaced our own migration step registration by using GenericSetup steps 
-  directly. Changed the migration tool to integrate with GS instead. 
-  Added BBB code to read the instance version from the migration tool if 
-  the last profile version isn't set yet inside the GS tool. 
+- Replaced our own migration step registration by using GenericSetup steps
+  directly. Changed the migration tool to integrate with GS instead.
+  Added BBB code to read the instance version from the migration tool if
+  the last profile version isn't set yet inside the GS tool.
   [hannosch]
 
 - Exposed all our migration steps as GenericSetup upgrade steps.
   [hannosch]
 
-- Hide the deprecation warning about the moved ITranslatable interface 
-  for our own code. 
+- Hide the deprecation warning about the moved ITranslatable interface
+  for our own code.
   [hannosch]
 
-- Use png icons instead of gif icons since they are much more flexible 
+- Use png icons instead of gif icons since they are much more flexible
   for styling.
   [dannyb, wichert]
 
-- Fixed the coreVersions method in MigrationTool to return strings and not 
-  bound methods for the Zope and Python version. 
+- Fixed the coreVersions method in MigrationTool to return strings and not
+  bound methods for the Zope and Python version.
   [hannosch]
 
-- Fixed off-by-two error in transaction_note. This closes 
+- Fixed off-by-two error in transaction_note. This closes
   http://dev.plone.org/plone/ticket/7610
   [hannosch]
 
@@ -1314,97 +1666,97 @@ Changelog
   actions themselves.
   [hannosch]
 
-- Changed PloneTool's getIconFor method to prefer the icon expression set 
-  on the action itself instead of looking it up in the action icons tool. 
-  This finally makes use of the new icon expression on actions introduced 
-  in CMF 2.1. 
+- Changed PloneTool's getIconFor method to prefer the icon expression set
+  on the action itself instead of looking it up in the action icons tool.
+  This finally makes use of the new icon expression on actions introduced
+  in CMF 2.1.
   [hannosch]
 
-- Avoid unneeded line breaks in TAL output, by effectively disabling the 
-  internal beautified wrapping inside tags. This reduces the HTML output 
-  by 5% - 10% for normal Plone pages. 
+- Avoid unneeded line breaks in TAL output, by effectively disabling the
+  internal beautified wrapping inside tags. This reduces the HTML output
+  by 5% - 10% for normal Plone pages.
   [hannosch]
 
-- Memoize the installed products and packages in App.FactoryDispatcher 
-  for the duration of the process runtime. 
+- Memoize the installed products and packages in App.FactoryDispatcher
+  for the duration of the process runtime.
   [hannosch]
 
-- Hiding page history, page navigation, and busy icon (spinner) in print.css 
-  Related to http://dev.plone.org/plone/ticket/7433 
+- Hiding page history, page navigation, and busy icon (spinner) in print.css
+  Related to http://dev.plone.org/plone/ticket/7433
   http://dev.plone.org/plone/ticket/7402
   [siebo]
 
-- Updated webdav_enabled method in utils.py to check for 
-  webdav.interfaces.IWriteLock interface in addition to the old Zope2 
-  interface. 
+- Updated webdav_enabled method in utils.py to check for
+  webdav.interfaces.IWriteLock interface in addition to the old Zope2
+  interface.
   [hannosch]
 
-- Use a FauxArchetypeTool which returns no catalogs for CatalogMultiplex 
-  aware objects in portal factory. This prevents most temporary objects 
-  from being indexed in the first place. 
+- Use a FauxArchetypeTool which returns no catalogs for CatalogMultiplex
+  aware objects in portal factory. This prevents most temporary objects
+  from being indexed in the first place.
   [tesdal, hannosch]
 
-- Move our GenericSetup import step registrations to zcml. 
+- Move our GenericSetup import step registrations to zcml.
   [wichert]
 
-- Added a 'do-not-use' warning to the ZMI security screen for Plone content 
-  objects. Sharing tab or workflows are what you are looking for. 
+- Added a 'do-not-use' warning to the ZMI security screen for Plone content
+  objects. Sharing tab or workflows are what you are looking for.
   [hannosch]
 
-- Moved interface declarations for factorytool from ZCML to the class. 
+- Moved interface declarations for factorytool from ZCML to the class.
   [hannosch]
 
-- Added BBB code for ITranslatable, which is now part of LinguaPlone. 
+- Added BBB code for ITranslatable, which is now part of LinguaPlone.
   [hannosch]
 
-- Added an explicit button to add a new Plone site to the ZMI for faster 
-  access. If you have installed Plone this is probably what you want to 
-  add most of the time. The button only shows up in the root folder. 
+- Added an explicit button to add a new Plone site to the ZMI for faster
+  access. If you have installed Plone this is probably what you want to
+  add most of the time. The button only shows up in the root folder.
   [hannosch]
 
-- Deprecate the ITranslatable interface. This interface is LinguaPlone- 
-  specific and has thus been moved to LinguaPlone. 
+- Deprecate the ITranslatable interface. This interface is LinguaPlone-
+  specific and has thus been moved to LinguaPlone.
   [wichert]
 
-- Removed tests for isRTL method of PTS. The method was deprecated in the 
-  last release and is gone now. 
+- Removed tests for isRTL method of PTS. The method was deprecated in the
+  last release and is gone now.
   [hannosch]
 
-- Removed PTSTranslationDomain utilities. PTS exposes all translation files 
-  as pure Zope3 translation utilities now, so these aren't needed anymore. 
+- Removed PTSTranslationDomain utilities. PTS exposes all translation files
+  as pure Zope3 translation utilities now, so these aren't needed anymore.
   [hannosch]
 
-- Replaced our FasterStringIO implementation by one based on 
-  collections.deque, which is a faster than StringIO. 
+- Replaced our FasterStringIO implementation by one based on
+  collections.deque, which is a faster than StringIO.
   [hannosch]
 
-- Removed more deprecated code, adjusted some comments. 
+- Removed more deprecated code, adjusted some comments.
   [hannosch]
 
-- Tweaked sortable_title method to give reasonable results for titles with 
-  many numbers in them, like '1.2.3 document'. 
+- Tweaked sortable_title method to give reasonable results for titles with
+  many numbers in them, like '1.2.3 document'.
   [hannosch]
 
-- Moved CMF skins registration into configure.zcml, removed security 
-  declaration for no-longer extant listPolicies of the portal. 
+- Moved CMF skins registration into configure.zcml, removed security
+  declaration for no-longer extant listPolicies of the portal.
   [hannosch]
 
-- Refactored initial content creation into a separate extension profile, 
-  thus making it possible to skip it. This refs 
-  http://dev.plone.org/plone/ticket/6948 
+- Refactored initial content creation into a separate extension profile,
+  thus making it possible to skip it. This refs
+  http://dev.plone.org/plone/ticket/6948
   [hannosch]
 
-- Removed some outdated Extension scripts. 
+- Removed some outdated Extension scripts.
   [hannosch]
 
-- Removed deprecated tool related Zope2 interfaces. Extended the 
-  deprecation period for ConstrainTypes and NonStructuralFolder as these 
-  are still used in Plone Core. 
+- Removed deprecated tool related Zope2 interfaces. Extended the
+  deprecation period for ConstrainTypes and NonStructuralFolder as these
+  are still used in Plone Core.
   [hannosch]
 
-- Removed work-around code for insertion of non-unicode non-ascii non-utf8 
-  encoded text in TAL. This will produce an error now. Always use Unicode 
-  when using data in page templates and TAL. 
+- Removed work-around code for insertion of non-unicode non-ascii non-utf8
+  encoded text in TAL. This will produce an error now. Always use Unicode
+  when using data in page templates and TAL.
   [hannosch]
 
 - Removed lots of deprecated code and zcml registrations.

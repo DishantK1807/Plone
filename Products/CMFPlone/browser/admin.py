@@ -17,6 +17,7 @@ from OFS.interfaces import IApplication
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.GenericSetup import profile_registry
 from Products.GenericSetup import BASE, EXTENSION
+from Products.GenericSetup.upgrade import normalize_version
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 
 from Products.CMFCore.permissions import ManagePortal
@@ -84,6 +85,20 @@ class RootLoginRedirect(BrowserView):
         if came_from is None:
             came_from = self.context.absolute_url()
         self.request.response.redirect(came_from)
+
+
+class RootLogout(BrowserView):
+    """ @@plone-root-logout """
+
+    logout = ViewPageTemplateFile('templates/plone-logged-out.pt')
+
+    def __call__(self):
+        response = self.request.response
+        realm = response.realm
+        response.setStatus(401)
+        response.setHeader('WWW-Authenticate', 'basic realm="%s"' % realm, 1)
+        response.setBody(self.logout())
+        return
 
 
 class FrontPage(BrowserView):
@@ -202,6 +217,10 @@ class Upgrade(BrowserView):
         result['instance'] = pm.getInstanceVersion()
         result['fs'] = pm.getFileSystemVersion()
         result['equal'] = result['instance'] == result['fs']
+        instance_version = normalize_version(result['instance'])
+        fs_version = normalize_version(result['fs'])
+        result['instance_gt'] = instance_version > fs_version
+        result['instance_lt'] = instance_version < fs_version
         result['corelist'] = pm.coreVersions()
         return result
 

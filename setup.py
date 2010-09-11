@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os.path
 
-version = '4.0b2'
+version = '4.0rc2'
 
 setup(name='Plone',
       version=version,
@@ -9,7 +9,6 @@ setup(name='Plone',
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "CHANGES.txt")).read(),
       classifiers=[
-        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Framework :: Plone",
         "Framework :: Zope2",
@@ -17,13 +16,12 @@ setup(name='Plone',
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
-        "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='Plone CMF python Zope',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
       url='http://plone.org/',
-      license='GPL',
+      license='GPL version 2',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],
       include_package_data=True,
@@ -31,7 +29,6 @@ setup(name='Plone',
       extras_require=dict(
         test=[
           'Products.PloneTestCase',
-          'zope.app.testing',
           'zope.testing',
         ]),
       install_requires=[
@@ -68,7 +65,7 @@ setup(name='Plone',
           'Products.ResourceRegistries',
           'Products.statusmessages',
           'Products.TinyMCE',
-          'Zope2',
+          'Zope2 >= 2.12.9',
           'ZODB3',
           'archetypes.kss',
           'archetypes.referencebrowserwidget',

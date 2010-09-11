@@ -29,7 +29,6 @@ if siteProperties is not None:
 
 # SIMPLE CONFIGURATION
 USE_ICON = True
-USE_RANKING = False
 MAX_TITLE = 29
 MAX_DESCRIPTION = 93
 
@@ -70,7 +69,8 @@ searchterms = url_quote_plus(r)
 site_encoding = context.plone_utils.getSiteEncoding()
 if path is None:
     path = getNavigationRoot(context)
-results = catalog(SearchableText=r, portal_type=friendly_types, path=path)
+results = catalog(SearchableText=r, portal_type=friendly_types, path=path,
+    sort_limit=limit)
 
 searchterm_query = '?searchterm=%s'%url_quote_plus(q)
 
@@ -119,19 +119,15 @@ else:
         itemUrl = itemUrl + searchterm_query
 
         write('''<li class="LSRow">''')
-        if icon.url is not None and icon.description is not None:
-            write('''<img src="%s" alt="%s" width="%i" height="%i" />''' % (icon.url,
-                                                                            icon.description,
-                                                                            icon.width,
-                                                                            icon.height))
+        write(icon.html_tag() or '')
         full_title = safe_unicode(pretty_title_or_id(result))
         if len(full_title) > MAX_TITLE:
             display_title = ''.join((full_title[:MAX_TITLE],'...'))
         else:
             display_title = full_title
         full_title = full_title.replace('"', '&quot;')
-        write('''<a href="%s" title="%s">%s</a>''' % (itemUrl, full_title, display_title))
-        write('''<span class="discreet" dir="%s">[%s%%]</span>''' % (test(portal_state.is_rtl(), 'rtl', 'ltr'), result.data_record_normalized_score_))
+        klass = 'contenttype-%s' % ploneUtils.normalizeString(result.portal_type)
+        write('''<a href="%s" title="%s" class="%s">%s</a>''' % (itemUrl, full_title, klass, display_title))
         display_description = safe_unicode(result.Description)
         if len(display_description) > MAX_DESCRIPTION:
             display_description = ''.join((display_description[:MAX_DESCRIPTION],'...'))

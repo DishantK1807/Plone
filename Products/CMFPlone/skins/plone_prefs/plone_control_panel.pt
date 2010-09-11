@@ -6,17 +6,17 @@
       metal:use-macro="here/prefs_main_template/macros/master"
       i18n:domain="plone">
 
-<metal:block fill-slot="top_slot"
-             tal:define="dummy python:request.set('disable_border',1)" />
 
-<metal:override fill-slot="column_one_slot" />
+<metal:override fill-slot="top_slot" 
+                tal:define="dummy python:request.set('disable_border',1);
+                            disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                            disable_column_two python:request.set('disable_plone.rightcolumn',1);"/>
 
 <body>
 
 <metal:main fill-slot="prefs_configlet_wrapper"
      tal:define="controlPanel context/portal_controlpanel;
-                 groups python:controlPanel.getGroups('site');
-                 getIconFor nocall:context/plone_utils/getIconFor">
+                 groups python:controlPanel.getGroups('site')">
 
 <tal:main-macro metal:define-macro="main"
                 tal:define="mt context/portal_migration;
@@ -78,7 +78,7 @@
         <div id="content">
 
             <h1 class="documentFirstHeading"
-                i18n:translate="heading_site_setup">Site Setup</h1>
+                i18n:translate="">Site Setup</h1>
 
             <div class="documentDescription" i18n:translate="description_site_setup">
               Configuration area for Plone and add-ons.
@@ -104,7 +104,7 @@
                                         <li tal:condition="configlet/visible">
                                             <a href=""
                                                tal:attributes="href configlet/url">
-                                                <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);"
+                                                <img src="" alt="" tal:attributes="src configlet/icon;"
                                                      tal:on-error="string:" />
                                             <tal:configletname tal:content="configlet/title"
                                                                i18n:translate=""></tal:configletname>
