@@ -7,19 +7,12 @@
         updateResults(data);
         return false;
     }); 
-    $("#search-filter input").bind('change', function() {
+    $("#search-filter input, #search-filter select").bind('change', function() {
         var data = $("form.searchPage").serialize();
         $(container).fadeOut('fast');
         updateResults(data);
         return false;
     });
-
-    function submitForm() {
-        var data = $("form.searchPage").serialize();
-        $(container).fadeOut('fast');
-        updateResults(data);
-        return false;                        
-    }
 
     $('#searchResultsHeading').click(function(event) {
        //$("#search-results").fadeOut(300);
