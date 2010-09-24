@@ -90,5 +90,22 @@
         return false;
     });
     
+    $("#close-search-options").click(function () {
+        $("#search-results-wrapper").removeClass("width-12");
+        $("#search-results-wrapper").removeClass("position-1:4");
+        $('#search-filter').fadeOut('fast', function(){
+            $('#search-filter').addClass('hiddenStructure');            
+            $("#search-results-wrapper").animate({
+                width: '97.75%',
+                marginLeft: '-98.875%'
+            }, 500, function(){
+                $("#show-search-options").delay(300).fadeIn();
+            });            
+        });
+        $("#search-results-wrapper").addClass("position-0");
+        $("#search-results-wrapper").addClass("width-16");                        
+        return false;
+    });
+    
 }); })(jQuery);
 
