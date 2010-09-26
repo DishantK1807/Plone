@@ -7,6 +7,7 @@
     visuals.
 ******/
 
+/*global kukit:false */
 
 var common_content_filter = '#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';
 
@@ -178,6 +179,27 @@ jQuery(function($){
        subtype: 'ajax', 
        urlmatch: '@@historyview',
        urlreplace: '@@contenthistorypopup'
+    });
+
+    // portlet editing
+    // Note that this sets up an overlay onLoad handler to initialize 
+    // tinymce for #form.text
+    // TODO: generalize that.
+    $('.managedPortlet div.portletHeader > a').prepOverlay({
+        subtype: 'ajax',
+        filter: common_content_filter,
+        formselector: '#zc\\.page\\.browser_form',
+        noform: function(el) {return noformerrorshow(el, 'close');},
+        closeselector: '#form.actions.cancel',
+        config: {
+                onLoad:function () {
+                    var initfunc = kukit && kukit.actionsGlobalRegistry.get("init-tinymce");
+
+                    if (initfunc && $('#form\\.text .mce_editable')) {
+                        initfunc({node:{id:'form.text'}});
+                    }
+                }
+            }
     });
 
 });
