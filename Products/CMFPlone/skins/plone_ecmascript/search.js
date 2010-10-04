@@ -57,11 +57,11 @@
                     $("#updated-search-results-number").remove();
                     return str;
                 });
-                $("#searchResultsHeading #sorting-options").html(function(){
-                    struct = $("#updated-sorting-options").html();
-                    $("#updated-sorting-options").remove();
-                    return struct;
-                });  
+                // $("#searchResultsHeading #sorting-options").html(function(){
+                //     struct = $("#updated-sorting-options").html();
+                //     $("#updated-sorting-options").remove();
+                //     return struct;
+                // });  
             },
             error: function(req,error){
                 if(error === 'error'){error = req.statusText;}
