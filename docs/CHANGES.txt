@@ -8,6 +8,11 @@ Changelog
 4.0.2 - Unreleased
 -------------------
 
+- Refactored ``URLTool.isURLInPortal``, adding ``allow_external_login_sites``
+  property to ``site_properties`` for external sites considered to be internal
+  for the purposes of logging in.
+  [elro]
+
 - Fixed: http://dev.plone.org/plone/ticket/11177, some formselector 
   specifications for popups were too vague. [smcmahon]
 

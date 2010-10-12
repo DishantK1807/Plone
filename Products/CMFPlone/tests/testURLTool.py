@@ -53,6 +53,32 @@ class TestURLTool(PloneTestCase.PloneTestCase):
         self.failUnless(iURLiP( #/plone/afolder
                                '../../../../%s/afolder' % portal_name ,self.folder.foo.doc1))
 
+    def test_isURLInPortalExternal(self):
+        props = self.portal.portal_properties.site_properties
+        sites = [
+            'http://external1',
+            'http://external2/',
+            'http://external3/site',
+            'http://external4/site/'
+            ]
+        props._updateProperty('allow_external_login_sites', sites)
+        iURLiP = self.url.isURLInPortal
+        self.failUnless(iURLiP('http://external1'))
+        self.failUnless(iURLiP('http://external1/'))
+        self.failUnless(iURLiP('http://external1/something'))
+        self.failUnless(iURLiP('http://external2'))
+        self.failUnless(iURLiP('http://external2/'))
+        self.failUnless(iURLiP('http://external2/something'))
+        self.failUnless(iURLiP('http://external3/site'))
+        self.failUnless(iURLiP('http://external3/site/'))
+        self.failUnless(iURLiP('http://external3/site/something'))
+        self.failUnless(iURLiP('http://external4/site'))
+        self.failUnless(iURLiP('http://external4/site/'))
+        self.failUnless(iURLiP('http://external4/site/something'))
+        
+        self.failIf(iURLiP('http://external5'))
+        self.failIf(iURLiP('http://external11'))
+
 
 def test_suite():
     from unittest import TestSuite, makeSuite
