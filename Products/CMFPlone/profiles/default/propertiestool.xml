@@ -155,5 +155,6 @@
    <element value="password"/>
    <element value="mail_me"/>
   </property>
+  <property name="allow_external_login_sites" type="lines"/>
  </object>
 </object>
