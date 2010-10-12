@@ -36,7 +36,9 @@
     <metal:main fill-slot="main"
          tal:define="auth nocall:context/acl_users/credentials_cookie_auth|context/cookie_authentication|nothing;
                      came_from request/came_from|request/HTTP_REFERER|nothing;
-                     came_from python:test(context.portal_url.isURLInPortal(came_from), came_from, None);
+                     came_from python:test(came_from is not None and context.portal_url.isURLInPortal(came_from), came_from, None);
+                     next request/next|nothing;
+                     next python:test(next is not None and context.portal_url.isURLInPortal(next), next, None);
                      errors options/state/getErrors;
                      ac_name auth/name_cookie|string:__ac_name;
                      ac_password auth/pw_cookie|string:__ac_password;
@@ -62,7 +64,12 @@
                     <input type="hidden"
                         name="came_from"
                         value=""
-                    tal:attributes="value came_from" />
+                    tal:attributes="value came_from|nothing" />
+
+                    <input type="hidden"
+                        name="next"
+                        value=""
+                    tal:attributes="value next|nothing" />
 
                     <input type="hidden" name="form.submitted" value="1" />
                     <input type="hidden" name="js_enabled" id="js_enabled" value="0" />
@@ -184,7 +191,7 @@
                     <a href=""
                        tal:define="join python:join.pop();
                                    join join;
-                                   join python:join+test(join.find('?')==-1, '?', '&amp;')+ztu.make_query(came_from=came_from);"
+                                   join python:join+test(join.find('?')==-1, '?', '&amp;')+ztu.make_query(came_from=came_from, next=next);"
                        tal:attributes="href join"
                        i18n:translate="description_no_account_registration_linktext">
                         registration form</a></span>.
