@@ -8,6 +8,15 @@ Changelog
 4.0.2 - Unreleased
 -------------------
 
+- Edit tab on Author page pointed to personal information page instead of
+  personal preferences.
+  This fixes http://dev.plone.org/plone/ticket/11141
+  [piv]
+
+- Fixed https://dev.plone.org/plone/ticket/11160,
+  first level of Table of Contents is a level with at least two entries.
+  [thomasdesvenain]
+
 - Fixed: http://dev.plone.org/plone/ticket/11177, some formselector 
   specifications for popups were too vague. [smcmahon]
 
@@ -51,6 +60,10 @@ Changelog
 - Validate new group names using the isMemberIdAllowed method of the
   registration tool. This fixes http://dev.plone.org/plone/ticket/10897.
   [davisagli]
+
+- Add a default icon when there is no icon defined in a configlet.
+  This prevent broken images on IE. This fixes http://dev.plone.org/plone/ticket/11112.
+  [kiorky]
 
 4.0 - 2010-08-28
 ----------------
