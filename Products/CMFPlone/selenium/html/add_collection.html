@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>add_collection_2</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">add_collection_2</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/Plone/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='pb_1']/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-factories']/dt/a/span[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>topic</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>title</td>
+	<td>I am a collection with javascript</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>description</td>
+	<td>skkep skip skop</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>description</td>
+	<td>skeep skip skop</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>customView</td>
+	<td></td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Creation Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Creator</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Description</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Effective Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=End Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Expiration Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Short Name</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Size</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Location</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Modification Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=State</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Start Date</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Tags</td>
+</tr>
+<tr>
+	<td>addSelection</td>
+	<td>customViewFields_options</td>
+	<td>label=Item Type</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='&gt;&gt;']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>form.button.save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//dl[@id='plone-contentmenu-workflow']/dt</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-workflow']/dt/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>workflow-transition-publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=View</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>form.button.save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Criteria</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Events</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-factories']/dt/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a[@id='event']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>title</td>
+	<td>just hanging out for testing</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='edit_form_endDate_1_day']/option[10]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>edit_form_endDate_1_day</td>
+	<td>label=31</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>form.button.save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-workflow']/dt/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>workflow-transition-publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Events</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-factories']/dt/a/span[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>event</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>title</td>
+	<td>soccer match</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//select[@id='edit_form_startDate_0_day']/option[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>edit_form_startDate_0_day</td>
+	<td>label=12</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>form.button.save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//dl[@id='plone-contentmenu-workflow']/dt/a/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>workflow-transition-publish</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//span[@id='breadcrumbs-home']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=I am a collection with javascript</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Criteria</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>field</td>
+	<td>label=Creator</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//option[@value='Creator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>criterion_type</td>
+	<td>label=Restrict to current user</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>form.button.AddCriterion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>sortfield</td>
+	<td>label=End Date</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>reversed</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>form.button.SetSortCriterion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=View</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=just hanging out for testing</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Events</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=soccer match</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Contents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>cb_just-hanging-out-for-testing</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>cb_soccer-match</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>folder_delete:method</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Home</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Contents</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>cb_i-am-a-collection-with-javascript</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>folder_delete:method</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
