@@ -30,7 +30,10 @@ setup(name='Plone',
         test=[
           'Products.PloneTestCase',
           'zope.testing',
-        ]),
+        ],
+        selenium=[
+          'plone.app.testing',
+          'selenium']),
       install_requires=[
           'setuptools',
           'Acquisition',
