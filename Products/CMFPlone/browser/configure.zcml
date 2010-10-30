@@ -85,4 +85,15 @@
             factory=".navtree.SitemapNavtreeStrategy"
             provides="plone.app.layout.navigation.interfaces.INavtreeStrategy" />
 
+
+    <browser:resource
+        name="qunit-CMFPlone-testing.html"
+        file="qunit/testing.html"
+        />
+
+    <browser:resourceDirectory
+        name="qunit-CMFPlone-inline-edit"
+        directory="qunit/inline-edit"
+        />
+
 </configure>
