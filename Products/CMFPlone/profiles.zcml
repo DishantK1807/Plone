@@ -38,4 +38,13 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="plone-selenium"
+      title="Plone Selenium Testing Content"
+      directory="profiles/selenium"
+      description="Extension profile to create content for the Selenium tests"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>
