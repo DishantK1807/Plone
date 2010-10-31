@@ -12,6 +12,7 @@ class SeleniumTestCase(unittest2.TestCase):
 
     def setUp(self):
         self.driver = self.layer['selenium']
+        self.portal = self.layer['portal']
     
     def open(self, path="/"):
         # ensure we have a clean starting point
