@@ -2,7 +2,7 @@ from Products.CMFPlone.selenium.base import SeleniumTestCase
 
 class TestPortlets(SeleniumTestCase):    
     
-    def test_add_collection(self):
+    def test_add_static_portlet(self):
         self.portal.acl_users._doAddUser('manager', 'secret', ['Manager'], [])
         self.login('manager', 'secret')
         self.open('/')
