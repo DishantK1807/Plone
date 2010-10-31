@@ -3,12 +3,12 @@ import unittest2
 
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
-from plone.app.testing.selenium_layers import SELENIUM_TESTING
+from plone.app.testing.selenium_layers import SELENIUM_PLONE_FUNCTIONAL_TESTING
 from plone.app.testing import selenium_layers as layers
 
 
 class SeleniumTestCase(unittest2.TestCase):
-    layer = SELENIUM_TESTING
+    layer = SELENIUM_PLONE_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.driver = self.layer['selenium']
