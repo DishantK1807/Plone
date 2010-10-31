@@ -5,6 +5,7 @@ from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.app.testing.selenium_layers import SELENIUM_PLONE_FUNCTIONAL_TESTING
 from plone.app.testing import selenium_layers as layers
+from plone.app.testing.helpers import applyProfile
 
 
 class SeleniumTestCase(unittest2.TestCase):
@@ -13,7 +14,10 @@ class SeleniumTestCase(unittest2.TestCase):
     def setUp(self):
         self.driver = self.layer['selenium']
         self.portal = self.layer['portal']
-    
+        self.portal.acl_users._doAddUser('member1', 'secret',
+                                         ['Member'], [])
+        applyProfile(self.layer['portal'], 'Products.CMFPlone:plone-selenium')
+
     def open(self, path="/"):
         # ensure we have a clean starting point
         transaction.commit()

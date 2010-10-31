@@ -47,4 +47,12 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:importStep
+      name="setup-selenium-content"
+      handler="Products.CMFPlone.setuphandlers.setupSelenium"
+      title="Setup Selenium Content"
+      description="Setup ownership of content for Selenium testing">
+   <depends name="structure" />
+  </genericsetup:importStep>
+
 </configure>

@@ -497,3 +497,18 @@ def updateWorkflowRoleMappings(context):
     site = context.getSite()
     portal_workflow = getToolByName(site, 'portal_workflow')
     portal_workflow.updateRoleMappings()
+
+def setupSelenium(context):
+    """
+    Setup some ownership on the sample content so we can run our Selenium
+    tests
+    """
+    if context.readDataFile('plone-selenium.txt') is None:
+        return
+    site = context.getSite()
+    plone_utils = getToolByName(site, 'plone_utils')
+    plone_utils.changeOwnershipOf(site['folder-1'], 'member1')
+    plone_utils.changeOwnershipOf(site['folder-1']['folder-3'],
+                                 'member1')
+    plone_utils.changeOwnershipOf(site['folder-2'], 'member1')
+
