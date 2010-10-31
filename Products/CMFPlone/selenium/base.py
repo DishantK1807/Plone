@@ -29,13 +29,13 @@ class SeleniumTestCase(unittest2.TestCase):
         self.driver.find_element_by_name('__ac_name').send_keys(username)
         self.driver.find_element_by_name('__ac_password').send_keys(password)
         self.driver.find_element_by_name('submit').click()
-        
-        
-    
+
+
+
     '''
     Convenience functions
     If you record the selenium tests in Firefox IDE and then export as web driver
-    junit format, you should be able to replace "selenium." with "self.". It's 
+    junit format, you should be able to replace "selenium." with "self.". It's
     not a catch all but should help a bit.
     '''
     def click(self, xpath):
@@ -49,24 +49,27 @@ class SeleniumTestCase(unittest2.TestCase):
             element = self.driver.find_element_by_id(eleName)
         else:
             element = self.driver.find_element_by_name(xpath)
-        
+
         element.click()
-        
+
     def type(self, name, value):
         self.driver.find_element_by_name(name).send_keys(value)
-        
+
+    def clear(self, name):
+        self.driver.find_element_by_name(name).clear()
+
     def select(self, xpath1, xpath2=''):
         xpath = xpath1
         if xpath2:
             xpath = "%s['%s']"%(xpath1, xpath2)
             xpath = xpath.replace("select['label=", "select/option['attribute::value=")
         self.driver.find_element_by_xpath(xpath).set_selected()
-        
+
     def waitForPageToLoad(self, foo):
         # this does nothing but make us lazy folks happy
         pass
-        
+
     def publish(self):
         self.click("//dl[@id='plone-contentmenu-workflow']/dt/a")
-        self.click("#workflow-transition-publish") 
+        self.click("#workflow-transition-publish")
 
