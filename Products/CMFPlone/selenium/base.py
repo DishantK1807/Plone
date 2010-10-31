@@ -54,10 +54,12 @@ class SeleniumTestCase(unittest2.TestCase):
     def select(self, xpath1, xpath2=''):
         xpath = xpath1
         if xpath2:
-            xpath = "%s[%s]"%(xpath1, xpath2)
+            xpath = "%s['%s']"%(xpath1, xpath2)
+            xpath = xpath.replace("select['label=", "select/option['attribute::value=")
         self.driver.find_element_by_xpath(xpath).set_selected()
         
     def waitForPageToLoad(self, foo):
+        # this does nothing but make us lazy folks happy
         pass
         
     def publish(self):
