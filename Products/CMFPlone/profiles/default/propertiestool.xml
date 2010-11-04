@@ -156,5 +156,7 @@
    <element value="mail_me"/>
   </property>
   <property name="allow_external_login_sites" type="lines"/>
+  <property name="external_login_url" type="string"/>
+  <property name="external_logout_url" type="string"/>
  </object>
 </object>

@@ -25,14 +25,8 @@ class TestSSOLogin(ptc.FunctionalTestCase):
             )
 
         # Configure our site to use the login portal for logins.
-        login_url = "%s/require_login?next=%s/acl_users/session/external_login" % (
-            self.login_portal.absolute_url(),
-            self.portal.absolute_url(),
-            )
-        self.portal.acl_users.credentials_cookie_auth.login_path = login_url
-        self.portal.portal_actions.user.login._updateProperty(
-            'url_expr', "python:portal.acl_users.credentials_cookie_auth.getProperty('login_path')"
-            )
+        external_login_url = self.login_portal.absolute_url() + '/login'
+        self.portal.portal_properties.site_properties._updateProperty('external_login_url', external_login_url)
 
         # Configure both sites to use a shared secret and set cookies per path
         # (normally they would have different domains.)
