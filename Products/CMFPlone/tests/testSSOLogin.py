@@ -5,8 +5,6 @@ ptc.setupPloneSite(id=ptc.portal_name)
 ptc.setupPloneSite(id='login_portal')
 
 class TestSSOLogin(ptc.FunctionalTestCase):
-    """ This is a base class for functional test cases for your custom product.
-    """
 
     def afterSetUp(self):
         ptc.FunctionalTestCase.afterSetUp(self)
@@ -15,21 +13,29 @@ class TestSSOLogin(ptc.FunctionalTestCase):
         self.browser.handleErrors = False # Don't get HTTP 500 pages
 
         self.login_portal = self.app.login_portal # logins go here
-        self.login_portal.acl_users.userFolderAddUser(ptc.default_user, ptc.default_password, ['Member'], [])
+        # The login portal does not get extra setup from the base class.
+        # Add our user to the login_portal to simulate an ldap equivalent.
+        self.login_portal.acl_users.userFolderAddUser(
+            ptc.default_user, ptc.default_password, ['Member'], []
+            )
 
+        # Configure the login portal to allow logins from our site.
         self.login_portal.portal_properties.site_properties._updateProperty(
             'allow_external_login_sites', [self.portal.absolute_url()]
             )
 
-        self.login_url = "%s/require_login?next=%s/acl_users/session/external_login" % (
+        # Configure our site to use the login portal for logins.
+        login_url = "%s/require_login?next=%s/acl_users/session/external_login" % (
             self.login_portal.absolute_url(),
             self.portal.absolute_url(),
             )
-        self.portal.acl_users.credentials_cookie_auth.login_path = self.login_url
+        self.portal.acl_users.credentials_cookie_auth.login_path = login_url
         self.portal.portal_actions.user.login._updateProperty(
             'url_expr', "python:portal.acl_users.credentials_cookie_auth.getProperty('login_path')"
             )
 
+        # Configure both sites to use a shared secret and set cookies per path
+        # (normally they would have different domains.)
         for portal in (self.portal, self.login_portal):
             session = portal.acl_users.session
             session._shared_secret = 'secret'
