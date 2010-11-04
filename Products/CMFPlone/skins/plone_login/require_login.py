@@ -18,9 +18,5 @@ portal = context.portal_url.getPortalObject()
 
 if context.portal_membership.isAnonymousUser():
     return portal.restrictedTraverse(login)()
-
-next = context.REQUEST.get('next', None)
-if next is not None and context.portal_url.isURLInPortal(next):
-    return portal.restrictedTraverse('external_login_return')()
-
-return portal.restrictedTraverse('insufficient_privileges')()
+else:
+    return portal.restrictedTraverse('insufficient_privileges')()
