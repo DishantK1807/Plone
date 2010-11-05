@@ -36,7 +36,7 @@ class SeleniumTestCase(unittest2.TestCase):
     Convenience functions
     If you record the selenium tests in Firefox IDE and then export as web driver
     junit format, you should be able to replace "selenium." with "self.". It's
-    not a catch all but should help a bit.
+    not a catch all but should help quite a bit.
     '''
     def click(self, xpath):
         if xpath.count("link="):
@@ -54,6 +54,20 @@ class SeleniumTestCase(unittest2.TestCase):
 
     def type(self, name, value):
         self.driver.find_element_by_name(name).send_keys(value)
+        
+    def typeMce(self, value):
+        '''
+        Text fields with mce are different.We need to go into the frame and update the 
+        p element to make this work. Unfortunately the code to get out of the frame is not 
+        implemented in python yet. The workaround is to use this handle trick, which 
+        is currently unsupported in chrome. See issue #405 for more. In general there
+        are still a lot of open issues on frame support so if this breaks it won't 
+        be a surprise.'''
+        handle = self.driver.get_current_window_handle()
+        self.driver.switch_to_frame("form.text_ifr")
+        ele = self.driver.find_element_by_xpath("//p")
+        ele.send_keys(value)
+        self.driver.switch_to_window(handle)
 
     def clear(self, name):
         self.driver.find_element_by_name(name).clear()
@@ -62,7 +76,7 @@ class SeleniumTestCase(unittest2.TestCase):
         xpath = xpath1
         if xpath2:
             xpath = "%s['%s']"%(xpath1, xpath2)
-            xpath = xpath.replace("select['label=", "select/option['attribute::value=")
+            xpath = xpath.replace("select['label=", "select/option['text()=")
         self.driver.find_element_by_xpath(xpath).set_selected()
 
     def waitForPageToLoad(self, foo):
@@ -72,4 +86,8 @@ class SeleniumTestCase(unittest2.TestCase):
     def publish(self):
         self.click("//dl[@id='plone-contentmenu-workflow']/dt/a")
         self.click("#workflow-transition-publish")
+        
+    def submit(self, formId):
+        self.driver.find_element_by_id(formId).submit()
+        
 
