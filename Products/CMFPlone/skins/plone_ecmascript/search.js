@@ -1,5 +1,7 @@
-jQuery(function ($) {
+(function ($) {
+
     $(function () {
+
         var container, data;
         container = $('#search-results');
 
@@ -35,6 +37,7 @@ jQuery(function ($) {
             updateResults(data);
             return false;
         });
+
         $("#search-filter input, #search-filter select").bind('change', function () {
             data = $("form.searchPage").serialize();
             $(container).fadeOut('fast');
@@ -42,32 +45,29 @@ jQuery(function ($) {
             return false;
         });
 
-        $('#searchResultsHeading').click(function (event) {
-           //$("#search-results").fadeOut(300);
-            if ($(event.target).is('#sorting-options a')) {
-                if ($(event.target).attr('rel')) {
-                    $("form.searchPage input[name='sort_on']").val($(event.target).attr('rel'));
-                }
-                else {
-                    $("form.searchPage input[name='sort_on']").val('');
-                }
-                data = $("form.searchPage").serialize();
-                updateResults(data);
-                // $("#search-results").before($("#kssPortalMessage"));
-                // $("#kssPortalMessage dd").html("Your search results have been updated");
-                // 
-                // $("#kssPortalMessage").delay(500).animate({
-                //     height: ['toggle', 'swing'],
-                //     opacity: 1,
-                //     marginBottom: 'toggle',
-                //     marginTop: 'toggle'
-                // }, 500, function () {
-                //     $("*").click(function () {
-                //         $("#kssPortalMessage").fadeOut('slow');
-                //     })
-                // })
-                return false;
+        $('#sorting-options a').live('click', function () {
+            if ($(this).attr('rel')) {
+                $("form.searchPage input[name='sort_on']").val($(this).attr('rel'));
             }
+            else {
+                $("form.searchPage input[name='sort_on']").val('');
+            }
+            data = $("form.searchPage").serialize();
+            updateResults(data);
+            // $("#search-results").before($("#kssPortalMessage"));
+            // $("#kssPortalMessage dd").html("Your search results have been updated");
+            // 
+            // $("#kssPortalMessage").delay(500).animate({
+            //     height: ['toggle', 'swing'],
+            //     opacity: 1,
+            //     marginBottom: 'toggle',
+            //     marginTop: 'toggle'
+            // }, 500, function () {
+            //     $("*").click(function () {
+            //         $("#kssPortalMessage").fadeOut('slow');
+            //     })
+            // })
+            return false;
         });
 
         $('#show-search-options').click(function () {
@@ -105,6 +105,5 @@ jQuery(function ($) {
             $("#search-results-wrapper").addClass("width-16");
             return false;
         });
-
     });
-});
+})(jQuery);
