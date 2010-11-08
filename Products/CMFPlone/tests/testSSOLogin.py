@@ -24,9 +24,11 @@ class TestSSOLogin(ptc.FunctionalTestCase):
             'allow_external_login_sites', [self.portal.absolute_url()]
             )
 
-        # Configure our site to use the login portal for logins.
-        external_login_url = self.login_portal.absolute_url() + '/login'
-        self.portal.portal_properties.site_properties._updateProperty('external_login_url', external_login_url)
+        # Configure our site to use the login portal for logins and logouts
+        site_properties = self.portal.portal_properties.site_properties
+        login_portal_url = self.login_portal.absolute_url()
+        site_properties._updateProperty('external_login_url', login_portal_url + '/login')
+        site_properties._updateProperty('external_logout_url', login_portal_url + '/logout')
 
         # Configure both sites to use a shared secret and set cookies per path
         # (normally they would have different domains.)
@@ -35,7 +37,7 @@ class TestSSOLogin(ptc.FunctionalTestCase):
             session._shared_secret = 'secret'
             session.path = portal.absolute_url_path()
 
-    def test_loginWithSSO(self):
+    def test_loginAndLogout(self):
         browser = self.browser
         browser.open(self.portal.absolute_url())
         browser.getLink('Log in').click()
@@ -46,6 +48,14 @@ class TestSSOLogin(ptc.FunctionalTestCase):
         # Without javascript we must click through
         browser.getForm('external_login_form').submit()
         self.assertEqual(self.browser.cookies.getinfo('__ac')['path'], self.portal.absolute_url_path())
+        # Now logout
+        browser.open(self.portal.absolute_url())
+        browser.getLink('Log out').click()
+        # Check we really logged out, there should be a login link
+        browser.getLink('Log in')
+        # Check we are logged out of the login_portal too
+        browser.open(self.login_portal.absolute_url())
+        browser.getLink('Log in')
 
 
 def test_suite():
