@@ -44,7 +44,7 @@ if came_from is not None:
     if not context.portal_url.isURLInPortal(came_from):
         came_from = ''
 
-if next is not None:
+if next:
     if not context.portal_url.isURLInPortal(next):
         came_from = next = ''
     else:
