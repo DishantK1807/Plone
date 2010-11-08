@@ -24,8 +24,9 @@ if not external_login_url:
     return context.restrictedTraverse('login_form')()
 
 # Handle login on this portal where login is external
-portal_url = context.portal_url()
-came_from = request.get('came_from', portal_url)
-next = portal_url + '/acl_users/session/external_login'
-url = "%s?came_from=%s&next=%s" % (external_login_url, came_from, next)
+next = request.URL1 + '/logged_in'
+url = "%s?next=%s" % (external_login_url, next)
+came_from = request.get('came_from')
+if came_from:
+    url = "%s&came_from=%s" % (url, came_from)
 request.RESPONSE.redirect(url)

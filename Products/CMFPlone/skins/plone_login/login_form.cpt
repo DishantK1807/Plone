@@ -176,7 +176,7 @@
                     <input type="hidden"
                         name="next"
                         value=""
-                    tal:attributes="value string:${context/portal_url}/acl_users/session/external_login" />
+                    tal:attributes="value string:${request/URL1}/logged_in" />
 
                     <div class="formControls">
 

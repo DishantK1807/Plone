@@ -19,7 +19,6 @@
      tal:define="isAnon context/@@plone_portal_state/anonymous;
                  auth nocall:context/acl_users/credentials_cookie_auth|context/cookie_authentication|nothing;
                  session nocall:context/acl_users/session|nothing;
-                 external_ticket_name session/external_ticket_name|string:ticket;
                  came_from request/came_from|nothing;
                  next request/next|nothing;
                  cookie_name auth/cookie_name|string:__ac;
@@ -43,7 +42,7 @@
                 tal:condition="python:auth">
 
                 <input tal:condition="came_from" type="hidden" name="came_from" value="" tal:attributes="value came_from" />
-                <input type="hidden" name="ticket" value="" tal:attributes="name external_ticket_name; value ticket;" />
+                <input type="hidden" name="__ac" value="" tal:attributes="value ticket;" />
 
                 <p i18n:translate="description_enable_cookies_to_stay_logged_in">
                    Note: If you do not remain logged in after leaving this page,
