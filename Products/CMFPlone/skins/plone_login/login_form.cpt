@@ -52,12 +52,13 @@
             tal:define="checkPermission nocall: context/portal_membership/checkPermission;
                         site_properties context/portal_properties/site_properties;
                         use_email_as_login site_properties/use_email_as_login|nothing;
+                        external_login_url site_properties/external_login_url|nothing;
                         ztu modules/ZTUtils;">
             <form tal:attributes="action python:context.absolute_url()+'/'+template.id"
                   class="enableAutoFocus"
                   method="post"
                   id="login_form"
-                  tal:condition="python:auth">
+                  tal:condition="python:auth and not external_login_url">
 
                 <div id="login-form">
 
@@ -164,7 +165,36 @@
 
             </form>
 
-            <div tal:condition="python:checkPermission('Mail forgotten password', context)">
+            <form tal:attributes="action external_login_url"
+                  class="enableAutoFocus"
+                  method="get"
+                  id="login_form"
+                  tal:condition="python:auth and external_login_url">
+
+                <div id="login-form">
+
+                    <input type="hidden"
+                        name="next"
+                        value=""
+                    tal:attributes="value string:${context/portal_url}/acl_users/session/external_login" />
+
+                    <div class="formControls">
+
+                        <input class="context"
+                               type="submit"
+                               name="submit"
+                               value="Log in"
+                               i18n:attributes="value label_log_in;"
+                               />
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <div tal:condition="python:checkPermission('Mail forgotten password', context) and not external_login_url">
                 <strong i18n:translate="box_forgot_password_option">
                     Forgot your password?
                 </strong>
