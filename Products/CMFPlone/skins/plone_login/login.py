@@ -14,11 +14,12 @@ request = context.REQUEST
 # logged in in this portal
 next = request.get('next', None)
 if (next is not None and context.portal_url.isURLInPortal(next) 
-    and context.portal_membership.isAnonymousUser()):
+    and not context.portal_membership.isAnonymousUser()):
     return context.restrictedTraverse('external_login_return')()
 
 # Handle login on this portal where login is internal
-external_login_url = context.portal_properties.site_properties.getProperty('external_login_url')
+site_properties = context.portal_properties.site_properties
+external_login_url = site_properties.getProperty('external_login_url')
 if not external_login_url:
     return context.restrictedTraverse('login_form')()
 
