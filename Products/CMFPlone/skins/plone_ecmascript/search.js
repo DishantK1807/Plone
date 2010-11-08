@@ -54,19 +54,6 @@
             }
             data = $("form.searchPage").serialize();
             updateResults(data);
-            // $("#search-results").before($("#kssPortalMessage"));
-            // $("#kssPortalMessage dd").html("Your search results have been updated");
-            // 
-            // $("#kssPortalMessage").delay(500).animate({
-            //     height: ['toggle', 'swing'],
-            //     opacity: 1,
-            //     marginBottom: 'toggle',
-            //     marginTop: 'toggle'
-            // }, 500, function () {
-            //     $("*").click(function () {
-            //         $("#kssPortalMessage").fadeOut('slow');
-            //     })
-            // })
             return false;
         });
 
