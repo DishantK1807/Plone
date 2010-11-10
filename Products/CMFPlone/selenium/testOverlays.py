@@ -5,10 +5,12 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 class TestOverlays(SeleniumTestCase):
-    layer = SELENIUM_PLONE_FUNCTIONAL_TESTING
 
     def test_login_form(self):
+        # Make sure we're logged out before starting
+        self.open('/logout')
         self.open()
+        
         self.driver.find_element_by_link_text('Log in').click()
         self.driver.find_element_by_name('__ac_name').send_keys('wrong')
         self.driver.find_element_by_name('__ac_password').send_keys('fail')
@@ -18,9 +20,6 @@ class TestOverlays(SeleniumTestCase):
         self.driver.find_element_by_name('__ac_name').send_keys(TEST_USER_NAME)
         self.driver.find_element_by_name('__ac_password').send_keys(TEST_USER_PASSWORD)
         self.driver.find_element_by_name('submit').click()
-        
-        # Pause, to allow overlay to close, page to reload
-        time.sleep(5)
         
         self.assertEquals(TEST_USER_ID, self.driver.find_element_by_id('user-name').get_text())
         
