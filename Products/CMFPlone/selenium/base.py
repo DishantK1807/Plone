@@ -3,6 +3,7 @@ import unittest2
 
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
+from plone.app.testing import PLONE_SITE_ID
 from plone.app.testing.selenium_layers import SELENIUM_PLONE_FUNCTIONAL_TESTING
 from plone.app.testing import selenium_layers as layers
 from plone.app.testing.helpers import applyProfile
@@ -14,6 +15,9 @@ class SeleniumTestCase(unittest2.TestCase):
     def setUp(self):
         self.driver = self.layer['selenium']
         self.portal = self.layer['portal']
+        self.baseurl = "http://%s:%s/%s" % (self.layer['host'],
+                                            self.layer['port'],
+                                            PLONE_SITE_ID)
         self.portal.acl_users._doAddUser('member1', 'secret',
                                          ['Member'], [])
         applyProfile(self.layer['portal'], 'Products.CMFPlone:plone-selenium')
@@ -22,7 +26,7 @@ class SeleniumTestCase(unittest2.TestCase):
         # ensure we have a clean starting point
         transaction.commit()
         portal = self.layer['portal']
-        self.driver.get("%s%s" % (portal.absolute_url(), path))
+        self.driver.get("%s%s" % (self.baseurl, path))
 
     def login(self, username=TEST_USER_NAME, password=TEST_USER_PASSWORD):
         self.open('/login_form')
