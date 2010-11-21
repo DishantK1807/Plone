@@ -1,6 +1,12 @@
 
 (function($){
 
+var log = function() {
+    if (window.console && console.log) {
+        // log for FireBug or WebKit console
+        console.log(Array.prototype.slice.call(arguments));
+    }
+};
 
 module("CMFPlone inline-edit", {
 
@@ -28,8 +34,8 @@ module("CMFPlone inline-edit", {
     // Actual mock response can be produced here.
     //
     handle_ajax: function(request, ajax_heartbeat) {
-        log(request);
-        if (request.urlParts.file == 'base-url') {
+        log('HANDLE', request);
+        if (request.urlParts.file == 'base-url@@replaceField') {
             request.setResponseHeader("Content-Type", "text/xml; charset=UTF-8");
             if (ajax_heartbeat == 0) {
                 /* response recorded from the server */
@@ -81,6 +87,8 @@ module("CMFPlone inline-edit", {
                     '</commands>' +
                     '</kukit>';
                 request.receive(200, response_text);
+
+                log('OK OK OK', request);
             } else if (ajax_heartbeat == 4) {
                 // simulate an error
                 request.receive(500, 'Error');
@@ -88,12 +96,14 @@ module("CMFPlone inline-edit", {
         } else {
             request.receive(404, 'Not Found in Mock Server');
         }
+        log('HANDLE finished', request);
     }
 
 
 });
 
 
+/*
 test("Bind", function() {
 
     $(document).addInlineEditing('http://base-url');
@@ -139,19 +149,18 @@ test("Bind again, fails", function() {
     $(document).addInlineEditing('http://base-url');
 
 });
+*/
 
-
-/*
 test("Click", function() {
 
-    $(document).addInlineEditing('http://base-url');
+    $(document).addInlineEditing('base-url');
 
     $('#test1').simulate('click');
 
+    log('test over.');
     $(document).removeInlineEditing();
 
 });
-*/
 
 
 
