@@ -14,13 +14,13 @@
 <metal:main fill-slot="main">
 <div id="content-core"
      tal:define="path context/@@plone_portal_state/navigation_root_path;
-                 results python:context.portal_catalog.searchResults(
+                 results python:context.portal_catalog.searchResults(dict(
                             portal_type='Event',
                             end={'query': context.ZopeTime(),
                                  'range': 'min'},
                             sort_on='start',
                             review_state='published',
-                            path=path);
+                            path=path));
                  results python:[r for r in results if r.getObject()];
                  Batch python:modules['Products.CMFPlone'].Batch;
                  b_start python:request.get('b_start',0);
@@ -60,8 +60,9 @@
                     </p>
 
                     <ul class="newsAbout">
-                        <li>
-                        <span tal:replace="python:modules['string'].join(resultObject.Subject(), ' ')"> Conference </span>
+                        <li tal:define="subject python:resultObject.Subject()"
+                            tal:condition="subject">
+                        <span tal:replace="python:modules['string'].join(subject, ' ')"> Conference </span>
                         </li>
                         <li>
                         <span tal:replace="python:toLocalizedTime(resultObject.start(), long_format=1)">Start Date Time</span>
