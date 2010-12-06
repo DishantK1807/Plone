@@ -44,9 +44,6 @@ Changelog
   you cannot delete a locked item
   [kiorky]
 
-- search.js script for search results view.
-  [spliter]
-
 4.0.1 - 2010-09-28
 -------------------
 

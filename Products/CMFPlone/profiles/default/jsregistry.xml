@@ -9,7 +9,6 @@
  <javascript id="nodeutilities.js" />
  <javascript id="cookie_functions.js" />
  <javascript id="livesearch.js" compression="full" />
- <javascript id="search.js" /> 
  <javascript id="fullscreenmode.js" enabled="False" />
  <javascript id="select_all.js" />
  <javascript id="dragdropreorder.js" />
