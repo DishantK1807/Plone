@@ -67,7 +67,6 @@ class TestJSRegistry(PloneTestCase.PloneTestCase):
              'select_all.js',
              'styleswitcher.js',
              'livesearch.js',
-             'search.js',             
              'table_sorter.js',
              'dropdown.js',
              'dragdropreorder.js',

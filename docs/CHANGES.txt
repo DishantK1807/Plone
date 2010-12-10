@@ -5,6 +5,12 @@
 Changelog
 =========
 
+4.1 - Unreleased
+----------------
+
+- plone.app.search integration.
+  [spliter]
+
 4.0.3 - Unreleased
 ------------------
 
