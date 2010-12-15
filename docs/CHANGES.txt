@@ -8,6 +8,9 @@ Changelog
 4.1 - Unreleased
 ----------------
 
+- Updated link to 'Advanced search' in livesearch results to link to @@search.
+  [spliter]
+
 - plone.app.search integration.
   [spliter]
 
