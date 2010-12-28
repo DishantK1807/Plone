@@ -139,5 +139,6 @@
   <property name="use_email_as_login" type="boolean">False</property>
   <property name="external_login_url" type="string"/>
   <property name="external_logout_url" type="string"/>
+  <property name="external_login_iframe" type="boolean"/>
  </object>
 </object>

@@ -9,7 +9,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en"
       lang="en"
-      tal:define="lang language"
+      tal:define="lang language;
+                  ajax_load request/ajax_load | nothing;
+                  ajax_include_head request/ajax_include_head | nothing;
+                  sl python:sl and not request.get('disable_plone.leftcolumn');
+                  sr python:sr and not request.get('disable_plone.rightcolumn');"
       tal:attributes="lang lang;
                       xml:lang lang">
 
@@ -28,7 +32,7 @@
     <metal:baseslot define-slot="base">
       <base tal:attributes="href here/renderBase" /><!--[if lt IE 7]></base><![endif]-->
     </metal:baseslot>
-
+<tal:notajax tal:condition="python:not ajax_load or ajax_include_head">
     <meta name="generator" content="Plone - http://plone.org" />
 
     <div tal:replace="structure provider:plone.htmlhead" />
@@ -67,14 +71,14 @@
 
     <tal:comment replace="nothing"> A slot where you can insert javascript in the header from a template </tal:comment>
     <metal:javascriptslot define-slot="javascript_head_slot" />
-
+</tal:notajax>
   </head>
 
   <body tal:attributes="class string:${here/getSectionFromURL} template-${template/id};
                         dir python:test(isRTL, 'rtl', 'ltr')">
     <div id="visual-portal-wrapper">
 
-      <div id="portal-top" i18n:domain="plone">
+      <div id="portal-top" i18n:domain="plone" tal:condition="not:ajax_load">
         <div tal:replace="structure provider:plone.portaltop" />
       </div>
 
@@ -83,6 +87,7 @@
       <table id="portal-columns">
         <tbody>
           <tr>
+<tal:notajax tal:condition="not:ajax_load">
             <tal:comment replace="nothing"> Start of the left column </tal:comment>
             <td id="portal-column-one"
                 metal:define-slot="column_one_slot"
@@ -95,6 +100,7 @@
               </div>
             </td>
             <tal:comment replace="nothing"> End of the left column </tal:comment>
+</tal:notajax>
 
             <tal:comment replace="nothing"> Start of main content block </tal:comment>
             <td id="portal-column-content"
@@ -102,10 +108,10 @@
 
               <metal:block define-slot="content">
                 <div metal:define-macro="content"
-                     tal:define="show_border context/@@plone/showEditableBorder"
+                     tal:define="show_border context/@@plone/showEditableBorder; show_border python:show_border and not ajax_load"
                      tal:attributes="class python:test(show_border,'documentEditable','')">
 
-                  <div tal:replace="structure provider:plone.contentviews" />
+                  <div tal:replace="structure provider:plone.contentviews" tal:condition="not:ajax_load" />
 
                   <div id="region-content"
                        class="documentContent">
@@ -119,7 +125,7 @@
                       Portal status message
                     </div>
                     
-                    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontent" />
+                    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontent" tal:condition="not:ajax_load" />
 
                     <metal:slot metal:define-slot="body">
                     <tal:comment replace="nothing">
@@ -138,7 +144,7 @@
                     </div>
                     </metal:slot>
 
-                    <metal:sub metal:define-slot="sub">
+                    <metal:sub metal:define-slot="sub" tal:condition="not:ajax_load">
                     
                       <div tal:replace="structure provider:plone.belowcontent" />
                     
@@ -155,6 +161,7 @@
             </td>
             <tal:comment replace="nothing"> End of main content block </tal:comment>
 
+<tal:notajax tal:condition="not:ajax_load">
             <tal:comment replace="nothing"> Start of right column </tal:comment>
             <td id="portal-column-two"
                 metal:define-slot="column_two_slot"
@@ -167,13 +174,15 @@
               </div>
             </td>
             <tal:comment replace="nothing"> End of the right column </tal:comment>
+</tal:notajax>
           </tr>
         </tbody>
       </table>
       <tal:comment replace="nothing"> end column wrapper </tal:comment>
 
       <div class="visualClear" id="clear-space-before-footer"><!-- --></div>
-      
+
+<tal:notajax tal:condition="not:ajax_load">      
       <div tal:define="context_state context/@@plone_context_state;
                         portlet_assignable context_state/portlet_assignable"
             tal:condition="python:not sl and not sr and portlet_assignable and checkPermission('Portlets: Manage portlets', context)">
@@ -189,10 +198,10 @@
         <div tal:replace="structure provider:plone.portalfooter" />
 
       </metal:block>
-
+</tal:notajax>
       <div class="visualClear"><!-- --></div>
     </div>
-<div id="kss-spinner"><img tal:attributes="src string:${portal_url}/spinner.gif" alt="" /></div>
+<div id="kss-spinner" tal:condition="not:ajax_load"><img tal:attributes="src string:${portal_url}/spinner.gif" alt="" /></div>
 </body>
 </html>
 </metal:page>
