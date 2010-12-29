@@ -271,7 +271,7 @@ class RegistrationTool(PloneBaseTool, BaseTool):
         # render the message ourselves and send it from here (where we
         # don't need to worry about 'UseMailHost' permissions).
         reset_tool = getToolByName(self, 'portal_password_reset')
-        reset = reset_tool.requestReset(login)
+        reset = reset_tool.requestReset(member.getId())
 
         
         email_charset = getattr(self, 'email_charset', 'UTF-8')
