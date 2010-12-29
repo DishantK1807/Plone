@@ -11,13 +11,13 @@ class CookieInfo(object):
         self.browser = browser
 
     def getinfo(self, name):
-        header = self.browser.headers['Set-Cookie']
-        for cookie in header.split(','):
-            ck_name, _ = cookie.split('=', 1)
-            if name != ck_name:
+        mech_browser = self.browser.mech_browser
+        cookiehandler = mech_browser._ua_handlers['_cookies']
+        cookies = cookiehandler.cookiejar._cookies_for_request(mech_browser.request)
+        for cookie in cookies:
+            if name != cookie.name:
                 continue
-            parts = (part.split('=', 1) for part in cookie.split('; '))
-            return dict((k.lower(), v) for k, v in parts)
+            return cookie.__dict__
         raise KeyError(name)
 
 
@@ -99,6 +99,29 @@ class TestSSOLogin(SSOLoginTestCase):
         browser.getLink('Log out').click()
         browser.getLink('Log in')
 
+    def test_requireLogin(self):
+        browser = self.browser
+        browser.handleErrors = True # So unauthorized renders a login form
+        # Login to the central portal
+        browser.open(self.login_portal.absolute_url())
+        browser.getLink('Log in').click()
+        browser.getControl(name='__ac_name').value = ptc.default_user
+        browser.getControl(name='__ac_password').value = ptc.default_password
+        browser.getControl(name='submit').click()
+        # Check we are logged in centrally
+        browser.getLink('Log out')
+        # But not on the other portal
+        browser.open(self.portal.absolute_url())
+        browser.getLink('Log in')
+        # Now open the protected doc
+        protected_url = self.folder.absolute_url() + '/folder_contents'
+        browser.open(protected_url)
+        # Without javascript we must click through
+        self.assertEqual(browser.getControl(name='came_from').value, protected_url)
+        browser.getForm('external_login_form').submit()
+        self.assertEqual(browser.url, protected_url)
+        browser.getLink('Log out')
+
 
 class TestSSOLoginIframe(SSOLoginTestCase):
 
@@ -109,7 +132,7 @@ class TestSSOLoginIframe(SSOLoginTestCase):
             site_properties = portal.portal_properties.site_properties
             site_properties._updateProperty('external_login_iframe', True)
 
-    def test_loginAndLogout(self):
+    def test_loginAndLogoutSSO(self):
         browser = self.browser
         browser.open(self.portal.absolute_url())
         browser.getLink('Log in').click()
@@ -154,6 +177,33 @@ class TestSSOLoginIframe(SSOLoginTestCase):
         browser.open(self.another_portal.absolute_url())
         browser.getLink('Log out').click()
         browser.getLink('Log in')
+
+    def test_requireLoginSSO(self):
+        browser = self.browser
+        browser.handleErrors = True # So unauthorized renders a login form
+        # Login to the central portal
+        browser.open(self.login_portal.absolute_url())
+        browser.getLink('Log in').click()
+        browser.getControl(name='__ac_name').value = ptc.default_user
+        browser.getControl(name='__ac_password').value = ptc.default_password
+        browser.getControl(name='submit').click()
+        # Check we are logged in centrally
+        browser.getLink('Log out')
+        # But not on the other portal
+        browser.open(self.portal.absolute_url())
+        browser.getLink('Log in')
+        # Now open the protected doc
+        protected_url = self.folder.absolute_url() + '/folder_contents'
+        browser.open(protected_url)
+        # The test browser does not support iframes
+        form = browser.getForm(name='login_form')
+        self.assertEqual(browser.getControl(name='came_from').value, protected_url)
+        form.submit()
+        # Without javascript we must click through
+        self.assertEqual(browser.getControl(name='came_from').value, protected_url)
+        browser.getForm('external_login_form').submit()
+        self.assertEqual(browser.url, protected_url)
+        browser.getLink('Log out')
 
 
 def test_suite():
