@@ -2,12 +2,10 @@
 # PloneTestCase
 #
 
+# $Id$
+
 from Products.PloneTestCase.ptc import *
-# BBB Zope 2.12
-try:
-    from Testing.testbrowser import Browser
-except ImportError:
-    from Products.Five.testbrowser import Browser
+from Products.Five.testbrowser import Browser
 
 # Make the test fixture extension profile active
 from zope.interface import classImplements

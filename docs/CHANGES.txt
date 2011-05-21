@@ -5,28 +5,8 @@
 Changelog
 =========
 
-4.1 - Unreleased
-----------------
-
-- Updated link to 'Advanced search' in livesearch results to link to @@search.
-  [spliter]
-
-- plone.app.search integration.
-  [spliter]
-
-4.0.3 - Unreleased
-------------------
-
-- In the registration tool strip the mail text before passing it
-  through message_from_string.  A leading white line would prevent
-  getting Subject, To and From headers from the generated message.
-  [maurits]
-
-- Avoid various deprecation warnings under Zope 2.13.
-  [hannosch]
-
-4.0.2 - 2010-11-15
-------------------
+4.0.2 - Unreleased
+-------------------
 
 - Added fill-slot to events_listing.pt that was not showing any events.
   This fixes http://dev.plone.org/plone/ticket/11216.
@@ -41,7 +21,7 @@ Changelog
   This fixes http://dev.plone.org/plone/ticket/11141.
   [piv]
 
-- Fixed http://dev.plone.org/plone/ticket/11160,
+- Fixed https://dev.plone.org/plone/ticket/11160,
   first level of Table of Contents is a level with at least two entries.
   [thomasdesvenain]
 
@@ -49,7 +29,7 @@ Changelog
   specifications for popups were too vague.
   [smcmahon]
 
-- Fixed: http://dev.plone.org/plone/ticket/11187, Better message when
+- Fixed: https://dev.plone.org/plone/ticket/11187, Better message when
   you cannot delete a locked item
   [kiorky]
 
@@ -68,7 +48,7 @@ Changelog
 
 - Successful completion of contact form ended in redirect to 'undefined'
   when using popups. Fixed by just closing.
-  Fixes http://dev.plone.org/plone/ticket/11090
+  Fixes https://dev.plone.org/plone/ticket/11090
   [smcmahon]
 
 - Fixed i18n of the Upgrade hellip button in plone-overview.pt.
@@ -82,7 +62,7 @@ Changelog
   This fixes http://dev.plone.org/plone/ticket/10864
   [mr_savage]
 
-- Fixed http://dev.plone.org/plone/ticket/10956 - prevent content of the
+- Fixed https://dev.plone.org/plone/ticket/10956 - prevent content of the
   types listed in typesUseViewActionInListings from being selected as default
   pages.
   [elro]

@@ -1,65 +1,61 @@
-import unittest
+#
+# Tests the workflow tool
+#
 
-from Products.CMFCore.tests.base.dummy import DummySite
-from Products.CMFCore.tests.base.dummy import DummyFolder
-from Products.CMFCore.tests.base.dummy import DummyContent
+from Products.CMFPlone.tests import PloneTestCase
 
-from Acquisition import aq_parent
-
-
-class DummyFolder(DummyFolder):
-    
-    def absolute_url(self):
-        return '/'.join([aq_parent(self).absolute_url(), self.getId()])
+portal_name = PloneTestCase.portal_name
 
 
-class TestURLTool(unittest.TestCase):
+class TestURLTool(PloneTestCase.PloneTestCase):
 
-    def setUp(self):
-        self.site = DummySite(id='foo')
-        self.site._setObject('foo', DummyFolder(id='foo'))
-        self.site.foo._setObject('doc1', DummyContent(id='doc1'))
-
-    def _makeOne(self, *args, **kw):
-        from Products.CMFPlone.URLTool import URLTool
-        url_tool = URLTool(*args, **kw)
-        return url_tool.__of__(self.site)
+    def afterSetUp(self):
+        self.url = self.portal.portal_url
+        self.folder.invokeFactory('Folder', id='foo')
+        self.folder.foo.invokeFactory('Document', id='doc1')
 
     def test_isURLInPortal(self):
-        url_tool = self._makeOne()
-        iURLiP = url_tool.isURLInPortal
+        iURLiP = self.url.isURLInPortal
         self.failUnless(iURLiP(
-                               'http://www.foobar.com/bar/foo/folder'))
+                               'http://nohost/%s/foo' % portal_name))
         self.failUnless(iURLiP(
-                               'http://www.foobar.com/bar/foo'))
+                               'http://nohost/%s' % portal_name))
         self.failIf(iURLiP(
-                           'http://www.foobar.com/bar2/foo'))
+                           'http://nohost2/%s/foo' % portal_name))
         self.failUnless(iURLiP(
-                               'https://www.foobar.com/bar/foo/folder'))
+                               'https://nohost/%s/bar' % portal_name))
         self.failIf(iURLiP(
-                           'http://www.foobar.com:8080/bar/foo/folder'))
+                           'http://nohost:8080/%s/baz' % portal_name))
         self.failIf(iURLiP(
-                           'http://www.foobar.com/bar'))
+                           'http://nohost/'))
         self.failIf(iURLiP(
                            '/images'))
         self.failUnless(iURLiP(
-                               '/bar/foo/foo'))
+                               '/%s/foo' % portal_name))
 
     def test_isURLInPortalRelative(self):
-        url_tool = self._makeOne()
-        iURLiP = url_tool.isURLInPortal
+        iURLiP = self.url.isURLInPortal
         #non-root relative urls will need a current context to be passed in
         self.failUnless(iURLiP(
                                'images/img1.jpg'))
         self.failUnless(iURLiP(
                                './images/img1.jpg'))
-        self.failUnless(iURLiP( #/bar/foo/something
-                               '../something', self.site.foo.doc1))
-        self.failIf(iURLiP( #/bar/afolder
-                           '../../afolder', self.site.foo.doc1))
+        self.failUnless(iURLiP( #/plone/Members/test_user_1_/something
+                               '../something', self.folder.foo.doc1))
+        self.failUnless(iURLiP( #/plone/Members/afolder
+                               '../../afolder', self.folder.foo.doc1))
+        self.failUnless(iURLiP( #/plone/afolder
+                               '../../../afolder', self.folder.foo.doc1))
         self.failIf(iURLiP( #/afolder
-                           '../../../afolder', self.site.foo.doc1))
+                           '../../../../afolder', self.folder.foo.doc1))
         self.failIf(iURLiP( #/../afolder? How do we have more ../'s than there are parts in the URL?
-                           '../../../../afolder', self.site.foo.doc1))
-        self.failUnless(iURLiP( #/bar/foo/afolder
-                               '../../foo/afolder', self.site.foo.doc1))
+                           '../../../../../afolder', self.folder.foo.doc1))
+        self.failUnless(iURLiP( #/plone/afolder
+                               '../../../../%s/afolder' % portal_name ,self.folder.foo.doc1))
+
+
+def test_suite():
+    from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    suite.addTest(makeSuite(TestURLTool))
+    return suite

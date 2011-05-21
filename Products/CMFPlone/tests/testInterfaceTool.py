@@ -2,7 +2,8 @@
 # InterfaceTool tests
 #
 
-import unittest
+from Testing import ZopeTestCase
+from Products.CMFPlone.tests import PloneTestCase
 
 from zope.interface import implements
 
@@ -24,7 +25,7 @@ class A(PortalContent, DefaultDublinCoreImpl):
 class B(PortalContent, DefaultDublinCoreImpl):
     implements(IMyPortalContent)
 
-class TestInterfaceResolution(unittest.TestCase):
+class TestInterfaceResolution(ZopeTestCase.ZopeTestCase):
 
     def testResolveDublinCore(self):
         # DublinCore should be resolved
@@ -42,38 +43,44 @@ class TestInterfaceResolution(unittest.TestCase):
         self.assertRaises(ValueError, resolveInterface, dotted_name)
 
 
-class TestInterfaceTool(unittest.TestCase):
+class TestInterfaceTool(PloneTestCase.PloneTestCase):
 
-    def _makeOne(self):
-        from Products.CMFPlone.InterfaceTool import InterfaceTool
-        return InterfaceTool()
+    def afterSetUp(self):
+        self.interface = self.portal.portal_interface
 
     def testContentImplements(self):
-        tool = self._makeOne()
         content = PortalContent()
-        self.failUnless(tool.objectImplements(content, getDottedName(IContentish)))
+        self.failUnless(self.interface.objectImplements(content, getDottedName(IContentish)))
 
     def testDocumentImplements(self):
-        tool = self._makeOne()
         document = Document(id='foo')
-        self.failUnless(tool.objectImplements(document, getDottedName(IContentish)))
-        self.failUnless(tool.objectImplements(document, getDottedName(IDublinCore)))
+        self.failUnless(self.interface.objectImplements(document, getDottedName(IContentish)))
+        self.failUnless(self.interface.objectImplements(document, getDottedName(IDublinCore)))
 
     def testDCImplements(self):
-        tool = self._makeOne()
         dc = DefaultDublinCoreImpl()
-        self.failUnless(tool.objectImplements(dc, getDottedName(IDublinCore)))
+        self.failUnless(self.interface.objectImplements(dc, getDottedName(IDublinCore)))
 
     def testAImplements(self):
-        tool = self._makeOne()
         a = A()
-        self.failUnless(tool.objectImplements(a, getDottedName(IContentish)))
-        self.failUnless(tool.objectImplements(a, getDottedName(IDublinCore)))
-        self.failIf(tool.objectImplements(a, getDottedName(IMyPortalContent)))
+        self.failUnless(self.interface.objectImplements(a, getDottedName(IContentish)))
+        self.failUnless(self.interface.objectImplements(a, getDottedName(IDublinCore)))
+        self.failIf(self.interface.objectImplements(a, getDottedName(IMyPortalContent)))
 
     def testBImplements(self):
-        tool = self._makeOne()
         b = B()
-        self.failUnless(tool.objectImplements(b, getDottedName(IContentish)))
-        self.failUnless(tool.objectImplements(b, getDottedName(IDublinCore)))
-        self.failUnless(tool.objectImplements(b, getDottedName(IMyPortalContent)))
+        self.failUnless(self.interface.objectImplements(b, getDottedName(IContentish)))
+        self.failUnless(self.interface.objectImplements(b, getDottedName(IDublinCore)))
+        self.failUnless(self.interface.objectImplements(b, getDottedName(IMyPortalContent)))
+
+
+def test_suite():
+    # Normalize dotted names
+    from Products.CMFPlone.tests.testInterfaceTool import TestInterfaceResolution
+    from Products.CMFPlone.tests.testInterfaceTool import TestInterfaceTool
+
+    from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    suite.addTest(makeSuite(TestInterfaceResolution))
+    suite.addTest(makeSuite(TestInterfaceTool))
+    return suite
