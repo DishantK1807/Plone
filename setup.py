@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import os.path
 
 version = '4.2b2dev'
@@ -28,9 +28,10 @@ setup(name='Plone',
       install_requires=[
           'setuptools',
           'Products.CMFPlacefulWorkflow',
-          'Products.CMFPlone',
+          'Products.CMFPlone [archetypes]',
           'Products.kupu',
           'plone.app.caching',
+          'plone.app.collection',
           'plone.app.iterate',
           'plone.app.openid',
           'plone.app.theming',
