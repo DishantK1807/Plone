@@ -1,7 +1,7 @@
 from setuptools import setup
 import os.path
 
-version = '4.2b2dev'
+version = '4.3b3.dev0'
 
 setup(name='Plone',
       version=version,
@@ -29,9 +29,9 @@ setup(name='Plone',
           'setuptools',
           'Products.CMFPlacefulWorkflow',
           'Products.CMFPlone [archetypes]',
-          'Products.kupu',
           'plone.app.caching',
           'plone.app.collection',
+          'plone.app.dexterity',
           'plone.app.iterate',
           'plone.app.openid',
           'plone.app.theming',
